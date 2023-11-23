@@ -6,6 +6,7 @@ public class UniversityRequestDto {
     private String universityDescription;
     private AddressDto address;
     private String mobilePhone;
+    private String email;
     private String accreditation;
     private RectorDto rector;
 
