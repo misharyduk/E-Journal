@@ -1,4 +1,4 @@
-package com.ejournal.university.dto;
+package com.ejournal.university.common.dto;
 
 public class ResponseDto {
     private final String statusCode;

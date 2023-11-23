@@ -1,8 +1,8 @@
-package com.ejournal.university.controller;
+package com.ejournal.university.info.controller;
 
-import com.ejournal.university.dto.ResponseDto;
-import com.ejournal.university.dto.UniversityRequestDto;
-import com.ejournal.university.dto.UniversityResponseDto;
+import com.ejournal.university.common.dto.ResponseDto;
+import com.ejournal.university.info.dto.UniversityRequestDto;
+import com.ejournal.university.info.dto.UniversityResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
