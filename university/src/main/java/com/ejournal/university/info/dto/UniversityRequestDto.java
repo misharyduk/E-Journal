@@ -7,7 +7,7 @@ public class UniversityRequestDto {
     private AddressDto address;
     private String mobilePhone;
     private String accreditation;
-    private Rector rector;
+    private RectorDto rector;
 
     private class AddressDto{
         private String country;
@@ -17,7 +17,7 @@ public class UniversityRequestDto {
         private String zipCode;
     }
 
-    private class Rector{
+    private class RectorDto{
         private String firstName;
         private String lastName;
         private String middleName;
