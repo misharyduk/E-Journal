@@ -27,7 +27,7 @@ public class SubjectController {
                 .body(List.of());
     }
 
-    @GetMapping("{subjectId}")
+    @GetMapping("/{subjectId}")
     public ResponseEntity<SubjectResponseDto> fetchSubject(@PathVariable("subjectId") Integer subjectId){
 
         return ResponseEntity
@@ -43,7 +43,7 @@ public class SubjectController {
                 .body(new SubjectResponseDto());
     }
 
-    @DeleteMapping("{subjectId}")
+    @DeleteMapping("/{subjectId}")
     public ResponseEntity<ResponseDto> deleteSubject(@PathVariable("subjectId") Integer subjectId){
 
         return ResponseEntity
