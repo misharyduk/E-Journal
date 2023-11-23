@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/faculties/")
+@RequestMapping("/api/v1/faculties")
 public class FacultyController {
 
     @PostMapping
@@ -29,7 +29,7 @@ public class FacultyController {
                 .body(List.of());
     }
 
-    @GetMapping("{facultyId}")
+    @GetMapping("/{facultyId}")
     public ResponseEntity<FacultyResponseDto> fetchFaculty(@PathVariable("facultyId") Integer facultyId){
 
         return ResponseEntity
@@ -45,7 +45,7 @@ public class FacultyController {
                 .body(new FacultyResponseDto());
     }
 
-    @DeleteMapping("{facultyId}")
+    @DeleteMapping("/{facultyId}")
     public ResponseEntity<ResponseDto> deleteFaculty(@PathVariable("facultyId") Integer facultyId){
 
         return ResponseEntity
