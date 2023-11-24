@@ -1,6 +1,7 @@
 package com.ejournal.university.faculty.dto;
 
 import com.ejournal.university.common.dto.AddressDto;
+import com.ejournal.university.teacher.dto.TeacherResponseDto;
 
 public class FacultyResponseDto {
 
@@ -10,6 +11,6 @@ public class FacultyResponseDto {
     private String officeNumber;
     private String mobilePhone;
     private String email;
-    private Long deanId;
+    private TeacherResponseDto dean;
 
 }
