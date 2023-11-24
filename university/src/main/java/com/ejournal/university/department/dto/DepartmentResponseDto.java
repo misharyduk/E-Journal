@@ -1,6 +1,7 @@
 package com.ejournal.university.department.dto;
 
 import com.ejournal.university.common.dto.AddressDto;
+import com.ejournal.university.department.dto.builder.DepartmentResponseBuilder;
 import com.ejournal.university.teacher.dto.TeacherResponseDto;
 
 public class DepartmentResponseDto {
@@ -13,4 +14,21 @@ public class DepartmentResponseDto {
     private String email;
     private TeacherResponseDto headOfDepartment;
 
+    public DepartmentResponseDto() {}
+
+    public DepartmentResponseDto(String departmentName, String departmentDescription,
+                                 AddressDto address, String officeNumber, String mobilePhone,
+                                 String email, TeacherResponseDto headOfDepartment) {
+        this.departmentName = departmentName;
+        this.departmentDescription = departmentDescription;
+        this.address = address;
+        this.officeNumber = officeNumber;
+        this.mobilePhone = mobilePhone;
+        this.email = email;
+        this.headOfDepartment = headOfDepartment;
+    }
+
+    public static DepartmentResponseBuilder builder(){
+        return DepartmentResponseBuilder.getInstance();
+    }
 }
