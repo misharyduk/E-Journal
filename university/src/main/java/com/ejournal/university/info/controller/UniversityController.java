@@ -1,8 +1,7 @@
 package com.ejournal.university.info.controller;
 
 import com.ejournal.university.common.dto.ResponseDto;
-import com.ejournal.university.info.dto.UniversityRequestDto;
-import com.ejournal.university.info.dto.UniversityResponseDto;
+import com.ejournal.university.info.dto.UniversityDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class UniversityController {
 
     @PostMapping
-    public ResponseEntity<ResponseDto> createUniversity(@RequestBody UniversityRequestDto universityRequestDto){
+    public ResponseEntity<ResponseDto> createUniversity(@RequestBody UniversityDto universityRequestDto){
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -20,19 +19,19 @@ public class UniversityController {
     }
 
     @GetMapping
-    public ResponseEntity<UniversityResponseDto> fetchUniversityDetails(){
+    public ResponseEntity<UniversityDto> fetchUniversityDetails(){
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new UniversityResponseDto());
+                .body(new UniversityDto());
     }
 
     @PutMapping
-    public ResponseEntity<UniversityResponseDto> updateUniversityDetails(@RequestBody UniversityRequestDto universityRequestDto){
+    public ResponseEntity<UniversityDto> updateUniversityDetails(@RequestBody UniversityDto universityRequestDto){
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new UniversityResponseDto());
+                .body(new UniversityDto());
     }
 
     @DeleteMapping
