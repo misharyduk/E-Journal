@@ -3,9 +3,11 @@ package com.ejournal.university.department.service.impl;
 import com.ejournal.university.department.dto.DepartmentRequestDto;
 import com.ejournal.university.department.dto.DepartmentResponseDto;
 import com.ejournal.university.department.service.DepartmentService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
