@@ -24,6 +24,7 @@ public class UniversityServiceImpl implements UniversityService {
 
     @Override
     public boolean createUniversity(UniversityDto universityRequestDto) {
+        System.out.println("CREATE UNIVERSITY: " + universityRequestDto);
         return true;
     }
 
@@ -34,11 +35,13 @@ public class UniversityServiceImpl implements UniversityService {
 
     @Override
     public UniversityDto updateUniversityDetails(UniversityDto universityRequestDto) {
+        System.out.println("UPDATE UNIVERSITY: " + universityRequestDto);
         return UNIVERSITY;
     }
 
     @Override
     public boolean deleteUniversity() {
+        System.out.println("DELETE UNIVERSITY");
         return true;
     }
 }
