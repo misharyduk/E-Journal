@@ -10,6 +10,6 @@ public class DepartmentRequestDto {
     private String officeNumber;
     private String mobilePhone;
     private String email;
-    private Long headOfDepartment;
+    private Long headOfDepartmentId;
 
 }
