@@ -1,21 +1,16 @@
 package com.ejournal.university.info.dto;
 
+import com.ejournal.university.common.dto.AddressDto;
+
 public class UniversityResponseDto {
 
     private String universityName;
     private String universityDescription;
     private AddressDto address;
     private String mobilePhone;
+    private String email;
     private String accreditation;
     private RectorDto rector;
-
-    private class AddressDto{
-        private String country;
-        private String city;
-        private String street;
-        private String number;
-        private String zipCode;
-    }
 
     private class RectorDto{
         private String firstName;
