@@ -21,7 +21,7 @@ public class UniversityController {
     @PostMapping
     public ResponseEntity<ResponseDto> createUniversity(@RequestBody UniversityRequestDto universityRequestDto){
 
-        universityService.createUniversity(universityRequestDto);
+        universityService.create(universityRequestDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDto(STATUS_CODE_201, "University" + STATUS_MESSAGE_201));
@@ -30,7 +30,7 @@ public class UniversityController {
     @GetMapping
     public ResponseEntity<UniversityResponseDto> fetchUniversityDetails(){
 
-        UniversityResponseDto universityResponseDto = universityService.fetchUniversityDetails();
+        UniversityResponseDto universityResponseDto = universityService.fetchById(0L);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(universityResponseDto);
@@ -39,7 +39,7 @@ public class UniversityController {
     @PutMapping
     public ResponseEntity<UniversityResponseDto> updateUniversityDetails(@RequestBody UniversityRequestDto universityRequestDto){
 
-        UniversityResponseDto updatedUniversityResponseDto = universityService.updateUniversityDetails(universityRequestDto);
+        UniversityResponseDto updatedUniversityResponseDto = universityService.update(universityRequestDto);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(updatedUniversityResponseDto);
@@ -48,10 +48,10 @@ public class UniversityController {
     @DeleteMapping
     public ResponseEntity<ResponseDto> deleteUniversity(){
 
-        universityService.deleteUniversity();
+        universityService.deleteById(0L);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new ResponseDto(HttpStatus.OK.toString(), "University" + INSTANCE_DELETED));
+                .body(new ResponseDto(STATUS_CODE_200, "University" + INSTANCE_DELETED));
     }
 
 }
