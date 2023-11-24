@@ -2,6 +2,7 @@ package com.ejournal.university.faculty.entity;
 
 import com.ejournal.university.common.dto.AddressDto;
 import com.ejournal.university.common.entity.Address;
+import com.ejournal.university.info.entity.University;
 import com.ejournal.university.teacher.dto.TeacherResponseDto;
 import com.ejournal.university.teacher.entity.Teacher;
 import jakarta.persistence.*;
@@ -37,5 +38,8 @@ public class Faculty {
     private Teacher dean;
     @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)
     private List<Teacher> teachers = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "university_id")
+    private University university;
 
 }
