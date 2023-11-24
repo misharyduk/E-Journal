@@ -1,14 +1,15 @@
 package com.ejournal.university.info.service;
 
-import com.ejournal.university.info.dto.UniversityDto;
+import com.ejournal.university.info.dto.UniversityResponseDto;
+import com.ejournal.university.info.dto.UniversityRequestDto;
 
 public interface UniversityService {
 
-    boolean createUniversity(UniversityDto universityRequestDto);
+    boolean createUniversity(UniversityRequestDto universityRequestDto);
 
-    UniversityDto fetchUniversityDetails();
+    UniversityResponseDto fetchUniversityDetails();
 
-    UniversityDto updateUniversityDetails(UniversityDto universityRequestDto);
+    UniversityResponseDto updateUniversityDetails(UniversityRequestDto universityRequestDto);
 
     boolean deleteUniversity();
 

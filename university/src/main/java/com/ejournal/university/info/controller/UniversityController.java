@@ -1,7 +1,8 @@
 package com.ejournal.university.info.controller;
 
 import com.ejournal.university.common.dto.ResponseDto;
-import com.ejournal.university.info.dto.UniversityDto;
+import com.ejournal.university.info.dto.UniversityResponseDto;
+import com.ejournal.university.info.dto.UniversityRequestDto;
 import com.ejournal.university.info.service.UniversityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class UniversityController {
     private final UniversityService universityService;
 
     @PostMapping
-    public ResponseEntity<ResponseDto> createUniversity(@RequestBody UniversityDto universityRequestDto){
+    public ResponseEntity<ResponseDto> createUniversity(@RequestBody UniversityRequestDto universityRequestDto){
 
         universityService.createUniversity(universityRequestDto);
         return ResponseEntity
@@ -27,21 +28,21 @@ public class UniversityController {
     }
 
     @GetMapping
-    public ResponseEntity<UniversityDto> fetchUniversityDetails(){
+    public ResponseEntity<UniversityResponseDto> fetchUniversityDetails(){
 
-        UniversityDto universityDto = universityService.fetchUniversityDetails();
+        UniversityResponseDto universityResponseDto = universityService.fetchUniversityDetails();
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(universityDto);
+                .body(universityResponseDto);
     }
 
     @PutMapping
-    public ResponseEntity<UniversityDto> updateUniversityDetails(@RequestBody UniversityDto universityRequestDto){
+    public ResponseEntity<UniversityResponseDto> updateUniversityDetails(@RequestBody UniversityRequestDto universityRequestDto){
 
-        UniversityDto updatedUniversityDto = universityService.updateUniversityDetails(universityRequestDto);
+        UniversityResponseDto updatedUniversityResponseDto = universityService.updateUniversityDetails(universityRequestDto);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(updatedUniversityDto);
+                .body(updatedUniversityResponseDto);
     }
 
     @DeleteMapping

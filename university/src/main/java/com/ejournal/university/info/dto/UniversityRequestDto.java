@@ -1,14 +1,10 @@
 package com.ejournal.university.info.dto;
 
 import com.ejournal.university.common.dto.AddressDto;
-import com.ejournal.university.info.dto.builder.UniversityBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter @Setter
-public class UniversityDto {
+public class UniversityRequestDto {
 
     private String universityName;
     private String universityDescription;
@@ -26,31 +22,10 @@ public class UniversityDto {
         private String middleName;
     }
 
-    public UniversityDto(){}
-
-    public UniversityDto(String universityName,
-                         String universityDescription,
-                         AddressDto address,
-                         String mobilePhone,
-                         String email,
-                         String accreditation,
-                         RectorDto rector) {
-        this.universityName = universityName;
-        this.universityDescription = universityDescription;
-        this.address = address;
-        this.mobilePhone = mobilePhone;
-        this.email = email;
-        this.accreditation = accreditation;
-        this.rector = rector;
-    }
-
-    public static UniversityBuilder builder(){
-        return UniversityBuilder.getInstance();
-    }
-
+    public UniversityRequestDto(){}
     @Override
     public String toString() {
-        return "UniversityDto{" +
+        return "UniversityRequestDto{" +
                 "universityName='" + universityName + '\'' +
                 ", universityDescription='" + universityDescription + '\'' +
                 ", address=" + address +
@@ -60,4 +35,5 @@ public class UniversityDto {
                 ", rector=" + rector +
                 '}';
     }
+
 }
