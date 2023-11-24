@@ -19,9 +19,9 @@ public class University {
     @Column(name = "university_id")
     private Long id;
     @Column(name = "university_name")
-    private String facultyName;
+    private String universityName;
     @Column(name = "university_description")
-    private String facultyDescription;
+    private String universityDescription;
     @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
