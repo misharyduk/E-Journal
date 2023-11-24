@@ -7,28 +7,29 @@ import com.ejournal.university.department.service.DepartmentService;
 import java.util.List;
 
 public class DepartmentServiceImpl implements DepartmentService {
+
     @Override
-    public boolean createDepartment(DepartmentRequestDto departmentRequestDto) {
+    public boolean create(DepartmentRequestDto requestDto) {
         return false;
     }
 
     @Override
-    public List<DepartmentResponseDto> fetchAllDepartments() {
+    public DepartmentResponseDto fetchById(Long id) {
         return null;
     }
 
     @Override
-    public DepartmentResponseDto fetchDepartment(Integer departmentId) {
+    public List<DepartmentResponseDto> fetchAll() {
         return null;
     }
 
     @Override
-    public DepartmentResponseDto updateDepartment(DepartmentRequestDto departmentRequestDto) {
+    public DepartmentResponseDto update(DepartmentRequestDto requestDto) {
         return null;
     }
 
     @Override
-    public boolean deleteDepartment(Integer departmentId) {
+    public boolean deleteById(Long id) {
         return false;
     }
 }

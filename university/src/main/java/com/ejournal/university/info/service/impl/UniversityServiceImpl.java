@@ -6,6 +6,8 @@ import com.ejournal.university.info.dto.UniversityRequestDto;
 import com.ejournal.university.info.service.UniversityService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UniversityServiceImpl implements UniversityService {
 
@@ -23,26 +25,29 @@ public class UniversityServiceImpl implements UniversityService {
             .setRector(new UniversityResponseDto.RectorDto("Максим", "Луцький", "Георгійович"))
             .build();
 
+
     @Override
-    public boolean createUniversity(UniversityRequestDto universityRequestDto) {
-        System.out.println("CREATE UNIVERSITY: " + universityRequestDto);
-        return true;
+    public boolean create(UniversityRequestDto requestDto) {
+        return false;
     }
 
     @Override
-    public UniversityResponseDto fetchUniversityDetails() {
-        return UNIVERSITY;
+    public UniversityResponseDto fetchById(Long id) {
+        return null;
     }
 
     @Override
-    public UniversityResponseDto updateUniversityDetails(UniversityRequestDto universityRequestDto) {
-        System.out.println("UPDATE UNIVERSITY: " + universityRequestDto);
-        return UNIVERSITY;
+    public List<UniversityResponseDto> fetchAll() {
+        return null;
     }
 
     @Override
-    public boolean deleteUniversity() {
-        System.out.println("DELETE UNIVERSITY");
-        return true;
+    public UniversityResponseDto update(UniversityRequestDto requestDto) {
+        return null;
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        return false;
     }
 }

@@ -25,28 +25,29 @@ public class FacultyServiceImpl implements FacultyService {
         }
     };
 
+
     @Override
-    public boolean createFaculty(FacultyRequestDto facultyRequestDto) {
-        return true;
+    public boolean create(FacultyRequestDto requestDto) {
+        return false;
     }
 
     @Override
-    public List<FacultyResponseDto> fetchAllFaculties() {
+    public FacultyResponseDto fetchById(Long id) {
         return null;
     }
 
     @Override
-    public FacultyResponseDto fetchFaculty(Integer facultyId) {
+    public List<FacultyResponseDto> fetchAll() {
         return null;
     }
 
     @Override
-    public FacultyResponseDto updateFaculty(FacultyRequestDto facultyRequestDto) {
+    public FacultyResponseDto update(FacultyRequestDto requestDto) {
         return null;
     }
 
     @Override
-    public boolean deleteFaculty(Integer facultyId) {
+    public boolean deleteById(Long id) {
         return false;
     }
 }
