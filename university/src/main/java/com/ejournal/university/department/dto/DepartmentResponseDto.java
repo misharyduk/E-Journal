@@ -3,7 +3,9 @@ package com.ejournal.university.department.dto;
 import com.ejournal.university.common.dto.AddressDto;
 import com.ejournal.university.department.dto.builder.DepartmentResponseBuilder;
 import com.ejournal.university.teacher.dto.TeacherResponseDto;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DepartmentResponseDto {
 
     private String departmentName;

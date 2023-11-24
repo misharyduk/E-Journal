@@ -2,11 +2,13 @@ package com.ejournal.university.info.dto;
 
 import com.ejournal.university.common.dto.AddressDto;
 import com.ejournal.university.info.dto.builder.UniversityResponseBuilder;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter @Setter
 public class UniversityResponseDto {
 
