@@ -2,7 +2,11 @@ package com.ejournal.university.info.dto;
 
 import com.ejournal.university.common.dto.AddressDto;
 import com.ejournal.university.info.dto.builder.UniversityBuilder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter @Setter
 public class UniversityDto {
 
     private String universityName;
@@ -41,59 +45,16 @@ public class UniversityDto {
         return UniversityBuilder.getInstance();
     }
 
-    public String getUniversityName() {
-        return universityName;
-    }
-
-    public void setUniversityName(String universityName) {
-        this.universityName = universityName;
-    }
-
-    public String getUniversityDescription() {
-        return universityDescription;
-    }
-
-    public void setUniversityDescription(String universityDescription) {
-        this.universityDescription = universityDescription;
-    }
-
-    public AddressDto getAddress() {
-        return address;
-    }
-
-    public void setAddress(AddressDto address) {
-        this.address = address;
-    }
-
-    public String getMobilePhone() {
-        return mobilePhone;
-    }
-
-    public void setMobilePhone(String mobilePhone) {
-        this.mobilePhone = mobilePhone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAccreditation() {
-        return accreditation;
-    }
-
-    public void setAccreditation(String accreditation) {
-        this.accreditation = accreditation;
-    }
-
-    public RectorDto getRector() {
-        return rector;
-    }
-
-    public void setRector(RectorDto rector) {
-        this.rector = rector;
+    @Override
+    public String toString() {
+        return "UniversityDto{" +
+                "universityName='" + universityName + '\'' +
+                ", universityDescription='" + universityDescription + '\'' +
+                ", address=" + address +
+                ", mobilePhone='" + mobilePhone + '\'' +
+                ", email='" + email + '\'' +
+                ", accreditation='" + accreditation + '\'' +
+                ", rector=" + rector +
+                '}';
     }
 }
