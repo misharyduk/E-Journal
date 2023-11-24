@@ -2,6 +2,7 @@ package com.ejournal.university.info.dto;
 
 import com.ejournal.university.common.dto.AddressDto;
 import com.ejournal.university.info.dto.builder.UniversityBuilder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,9 @@ public class UniversityDto {
     private String accreditation;
     private RectorDto rector;
 
-    public class RectorDto {
+    @Data
+    @AllArgsConstructor
+    public static class RectorDto {
         private String firstName;
         private String lastName;
         private String middleName;
@@ -41,7 +44,7 @@ public class UniversityDto {
         this.rector = rector;
     }
 
-    public UniversityBuilder builder(){
+    public static UniversityBuilder builder(){
         return UniversityBuilder.getInstance();
     }
 
