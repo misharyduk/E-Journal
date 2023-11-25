@@ -8,8 +8,8 @@ import java.util.List;
 
 public class TeacherServiceImpl implements TeacherService {
     @Override
-    public boolean create(TeacherRequestDto requestDto) {
-        return false;
+    public TeacherResponseDto create(TeacherRequestDto requestDto) {
+        return null;
     }
 
     @Override

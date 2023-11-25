@@ -27,8 +27,8 @@ public class FacultyServiceImpl implements FacultyService {
 
 
     @Override
-    public boolean create(FacultyRequestDto requestDto) {
-        return false;
+    public FacultyResponseDto create(FacultyRequestDto requestDto) {
+        return null;
     }
 
     @Override

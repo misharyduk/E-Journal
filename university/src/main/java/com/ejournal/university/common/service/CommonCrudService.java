@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CommonCrudService<K1, K2> {
 
-    boolean create(K1 requestDto);
+    K2 create(K1 requestDto);
 
     K2 fetchById(Long id);
 

@@ -8,8 +8,8 @@ import java.util.List;
 
 public class SubjectServiceImpl implements SubjectService {
     @Override
-    public boolean create(SubjectRequestDto requestDto) {
-        return false;
+    public SubjectResponseDto create(SubjectRequestDto requestDto) {
+        return null;
     }
 
     @Override

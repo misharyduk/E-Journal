@@ -27,8 +27,8 @@ public class UniversityServiceImpl implements UniversityService {
 
 
     @Override
-    public boolean create(UniversityRequestDto requestDto) {
-        return false;
+    public UniversityResponseDto create(UniversityRequestDto requestDto) {
+        return null;
     }
 
     @Override
