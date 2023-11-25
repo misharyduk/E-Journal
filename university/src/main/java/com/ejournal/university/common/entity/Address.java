@@ -10,16 +10,16 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "address_id")
-    public Long id;
+    private Long id;
     @Column(name = "country")
-    public String country;
+    private String country;
     @Column(name = "city")
-    public String city;
+    private String city;
     @Column(name = "street")
-    public String street;
+    private String street;
     @Column(name = "number")
-    public String number;
+    private String number;
     @Column(name = "zipCode")
-    public String zipCode;
+    private String zipCode;
 
 }
