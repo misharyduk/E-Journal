@@ -1,12 +1,10 @@
 package com.ejournal.university.common.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class AddressDto {
 
     public String country;
