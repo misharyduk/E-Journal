@@ -2,6 +2,7 @@ package com.ejournal.university.department.dto;
 
 import com.ejournal.university.common.dto.AddressDto;
 import com.ejournal.university.department.dto.builder.DepartmentResponseBuilder;
+import com.ejournal.university.faculty.entity.Faculty;
 import com.ejournal.university.teacher.dto.TeacherResponseDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -15,12 +16,13 @@ public class DepartmentResponseDto {
     private String mobilePhone;
     private String email;
     private TeacherResponseDto headOfDepartment;
+    private Faculty faculty;
 
     public DepartmentResponseDto() {}
 
     public DepartmentResponseDto(String departmentName, String departmentDescription,
                                  AddressDto address, String officeNumber, String mobilePhone,
-                                 String email, TeacherResponseDto headOfDepartment) {
+                                 String email, TeacherResponseDto headOfDepartment, Faculty faculty) {
         this.departmentName = departmentName;
         this.departmentDescription = departmentDescription;
         this.address = address;
@@ -28,6 +30,7 @@ public class DepartmentResponseDto {
         this.mobilePhone = mobilePhone;
         this.email = email;
         this.headOfDepartment = headOfDepartment;
+        this.faculty = faculty;
     }
 
     public static DepartmentResponseBuilder builder(){

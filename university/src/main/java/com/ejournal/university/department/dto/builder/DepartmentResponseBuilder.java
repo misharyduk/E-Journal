@@ -3,6 +3,7 @@ package com.ejournal.university.department.dto.builder;
 import com.ejournal.university.common.dto.AddressDto;
 import com.ejournal.university.common.dto.builder.Builder;
 import com.ejournal.university.department.dto.DepartmentResponseDto;
+import com.ejournal.university.faculty.entity.Faculty;
 import com.ejournal.university.teacher.dto.TeacherResponseDto;
 
 public class DepartmentResponseBuilder implements Builder<DepartmentResponseDto> {
@@ -14,6 +15,7 @@ public class DepartmentResponseBuilder implements Builder<DepartmentResponseDto>
     private String mobilePhone;
     private String email;
     private TeacherResponseDto headOfDepartment;
+    private Faculty faculty;
 
     private DepartmentResponseBuilder(){}
 
@@ -56,9 +58,14 @@ public class DepartmentResponseBuilder implements Builder<DepartmentResponseDto>
         return this;
     }
 
+    public DepartmentResponseBuilder setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+        return this;
+    }
+
     @Override
     public DepartmentResponseDto build() {
         return new DepartmentResponseDto(departmentName, departmentDescription, address,
-                officeNumber, mobilePhone, email, headOfDepartment);
+                officeNumber, mobilePhone, email, headOfDepartment, faculty);
     }
 }
