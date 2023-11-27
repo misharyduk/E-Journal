@@ -1,4 +1,4 @@
-package com.ejournal.university.department.mapper;
+package com.ejournal.university.common.mapper;
 
 import com.ejournal.university.common.dto.AddressDto;
 import com.ejournal.university.common.entity.Address;
