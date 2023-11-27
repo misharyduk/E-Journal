@@ -32,7 +32,7 @@ public interface JpaDepartmentRepositoryImpl extends JpaRepository<Department, L
     }
 
     @Override
-    default void deleteDepartments(Department department){
+    default void deleteDepartment(Department department){
         delete(department);
     }
 }
