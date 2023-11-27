@@ -1,4 +1,4 @@
-package com.ejournal.university.teacher.mapper.builder;
+package com.ejournal.university.teacher.dto.builder;
 
 import com.ejournal.university.common.dto.builder.Builder;
 import com.ejournal.university.faculty.dto.FacultyResponseDto;

@@ -1,10 +1,8 @@
 package com.ejournal.university.teacher.dto;
 
 import com.ejournal.university.faculty.dto.FacultyResponseDto;
-import com.ejournal.university.teacher.mapper.builder.TeacherResponseBuilder;
+import com.ejournal.university.teacher.dto.builder.TeacherResponseBuilder;
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TeacherResponseDto {
