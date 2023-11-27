@@ -1,5 +1,7 @@
 package com.ejournal.university.teacher.dto;
 
+import com.ejournal.university.faculty.dto.FacultyResponseDto;
+import com.ejournal.university.teacher.mapper.builder.TeacherResponseBuilder;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
@@ -13,5 +15,23 @@ public class TeacherResponseDto {
     //    private List<String> academicRanks;
     private String mobilePhone;
     private String email;
+    private FacultyResponseDto faculty;
 
+    public TeacherResponseDto() {
+    }
+
+    public TeacherResponseDto(String firstName, String lastName,
+                              String middleName, String mobilePhone,
+                              String email, FacultyResponseDto faculty) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.mobilePhone = mobilePhone;
+        this.email = email;
+        this.faculty = faculty;
+    }
+
+    public static TeacherResponseBuilder builder(){
+        return TeacherResponseBuilder.getInstance();
+    }
 }
