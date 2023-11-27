@@ -3,7 +3,10 @@ package com.ejournal.university.info.dto;
 import com.ejournal.university.common.dto.AddressDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter @Setter
 public class UniversityRequestDto {
 
     private String universityName;

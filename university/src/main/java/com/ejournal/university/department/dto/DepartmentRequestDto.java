@@ -2,8 +2,9 @@ package com.ejournal.university.department.dto;
 
 import com.ejournal.university.common.dto.AddressDto;
 import lombok.Getter;
+import lombok.Setter;
 
-@Getter
+@Getter @Setter
 public class DepartmentRequestDto {
 
     private String departmentName;

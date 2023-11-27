@@ -2,8 +2,11 @@ package com.ejournal.university.teacher.entity;
 
 import com.ejournal.university.faculty.entity.Faculty;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter @Setter
 public class Teacher {
 
     @Id
