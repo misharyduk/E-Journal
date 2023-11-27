@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.ejournal.university.common.util.ServiceConstants.*;
 
 @RestController
@@ -19,12 +21,12 @@ public class UniversityController {
     private final UniversityService universityService;
 
     @PostMapping
-    public ResponseEntity<ResponseDto> createUniversity(@RequestBody UniversityRequestDto universityRequestDto){
+    public ResponseEntity<UniversityResponseDto> createUniversity(@RequestBody UniversityRequestDto universityRequestDto){
 
-        universityService.create(universityRequestDto);
+        UniversityResponseDto responseDto = universityService.create(universityRequestDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(new ResponseDto(STATUS_CODE_201, "University" + STATUS_MESSAGE_201));
+                .body(responseDto);
     }
 
     @GetMapping("/{universityId}")
@@ -36,7 +38,16 @@ public class UniversityController {
                 .body(universityResponseDto);
     }
 
-    @PutMapping
+    @GetMapping
+    public ResponseEntity<List<UniversityResponseDto>> fetchAllUniversities(){
+
+        List<UniversityResponseDto> responseDTOs = universityService.fetchAll();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(responseDTOs);
+    }
+
+    @PutMapping("/{universityId}")
     public ResponseEntity<UniversityResponseDto> updateUniversityDetails(@PathVariable("universityId") Long universityId,
                                                                          @RequestBody UniversityRequestDto universityRequestDto){
 
