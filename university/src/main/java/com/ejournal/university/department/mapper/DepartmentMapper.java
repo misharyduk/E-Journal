@@ -11,10 +11,7 @@ import com.ejournal.university.teacher.mapper.TeacherMapper;
 import com.ejournal.university.teacher.service.TeacherService;
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 public class DepartmentMapper {
-
-    private static TeacherService teacherService;
 
     public static Department mapToEntity(DepartmentRequestDto requestDto, Department department){
         department.setDepartmentName(requestDto.getDepartmentName());
@@ -34,8 +31,8 @@ public class DepartmentMapper {
                 .setOfficeNumber(department.getOfficeNumber())
                 .setEmail(department.getEmail())
                 .setMobilePhone(department.getMobilePhone())
-                .setHeadOfDepartment(TeacherMapper.mapToDto(department.getHeadOfDepartment()))
-                .setFaculty(FacultyMapper.mapToDto(department.getFaculty()))
+                // TODO: add head of department mapping
+                // TODO: add faculty mapping
                 .build();
     }
 

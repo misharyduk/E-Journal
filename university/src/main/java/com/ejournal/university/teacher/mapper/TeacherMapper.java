@@ -8,10 +8,7 @@ import com.ejournal.university.teacher.dto.TeacherResponseDto;
 import com.ejournal.university.teacher.entity.Teacher;
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 public class TeacherMapper {
-
-    private static FacultyService facultyService;
 
     public static Teacher mapToEntity(TeacherRequestDto requestDto, Teacher teacher){
         teacher.setFirstName(requestDto.getFirstName());
@@ -19,7 +16,7 @@ public class TeacherMapper {
         teacher.setMiddleName(requestDto.getMiddleName());
         teacher.setEmail(requestDto.getEmail());
         teacher.setMobilePhone(requestDto.getMobilePhone());
-        teacher.setFaculty(FacultyMapper.mapToEntity(facultyService.fetchById(requestDto.getFacultyId())), new Faculty());
+        // TODO: add faculty mapping
         return teacher;
     }
 
@@ -30,7 +27,7 @@ public class TeacherMapper {
                 .setMiddleName(teacher.getMiddleName())
                 .setEmail(teacher.getEmail())
                 .setMobilePhone(teacher.getMobilePhone())
-                .setFaculty(FacultyMapper.mapToDto(teacher.getFaculty()))
+                // TODO: add faculty mapping
                 .build();
     }
 }

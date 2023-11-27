@@ -7,14 +7,11 @@ import com.ejournal.university.faculty.dto.FacultyRequestDto;
 import com.ejournal.university.faculty.dto.FacultyResponseDto;
 import com.ejournal.university.faculty.entity.Faculty;
 import com.ejournal.university.info.service.UniversityService;
+import com.ejournal.university.teacher.mapper.TeacherMapper;
 import com.ejournal.university.teacher.service.TeacherService;
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 public class FacultyMapper {
-
-    private static TeacherService teacherService;
-    private static UniversityService universityService;
 
     public static Faculty mapToEntity(FacultyRequestDto requestDto, Faculty faculty){
         faculty.setFacultyName(requestDto.getFacultyName());
@@ -23,7 +20,7 @@ public class FacultyMapper {
         faculty.setOfficeNumber(requestDto.getOfficeNumber());
         faculty.setEmail(requestDto.getEmail());
         faculty.setMobilePhone(requestDto.getMobilePhone());
-        faculty.setDean(TeacherMapper.mapToEntity(teacherService.fetchById(requestDto.getDeanId())));
+        // TODO: add dean mapping
         // TODO: add university mapping
         return faculty;
     }
@@ -36,7 +33,7 @@ public class FacultyMapper {
                 .setOfficeNumber(faculty.getOfficeNumber())
                 .setEmail(faculty.getEmail())
                 .setMobilePhone(faculty.getMobilePhone())
-                .setDean(TeacherMapper.mapToDto(faculty.getDean()))
+                // TODO: add dean mapping
                 .build();
         // TODO: add university mapping
     }
