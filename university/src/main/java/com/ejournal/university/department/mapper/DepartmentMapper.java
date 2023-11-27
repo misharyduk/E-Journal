@@ -2,9 +2,12 @@ package com.ejournal.university.department.mapper;
 
 import com.ejournal.university.common.dto.AddressDto;
 import com.ejournal.university.common.entity.Address;
+import com.ejournal.university.common.mapper.AddressMapper;
 import com.ejournal.university.department.dto.DepartmentRequestDto;
 import com.ejournal.university.department.dto.DepartmentResponseDto;
 import com.ejournal.university.department.entity.Department;
+import com.ejournal.university.faculty.mapper.FacultyMapper;
+import com.ejournal.university.teacher.mapper.TeacherMapper;
 import com.ejournal.university.teacher.service.TeacherService;
 import lombok.AllArgsConstructor;
 
@@ -31,6 +34,8 @@ public class DepartmentMapper {
                 .setOfficeNumber(department.getOfficeNumber())
                 .setEmail(department.getEmail())
                 .setMobilePhone(department.getMobilePhone())
+                .setHeadOfDepartment(TeacherMapper.mapToDto(department.getHeadOfDepartment()))
+                .setFaculty(FacultyMapper.mapToDto(department.getFaculty()))
                 .build();
     }
 
