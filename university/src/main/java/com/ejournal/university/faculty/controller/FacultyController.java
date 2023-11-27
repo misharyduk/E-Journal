@@ -3,6 +3,8 @@ package com.ejournal.university.faculty.controller;
 import com.ejournal.university.faculty.dto.FacultyRequestDto;
 import com.ejournal.university.faculty.dto.FacultyResponseDto;
 import com.ejournal.university.common.dto.ResponseDto;
+import com.ejournal.university.faculty.service.FacultyService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,43 +13,51 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/faculties")
+@RequiredArgsConstructor
 public class FacultyController {
 
-    @PostMapping
-    public ResponseEntity<ResponseDto> createFaculty(@RequestBody FacultyRequestDto facultyRequestDto){
+    private final FacultyService facultyService;
 
+    @PostMapping
+    public ResponseEntity<FacultyResponseDto> createFaculty(@RequestBody FacultyRequestDto facultyRequestDto){
+
+        FacultyResponseDto responseDto = facultyService.create(facultyRequestDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(new ResponseDto(HttpStatus.CREATED.toString(), "Faculty has been successfully created"));
+                .body(responseDto);
     }
 
     @GetMapping
     public ResponseEntity<List<FacultyResponseDto>> fetchAllFaculties(){
 
+        List<FacultyResponseDto> responseDTOs = facultyService.fetchAll();
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(List.of());
+                .body(responseDTOs);
     }
 
     @GetMapping("/{facultyId}")
-    public ResponseEntity<FacultyResponseDto> fetchFaculty(@PathVariable("facultyId") Integer facultyId){
+    public ResponseEntity<FacultyResponseDto> fetchFaculty(@PathVariable("facultyId") Long facultyId){
 
+        FacultyResponseDto responseDto = facultyService.fetchById(facultyId);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new FacultyResponseDto());
+                .body(responseDto);
     }
 
-    @PutMapping
-    public ResponseEntity<FacultyResponseDto> updateFaculty(@RequestBody FacultyRequestDto facultyRequestDto){
-
+    @PutMapping("/{facultyId}")
+    public ResponseEntity<FacultyResponseDto> updateFaculty(@PathVariable("facultyId") Long facultyId,
+                                                            @RequestBody FacultyRequestDto facultyRequestDto){
+        FacultyResponseDto updatedResponseDto = facultyService.update(facultyId, facultyRequestDto);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new FacultyResponseDto());
+                .body(updatedResponseDto);
     }
 
     @DeleteMapping("/{facultyId}")
-    public ResponseEntity<ResponseDto> deleteFaculty(@PathVariable("facultyId") Integer facultyId){
+    public ResponseEntity<ResponseDto> deleteFaculty(@PathVariable("facultyId") Long facultyId){
 
+        facultyService.deleteById(facultyId);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDto(HttpStatus.OK.toString(), "Faculty has been successfully created"));
