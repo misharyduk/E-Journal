@@ -21,21 +21,21 @@ public class DepartmentController {
     private final DepartmentService departmentService;
 
     @PostMapping
-    public ResponseEntity<ResponseDto> createDepartment(@RequestBody DepartmentRequestDto departmentRequestDto){
+    public ResponseEntity<DepartmentResponseDto> createDepartment(@RequestBody DepartmentRequestDto departmentRequestDto){
 
-        departmentService.create(departmentRequestDto);
+        DepartmentResponseDto responseDto = departmentService.create(departmentRequestDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(new ResponseDto(STATUS_CODE_201, "Department" + STATUS_MESSAGE_201));
+                .body(responseDto);
     }
 
     @GetMapping
     public ResponseEntity<List<DepartmentResponseDto>> fetchAllDepartments(){
 
-        List<DepartmentResponseDto> departmentResponseDtos = departmentService.fetchAll();
+        List<DepartmentResponseDto> departmentResponseDTOs = departmentService.fetchAll();
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(departmentResponseDtos);
+                .body(departmentResponseDTOs);
     }
 
     @GetMapping("/{departmentId}")

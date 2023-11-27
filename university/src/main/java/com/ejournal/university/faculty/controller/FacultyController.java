@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.ejournal.university.common.util.ServiceConstants.INSTANCE_DELETED;
+
 @RestController
 @RequestMapping("/api/v1/faculties")
 @RequiredArgsConstructor
@@ -60,7 +62,7 @@ public class FacultyController {
         facultyService.deleteById(facultyId);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new ResponseDto(HttpStatus.OK.toString(), "Faculty has been successfully created"));
+                .body(new ResponseDto(HttpStatus.OK.toString(), "Faculty" + INSTANCE_DELETED));
     }
 
 }
