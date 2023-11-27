@@ -12,6 +12,7 @@ import lombok.Setter;
 @Getter @Setter
 public class UniversityResponseDto {
 
+    private Long universityId;
     private String universityName;
     private String universityDescription;
     private AddressDto address;
@@ -30,13 +31,15 @@ public class UniversityResponseDto {
 
     public UniversityResponseDto(){}
 
-    public UniversityResponseDto(String universityName,
+    public UniversityResponseDto(Long universityId,
+                                 String universityName,
                                  String universityDescription,
                                  AddressDto address,
                                  String mobilePhone,
                                  String email,
                                  String accreditation,
                                  RectorDto rector) {
+        this.universityId = universityId;
         this.universityName = universityName;
         this.universityDescription = universityDescription;
         this.address = address;
@@ -53,6 +56,7 @@ public class UniversityResponseDto {
     @Override
     public String toString() {
         return "UniversityDto{" +
+                "universityId='" + universityId + '\'' +
                 "universityName='" + universityName + '\'' +
                 ", universityDescription='" + universityDescription + '\'' +
                 ", address=" + address +

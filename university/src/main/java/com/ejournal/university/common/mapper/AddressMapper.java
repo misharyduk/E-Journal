@@ -15,6 +15,7 @@ public class AddressMapper {
     }
 
     public static AddressDto mapToDto(Address address, AddressDto addressDto){
+        addressDto.setId(address.getId());
         addressDto.setCountry(address.getCountry());
         addressDto.setCity(address.getCity());
         addressDto.setStreet(address.getStreet());

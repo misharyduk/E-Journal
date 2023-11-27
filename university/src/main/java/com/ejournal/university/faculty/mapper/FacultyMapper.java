@@ -27,6 +27,7 @@ public class FacultyMapper {
 
     public static FacultyResponseDto mapToDto(Faculty faculty){
         return FacultyResponseDto.builder()
+                .setFacultyId(faculty.getId())
                 .setFacultyName(faculty.getFacultyName())
                 .setFacultyDescription(faculty.getFacultyDescription())
                 .setAddress(AddressMapper.mapToDto(faculty.getAddress(), new AddressDto()))

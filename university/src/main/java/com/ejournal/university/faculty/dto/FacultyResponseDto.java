@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FacultyResponseDto {
 
+    private Long facultyId;
     private String facultyName;
     private String facultyDescription;
     private AddressDto address;
@@ -18,9 +19,10 @@ public class FacultyResponseDto {
 
     public FacultyResponseDto(){}
 
-    public FacultyResponseDto(String facultyName, String facultyDescription,
+    public FacultyResponseDto(Long facultyId, String facultyName, String facultyDescription,
                               AddressDto address, String officeNumber,
                               String mobilePhone, String email, TeacherResponseDto dean) {
+        this.facultyId = facultyId;
         this.facultyName = facultyName;
         this.facultyDescription = facultyDescription;
         this.address = address;

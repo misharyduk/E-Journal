@@ -6,6 +6,7 @@ import com.ejournal.university.teacher.dto.TeacherResponseDto;
 
 public class TeacherResponseBuilder implements Builder<TeacherResponseDto> {
 
+    private Long teacherId;
     private String firstName;
     private String lastName;
     private String middleName;
@@ -18,6 +19,11 @@ public class TeacherResponseBuilder implements Builder<TeacherResponseDto> {
 
     public static TeacherResponseBuilder getInstance(){
         return new TeacherResponseBuilder();
+    }
+
+    public TeacherResponseBuilder setTeacherId(Long teacherId) {
+        this.teacherId = teacherId;
+        return this;
     }
 
     public TeacherResponseBuilder setFirstName(String firstName) {
@@ -52,7 +58,7 @@ public class TeacherResponseBuilder implements Builder<TeacherResponseDto> {
 
     @Override
     public TeacherResponseDto build() {
-        return new TeacherResponseDto(firstName, lastName, middleName,
+        return new TeacherResponseDto(teacherId, firstName, lastName, middleName,
                 mobilePhone, email, faculty);
     }
 }

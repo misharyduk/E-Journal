@@ -12,7 +12,7 @@ public class SubjectMapper {
     }
 
     public static SubjectResponseDto mapToDto(Subject subject){
-        return new SubjectResponseDto(subject.getName());
+        return new SubjectResponseDto(subject.getId(), subject.getName());
     }
 
 }

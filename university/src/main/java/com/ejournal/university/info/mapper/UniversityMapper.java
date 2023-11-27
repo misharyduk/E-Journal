@@ -22,6 +22,7 @@ public class UniversityMapper {
 
     public static UniversityResponseDto mapToDto(University university){
         return UniversityResponseDto.builder()
+                .setUniversityId(university.getId())
                 .setUniversityName(university.getUniversityName())
                 .setUniversityDescription(university.getUniversityDescription())
                 .setAddress(AddressMapper.mapToDto(university.getAddress(), new AddressDto()))

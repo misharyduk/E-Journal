@@ -7,6 +7,7 @@ import com.ejournal.university.teacher.dto.TeacherResponseDto;
 
 public class FacultyResponseBuilder implements Builder<FacultyResponseDto> {
 
+    private Long facultyId;
     private String facultyName;
     private String facultyDescription;
     private AddressDto address;
@@ -19,6 +20,11 @@ public class FacultyResponseBuilder implements Builder<FacultyResponseDto> {
 
     public static FacultyResponseBuilder getInstance(){
         return new FacultyResponseBuilder();
+    }
+
+    public FacultyResponseBuilder setFacultyId(Long facultyId) {
+        this.facultyId = facultyId;
+        return this;
     }
 
     public FacultyResponseBuilder setFacultyName(String facultyName) {
@@ -58,7 +64,7 @@ public class FacultyResponseBuilder implements Builder<FacultyResponseDto> {
 
     @Override
     public FacultyResponseDto build() {
-        return new FacultyResponseDto(facultyName, facultyDescription,
+        return new FacultyResponseDto(facultyId, facultyName, facultyDescription,
                 address, officeNumber, mobilePhone, email, dean);
     }
 }

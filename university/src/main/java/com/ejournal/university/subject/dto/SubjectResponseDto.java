@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class SubjectResponseDto {
 
+    private Long subjectId;
     private String subjectName;
 
 }

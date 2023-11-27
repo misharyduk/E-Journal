@@ -25,6 +25,7 @@ public class DepartmentMapper {
 
     public static DepartmentResponseDto mapToResponseDto(Department department){
         return DepartmentResponseDto.builder()
+                .setDepartmentId(department.getId())
                 .setDepartmentName(department.getDepartmentName())
                 .setDepartmentDescription(department.getDepartmentDescription())
                 .setAddress(AddressMapper.mapToDto(department.getAddress(), new AddressDto()))

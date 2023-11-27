@@ -8,6 +8,7 @@ import com.ejournal.university.teacher.dto.TeacherResponseDto;
 
 public class DepartmentResponseBuilder implements Builder<DepartmentResponseDto> {
 
+    private Long departmentId;
     private String departmentName;
     private String departmentDescription;
     private AddressDto address;
@@ -21,6 +22,11 @@ public class DepartmentResponseBuilder implements Builder<DepartmentResponseDto>
 
     public static DepartmentResponseBuilder getInstance(){
         return new DepartmentResponseBuilder();
+    }
+
+    public DepartmentResponseBuilder setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
+        return this;
     }
 
     public DepartmentResponseBuilder setDepartmentName(String departmentName) {
@@ -65,7 +71,7 @@ public class DepartmentResponseBuilder implements Builder<DepartmentResponseDto>
 
     @Override
     public DepartmentResponseDto build() {
-        return new DepartmentResponseDto(departmentName, departmentDescription, address,
+        return new DepartmentResponseDto(departmentId, departmentName, departmentDescription, address,
                 officeNumber, mobilePhone, email, headOfDepartment, faculty);
     }
 }

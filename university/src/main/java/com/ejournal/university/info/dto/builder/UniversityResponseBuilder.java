@@ -6,6 +6,7 @@ import com.ejournal.university.info.dto.UniversityResponseDto;
 
 public class UniversityResponseBuilder implements Builder<UniversityResponseDto> {
 
+    private Long universityId;
     private String universityName;
     private String universityDescription;
     private AddressDto address;
@@ -19,6 +20,11 @@ public class UniversityResponseBuilder implements Builder<UniversityResponseDto>
 
     public static UniversityResponseBuilder getInstance() {
         return new UniversityResponseBuilder();
+    }
+
+    public UniversityResponseBuilder setUniversityId(Long universityId) {
+        this.universityId = universityId;
+        return this;
     }
 
     public UniversityResponseBuilder setUniversityName(String universityName) {
@@ -58,7 +64,7 @@ public class UniversityResponseBuilder implements Builder<UniversityResponseDto>
 
     @Override
     public UniversityResponseDto build() {
-        return new UniversityResponseDto(universityName, universityDescription,
+        return new UniversityResponseDto(universityId, universityName, universityDescription,
                 address, mobilePhone, email, accreditation, rector);
     }
 }

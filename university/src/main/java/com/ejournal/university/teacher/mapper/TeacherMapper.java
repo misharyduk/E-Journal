@@ -22,6 +22,7 @@ public class TeacherMapper {
 
     public static TeacherResponseDto mapToDto(Teacher teacher){
         return TeacherResponseDto.builder()
+                .setTeacherId(teacher.getId())
                 .setFirstName(teacher.getFirstName())
                 .setLastName(teacher.getLastName())
                 .setMiddleName(teacher.getMiddleName())
