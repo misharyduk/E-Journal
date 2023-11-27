@@ -12,27 +12,27 @@ import java.util.Optional;
 public interface JpaDepartmentRepositoryImpl extends JpaRepository<Department, Long>, DepartmentRepository {
 
     @Override
-    default List<Department> findAllDepartments(){
+    default List<Department> fetchAllInstances(){
         return findAll();
     }
 
     @Override
-    default Optional<Department> findDepartmentById(Long departmentId){
+    default Optional<Department> fetchInstanceById(Long departmentId){
         return findById(departmentId);
     }
 
     @Override
-    default Department createDepartment(Department department){
+    default Department createInstance(Department department){
         return save(department);
     }
 
     @Override
-    default Department updateDepartment(Department department){
+    default Department updateInstance(Department department){
         return save(department);
     }
 
     @Override
-    default void deleteDepartment(Department department){
+    default void deleteInstance(Department department){
         delete(department);
     }
 }

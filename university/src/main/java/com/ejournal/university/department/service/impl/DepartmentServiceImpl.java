@@ -22,19 +22,19 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentResponseDto create(DepartmentRequestDto requestDto) {
         Department department = DepartmentMapper.mapToEntity(requestDto, new Department());
-        return DepartmentMapper.mapToResponseDto(departmentRepository.createDepartment(department));
+        return DepartmentMapper.mapToResponseDto(departmentRepository.createInstance(department));
     }
 
     @Override
     public DepartmentResponseDto fetchById(Long id) {
-        Department department = departmentRepository.findDepartmentById(id)
+        Department department = departmentRepository.fetchInstanceById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", String.valueOf(id)));
         return DepartmentMapper.mapToResponseDto(department);
     }
 
     @Override
     public List<DepartmentResponseDto> fetchAll() {
-        List<Department> allDepartments = departmentRepository.findAllDepartments();
+        List<Department> allDepartments = departmentRepository.fetchAllInstances();
         return allDepartments.stream()
                 .map(DepartmentMapper::mapToResponseDto)
                 .collect(Collectors.toList());
@@ -42,18 +42,18 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentResponseDto update(Long id, DepartmentRequestDto requestDto) {
-        Department department = departmentRepository.findDepartmentById(id)
+        Department department = departmentRepository.fetchInstanceById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", String.valueOf(id)));
         Department updatedDepartment = DepartmentMapper.mapToEntity(requestDto, department);
-        updatedDepartment = departmentRepository.updateDepartment(updatedDepartment);
+        updatedDepartment = departmentRepository.updateInstance(updatedDepartment);
         return DepartmentMapper.mapToResponseDto(updatedDepartment);
     }
 
     @Override
     public boolean deleteById(Long id) {
-        Department department = departmentRepository.findDepartmentById(id)
+        Department department = departmentRepository.fetchInstanceById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", String.valueOf(id)));
-        departmentRepository.deleteDepartment(department);
+        departmentRepository.deleteInstance(department);
         return true;
     }
 }
