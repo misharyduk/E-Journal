@@ -4,10 +4,12 @@ import com.ejournal.university.faculty.entity.Faculty;
 import com.ejournal.university.faculty.repository.FacultyRepository;
 import com.ejournal.university.teacher.entity.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface JpaFacultyRepositoryImpl extends JpaRepository<Faculty, Long>, FacultyRepository {
     @Override
     default List<Faculty> fetchAllInstances(){
