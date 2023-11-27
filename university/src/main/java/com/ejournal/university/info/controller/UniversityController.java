@@ -27,28 +27,29 @@ public class UniversityController {
                 .body(new ResponseDto(STATUS_CODE_201, "University" + STATUS_MESSAGE_201));
     }
 
-    @GetMapping
-    public ResponseEntity<UniversityResponseDto> fetchUniversityDetails(){
+    @GetMapping("/{universityId}")
+    public ResponseEntity<UniversityResponseDto> fetchUniversityDetails(@PathVariable("universityId") Long universityId){
 
-        UniversityResponseDto universityResponseDto = universityService.fetchById(0L);
+        UniversityResponseDto universityResponseDto = universityService.fetchById(universityId);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(universityResponseDto);
     }
 
     @PutMapping
-    public ResponseEntity<UniversityResponseDto> updateUniversityDetails(@RequestBody UniversityRequestDto universityRequestDto){
+    public ResponseEntity<UniversityResponseDto> updateUniversityDetails(@PathVariable("universityId") Long universityId,
+                                                                         @RequestBody UniversityRequestDto universityRequestDto){
 
-        UniversityResponseDto updatedUniversityResponseDto = universityService.update(universityRequestDto);
+        UniversityResponseDto updatedUniversityResponseDto = universityService.update(universityId, universityRequestDto);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(updatedUniversityResponseDto);
     }
 
-    @DeleteMapping
-    public ResponseEntity<ResponseDto> deleteUniversity(){
+    @DeleteMapping("/{universityId}")
+    public ResponseEntity<ResponseDto> deleteUniversity(@PathVariable("universityId") Long universityId){
 
-        universityService.deleteById(0L);
+        universityService.deleteById(universityId);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDto(STATUS_CODE_200, "University" + INSTANCE_DELETED));

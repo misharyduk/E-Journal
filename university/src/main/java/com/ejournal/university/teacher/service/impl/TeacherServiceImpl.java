@@ -23,7 +23,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public TeacherResponseDto update(TeacherRequestDto requestDto) {
+    public TeacherResponseDto update(Long id, TeacherRequestDto requestDto) {
         return null;
     }
 

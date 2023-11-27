@@ -42,7 +42,7 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
-    public FacultyResponseDto update(FacultyRequestDto requestDto) {
+    public FacultyResponseDto update(Long id, FacultyRequestDto requestDto) {
         return null;
     }
 

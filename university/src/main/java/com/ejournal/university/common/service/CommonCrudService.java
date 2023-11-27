@@ -13,7 +13,7 @@ public interface CommonCrudService<K1, K2> {
 
     List<K2> fetchAll();
 
-    K2 update(K1 requestDto);
+    K2 update(Long id, K1 requestDto);
 
     boolean deleteById(Long id);
 

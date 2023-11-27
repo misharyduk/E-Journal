@@ -23,7 +23,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public SubjectResponseDto update(SubjectRequestDto requestDto) {
+    public SubjectResponseDto update(Long id, SubjectRequestDto requestDto) {
         return null;
     }
 

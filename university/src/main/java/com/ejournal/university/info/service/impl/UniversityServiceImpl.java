@@ -42,7 +42,7 @@ public class UniversityServiceImpl implements UniversityService {
     }
 
     @Override
-    public UniversityResponseDto update(UniversityRequestDto requestDto) {
+    public UniversityResponseDto update(Long id, UniversityRequestDto requestDto) {
         return null;
     }
 

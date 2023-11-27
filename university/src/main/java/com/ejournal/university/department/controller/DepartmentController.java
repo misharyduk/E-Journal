@@ -47,10 +47,11 @@ public class DepartmentController {
                 .body(departmentResponseDto);
     }
 
-    @PutMapping
-    public ResponseEntity<DepartmentResponseDto> updateDepartment(@RequestBody DepartmentRequestDto departmentRequestDto){
+    @PutMapping("/{departmentId}")
+    public ResponseEntity<DepartmentResponseDto> updateDepartment(@PathVariable("departmentId") Long departmentId,
+                                                                  @RequestBody DepartmentRequestDto departmentRequestDto){
 
-        DepartmentResponseDto updatedDepartmentResponseDto = departmentService.update(departmentRequestDto);
+        DepartmentResponseDto updatedDepartmentResponseDto = departmentService.update(departmentId, departmentRequestDto);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(updatedDepartmentResponseDto);
