@@ -20,21 +20,6 @@ public class UniversityServiceImpl implements UniversityService {
 
     private final UniversityRepository universityRepository;
 
-    private static final UniversityResponseDto UNIVERSITY = UniversityResponseDto.builder()
-            .setUniversityName("Національний Авіаційний Університет")
-            .setUniversityDescription("Національний авіаційний університет – один " +
-                    "із найпотужніших авіаційних закладів вищої освіти у світі, в " +
-                    "якому навчається близько 25 тисячі студентів, серед яких майже " +
-                    "1500 іноземців з 55 країн світу. Ректор університету – доктор " +
-                    "технічних наук, професор, Луцький Максим Георгійович")
-            .setAddress(new AddressDto("Україна", "Київ", "пр. Гузара Любомира", "1", "03058"))
-            .setEmail("post@nau.edu.ua")
-            .setMobilePhone("(044) 406-79-01")
-            .setAccreditation("4")
-            .setRector(new UniversityResponseDto.RectorDto("Максим", "Луцький", "Георгійович"))
-            .build();
-
-
     @Override
     public UniversityResponseDto create(UniversityRequestDto requestDto) {
         University university = UniversityMapper.mapToEntity(requestDto, new University());
