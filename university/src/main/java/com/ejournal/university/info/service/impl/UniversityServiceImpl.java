@@ -9,6 +9,7 @@ import com.ejournal.university.info.mapper.UniversityMapper;
 import com.ejournal.university.info.repository.UniversityRepository;
 import com.ejournal.university.info.service.UniversityService;
 import com.ejournal.university.teacher.entity.Teacher;
+import com.ejournal.university.teacher.mapper.TeacherMapper;
 import com.ejournal.university.teacher.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class UniversityServiceImpl implements UniversityService {
     @Override
     public UniversityResponseDto create(UniversityRequestDto requestDto) {
         University university = UniversityMapper.mapToEntity(requestDto, new University());
+        university.setRector(TeacherMapper.mapToEntity(requestDto.getRector(), new Teacher()));
         universityRepository.createInstance(university);
         return UniversityMapper.mapToDto(university);
     }
