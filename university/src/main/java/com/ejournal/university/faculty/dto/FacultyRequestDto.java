@@ -14,4 +14,5 @@ public class FacultyRequestDto {
     private String mobilePhone;
     private String email;
     private Long deanId;
+    private Long universityId;
 }

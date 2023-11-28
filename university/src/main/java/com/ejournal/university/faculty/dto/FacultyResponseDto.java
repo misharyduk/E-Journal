@@ -2,6 +2,7 @@ package com.ejournal.university.faculty.dto;
 
 import com.ejournal.university.common.dto.AddressDto;
 import com.ejournal.university.faculty.dto.builder.FacultyResponseBuilder;
+import com.ejournal.university.info.dto.UniversityResponseDto;
 import com.ejournal.university.teacher.dto.TeacherResponseDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -19,12 +20,14 @@ public class FacultyResponseDto {
     private String mobilePhone;
     private String email;
     private TeacherResponseDto dean;
+    private UniversityResponseDto university;
 
     public FacultyResponseDto(){}
 
     public FacultyResponseDto(Long facultyId, String facultyName, String facultyDescription,
                               AddressDto address, String officeNumber,
-                              String mobilePhone, String email, TeacherResponseDto dean) {
+                              String mobilePhone, String email, TeacherResponseDto dean,
+                              UniversityResponseDto university) {
         this.facultyId = facultyId;
         this.facultyName = facultyName;
         this.facultyDescription = facultyDescription;
@@ -33,6 +36,7 @@ public class FacultyResponseDto {
         this.mobilePhone = mobilePhone;
         this.email = email;
         this.dean = dean;
+        this.university = university;
     }
 
     public static FacultyResponseBuilder builder(){
