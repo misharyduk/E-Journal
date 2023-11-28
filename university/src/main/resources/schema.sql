@@ -1,3 +1,10 @@
+CREATE SEQUENCE university_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE faculty_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE department_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE subject_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE teacher_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE address_id_sequence INCREMENT BY 1;
+
 CREATE TABLE IF NOT EXISTS university(
     university_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     university_name VARCHAR(255) NOT NULL,

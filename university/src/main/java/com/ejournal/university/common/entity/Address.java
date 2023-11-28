@@ -8,7 +8,8 @@ import lombok.Setter;
 @Getter @Setter
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "address_id_sequence_generator", sequenceName = "address_id_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_id_sequence_generator")
     @Column(name = "address_id")
     private Long id;
     @Column(name = "country")
