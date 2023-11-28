@@ -20,7 +20,7 @@ public class UniversityMapper {
         university.setEmail(requestDto.getEmail());
         university.setMobilePhone(requestDto.getMobilePhone());
         university.setAccreditation(requestDto.getAccreditation());
-        university.setRector(RectorMapper.mapToEntity(requestDto.getRector(), new Teacher()));
+        university.setRector(TeacherMapper.mapToEntity(requestDto.getRector(), new Teacher()));
         return university;
     }
 
@@ -33,31 +33,8 @@ public class UniversityMapper {
                 .setEmail(university.getEmail())
                 .setMobilePhone(university.getMobilePhone())
                 .setAccreditation(university.getAccreditation())
-                .setRector(RectorMapper.mapToDto(university.getRector()))
+                .setRector(TeacherMapper.mapToDto(university.getRector()))
                 .build();
-    }
-
-    public static class RectorMapper extends TeacherMapper {
-
-        public static Teacher mapToEntity(TeacherRequestDto requestDto, Teacher rector) {
-            rector.setFirstName(requestDto.getFirstName());
-            rector.setLastName(requestDto.getLastName());
-            rector.setMiddleName(requestDto.getMiddleName());
-            rector.setEmail(requestDto.getEmail());
-            rector.setMobilePhone(requestDto.getMobilePhone());
-            return rector;
-        }
-
-        public static TeacherResponseDto mapToDto(Teacher rector) {
-            return TeacherResponseDto.builder()
-                    .setTeacherId(rector.getId())
-                    .setFirstName(rector.getFirstName())
-                    .setLastName(rector.getLastName())
-                    .setMiddleName(rector.getMiddleName())
-                    .setEmail(rector.getEmail())
-                    .setMobilePhone(rector.getMobilePhone())
-                    .build();
-        }
     }
 
 }
