@@ -19,7 +19,8 @@ public class FacultyMapper {
     public static Faculty mapToEntity(FacultyRequestDto requestDto, Faculty faculty){
         faculty.setFacultyName(requestDto.getFacultyName());
         faculty.setFacultyDescription(requestDto.getFacultyDescription());
-        faculty.setAddress(AddressMapper.mapToEntity(requestDto.getAddress(), new Address()));
+        if(requestDto.getAddress() != null)
+            faculty.setAddress(AddressMapper.mapToEntity(requestDto.getAddress(), new Address()));
         faculty.setOfficeNumber(requestDto.getOfficeNumber());
         faculty.setEmail(requestDto.getEmail());
         faculty.setMobilePhone(requestDto.getMobilePhone());

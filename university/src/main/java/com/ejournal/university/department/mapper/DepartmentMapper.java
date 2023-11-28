@@ -14,7 +14,8 @@ public class DepartmentMapper {
     public static Department mapToEntity(DepartmentRequestDto requestDto, Department department){
         department.setDepartmentName(requestDto.getDepartmentName());
         department.setDepartmentDescription(requestDto.getDepartmentDescription());
-        department.setAddress(AddressMapper.mapToEntity(requestDto.getAddress(), new Address()));
+        if(requestDto.getAddress() != null)
+            department.setAddress(AddressMapper.mapToEntity(requestDto.getAddress(), new Address()));
         department.setOfficeNumber(requestDto.getOfficeNumber());
         department.setEmail(requestDto.getEmail());
         department.setMobilePhone(requestDto.getMobilePhone());

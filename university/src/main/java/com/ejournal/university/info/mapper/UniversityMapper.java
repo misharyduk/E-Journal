@@ -14,11 +14,11 @@ public class UniversityMapper {
     public static University mapToEntity(UniversityRequestDto requestDto, University university){
         university.setUniversityName(requestDto.getUniversityName());
         university.setUniversityDescription(requestDto.getUniversityDescription());
-        university.setAddress(AddressMapper.mapToEntity(requestDto.getAddress(), new Address()));
+        if(requestDto.getAddress() != null)
+            university.setAddress(AddressMapper.mapToEntity(requestDto.getAddress(), new Address()));
         university.setEmail(requestDto.getEmail());
         university.setMobilePhone(requestDto.getMobilePhone());
         university.setAccreditation(requestDto.getAccreditation());
-        university.setRector(TeacherMapper.mapToEntity(requestDto.getRector(), new Teacher()));
         return university;
     }
 

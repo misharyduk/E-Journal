@@ -65,11 +65,9 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department updatedDepartment = DepartmentMapper.mapToEntity(requestDto, department);
 
         // checking if head of department hasn't been updated
-        if(!department.getHeadOfDepartment().getId().equals(requestDto.getHeadOfDepartmentId())){
-            Teacher headOfDepartment = teacherRepository.fetchInstanceById(requestDto.getHeadOfDepartmentId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Head of Department", "id", String.valueOf(requestDto.getHeadOfDepartmentId())));
-            updatedDepartment.setHeadOfDepartment(headOfDepartment);
-        }
+        Teacher headOfDepartment = teacherRepository.fetchInstanceById(requestDto.getHeadOfDepartmentId())
+                .orElseThrow(() -> new ResourceNotFoundException("Head of Department", "id", String.valueOf(requestDto.getHeadOfDepartmentId())));
+        updatedDepartment.setHeadOfDepartment(headOfDepartment);
 
         updatedDepartment = departmentRepository.updateInstance(updatedDepartment);
         return DepartmentMapper.mapToDto(updatedDepartment);

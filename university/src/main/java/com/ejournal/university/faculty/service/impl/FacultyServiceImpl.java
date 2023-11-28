@@ -1,6 +1,7 @@
 package com.ejournal.university.faculty.service.impl;
 
 import com.ejournal.university.common.dto.AddressDto;
+import com.ejournal.university.common.entity.Address;
 import com.ejournal.university.common.exception.ResourceNotFoundException;
 import com.ejournal.university.faculty.dto.FacultyRequestDto;
 import com.ejournal.university.faculty.dto.FacultyResponseDto;
@@ -87,12 +88,10 @@ public class FacultyServiceImpl implements FacultyService {
                 .orElseThrow(() -> new ResourceNotFoundException("Faculty", "id", String.valueOf(id)));
         Faculty updatedFaculty = FacultyMapper.mapToEntity(requestDto, faculty);
 
-        // checking if dean hasn't been updated
-        if(!faculty.getDean().getId().equals(requestDto.getDeanId())){
-            Teacher dean = teacherRepository.fetchInstanceById(requestDto.getDeanId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Dean", "id", String.valueOf(requestDto.getDeanId())));
-            updatedFaculty.setDean(dean);
-        }
+        // mapping rector either he's been updated or not
+        Teacher dean = teacherRepository.fetchInstanceById(requestDto.getDeanId())
+                .orElseThrow(() -> new ResourceNotFoundException("Dean", "id", String.valueOf(requestDto.getDeanId())));
+        updatedFaculty.setDean(dean);
 
         updatedFaculty = facultyRepository.updateInstance(updatedFaculty);
         return FacultyMapper.mapToDto(updatedFaculty);
