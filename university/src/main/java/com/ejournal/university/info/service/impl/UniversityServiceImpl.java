@@ -8,6 +8,8 @@ import com.ejournal.university.info.entity.University;
 import com.ejournal.university.info.mapper.UniversityMapper;
 import com.ejournal.university.info.repository.UniversityRepository;
 import com.ejournal.university.info.service.UniversityService;
+import com.ejournal.university.teacher.entity.Teacher;
+import com.ejournal.university.teacher.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 public class UniversityServiceImpl implements UniversityService {
 
     private final UniversityRepository universityRepository;
+    private final TeacherRepository teacherRepository;
 
     @Override
     public UniversityResponseDto create(UniversityRequestDto requestDto) {
@@ -47,6 +50,12 @@ public class UniversityServiceImpl implements UniversityService {
         University university = universityRepository.fetchInstanceById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("University", "id", String.valueOf(id)));
         University updatedUniversity = UniversityMapper.mapToEntity(requestDto, university);
+
+        // mapping rector either he's been updated or not
+        Teacher rector = teacherRepository.fetchInstanceById(requestDto.getRectorId())
+                .orElseThrow(() -> new ResourceNotFoundException("Rector", "id", String.valueOf(requestDto.getRectorId())));
+        updatedUniversity.setRector(rector);
+
         updatedUniversity = universityRepository.updateInstance(updatedUniversity);
         return UniversityMapper.mapToDto(updatedUniversity);
     }
