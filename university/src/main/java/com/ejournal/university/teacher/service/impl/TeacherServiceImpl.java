@@ -2,6 +2,8 @@ package com.ejournal.university.teacher.service.impl;
 
 import com.ejournal.university.common.exception.ResourceNotFoundException;
 import com.ejournal.university.department.entity.Department;
+import com.ejournal.university.faculty.entity.Faculty;
+import com.ejournal.university.faculty.repository.FacultyRepository;
 import com.ejournal.university.teacher.dto.TeacherRequestDto;
 import com.ejournal.university.teacher.dto.TeacherResponseDto;
 import com.ejournal.university.teacher.entity.Teacher;
@@ -19,17 +21,26 @@ import java.util.stream.Collectors;
 public class TeacherServiceImpl implements TeacherService {
 
     private final TeacherRepository teacherRepository;
+    private final FacultyRepository facultyRepository;
 
     @Override
     public TeacherResponseDto create(TeacherRequestDto requestDto) {
         Teacher teacher = TeacherMapper.mapToEntity(requestDto, new Teacher());
-        return TeacherMapper.mapToDto(teacherRepository.createInstance(teacher));
+
+        // fetching faculty for appropriate mapping
+        Faculty faculty = facultyRepository.fetchInstanceById(requestDto.getFacultyId())
+                .orElseThrow(() -> new ResourceNotFoundException("Faculty", "id", String.valueOf(requestDto.getFacultyId())));
+        teacher.setFaculty(faculty);
+
+        teacherRepository.createInstance(teacher);
+        return TeacherMapper.mapToDto(teacher);
     }
 
     @Override
     public TeacherResponseDto fetchById(Long id) {
         Teacher teacher = teacherRepository.fetchInstanceById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Teacher", "id", String.valueOf(id)));
+
         return TeacherMapper.mapToDto(teacher);
     }
 
@@ -46,6 +57,14 @@ public class TeacherServiceImpl implements TeacherService {
         Teacher teacher = teacherRepository.fetchInstanceById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Teacher", "id", String.valueOf(id)));
         Teacher updatedTeacher = TeacherMapper.mapToEntity(requestDto, teacher);
+
+        // checking if head of department hasn't been updated
+        if(!teacher.getFaculty().getId().equals(requestDto.getFacultyId())){
+            Faculty faculty = facultyRepository.fetchInstanceById(requestDto.getFacultyId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Faculty", "id", String.valueOf(requestDto.getFacultyId())));
+            updatedTeacher.setFaculty(faculty);
+        }
+
         updatedTeacher = teacherRepository.updateInstance(updatedTeacher);
         return TeacherMapper.mapToDto(updatedTeacher);
     }
