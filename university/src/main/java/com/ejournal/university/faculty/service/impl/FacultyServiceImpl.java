@@ -59,7 +59,8 @@ public class FacultyServiceImpl implements FacultyService {
                 .orElseThrow(() -> new ResourceNotFoundException("Dean", "id", String.valueOf(requestDto.getUniversityId())));
         faculty.setDean(dean);
 
-        return fetchById(university.getId());
+        facultyRepository.createInstance(faculty);
+        return FacultyMapper.mapToDto(faculty);
     }
 
     @Override
@@ -87,7 +88,7 @@ public class FacultyServiceImpl implements FacultyService {
         // checking if dean hasn't been updated
         if(!faculty.getDean().getId().equals(requestDto.getDeanId())){
             Teacher dean = teacherRepository.fetchInstanceById(requestDto.getDeanId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Dean", "id", String.valueOf(requestDto.getUniversityId())));
+                    .orElseThrow(() -> new ResourceNotFoundException("Dean", "id", String.valueOf(requestDto.getDeanId())));
             updatedFaculty.setDean(dean);
         }
 

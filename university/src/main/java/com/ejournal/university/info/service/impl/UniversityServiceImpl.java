@@ -23,7 +23,8 @@ public class UniversityServiceImpl implements UniversityService {
     @Override
     public UniversityResponseDto create(UniversityRequestDto requestDto) {
         University university = UniversityMapper.mapToEntity(requestDto, new University());
-        return UniversityMapper.mapToDto(universityRepository.createInstance(university));
+        universityRepository.createInstance(university);
+        return UniversityMapper.mapToDto(university);
     }
 
     @Override
