@@ -22,21 +22,21 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public DepartmentResponseDto create(DepartmentRequestDto requestDto) {
         Department department = DepartmentMapper.mapToEntity(requestDto, new Department());
-        return DepartmentMapper.mapToResponseDto(departmentRepository.createInstance(department));
+        return DepartmentMapper.mapToDto(departmentRepository.createInstance(department));
     }
 
     @Override
     public DepartmentResponseDto fetchById(Long id) {
         Department department = departmentRepository.fetchInstanceById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", String.valueOf(id)));
-        return DepartmentMapper.mapToResponseDto(department);
+        return DepartmentMapper.mapToDto(department);
     }
 
     @Override
     public List<DepartmentResponseDto> fetchAll() {
         List<Department> allDepartments = departmentRepository.fetchAllInstances();
         return allDepartments.stream()
-                .map(DepartmentMapper::mapToResponseDto)
+                .map(DepartmentMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 
@@ -46,7 +46,7 @@ public class DepartmentServiceImpl implements DepartmentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", String.valueOf(id)));
         Department updatedDepartment = DepartmentMapper.mapToEntity(requestDto, department);
         updatedDepartment = departmentRepository.updateInstance(updatedDepartment);
-        return DepartmentMapper.mapToResponseDto(updatedDepartment);
+        return DepartmentMapper.mapToDto(updatedDepartment);
     }
 
     @Override
