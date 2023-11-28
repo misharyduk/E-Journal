@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter @Setter
 public class UniversityResponseDto {
 
