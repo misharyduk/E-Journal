@@ -5,8 +5,11 @@ import com.ejournal.university.department.dto.builder.DepartmentResponseBuilder;
 import com.ejournal.university.faculty.entity.Faculty;
 import com.ejournal.university.teacher.dto.TeacherResponseDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Getter @Setter
 public class DepartmentResponseDto {
 
     private Long departmentId;

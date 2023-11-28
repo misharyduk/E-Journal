@@ -3,8 +3,11 @@ package com.ejournal.university.teacher.dto;
 import com.ejournal.university.faculty.dto.FacultyResponseDto;
 import com.ejournal.university.teacher.dto.builder.TeacherResponseBuilder;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
+import lombok.Setter;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Getter @Setter
 public class TeacherResponseDto {
 
     private Long teacherId;
