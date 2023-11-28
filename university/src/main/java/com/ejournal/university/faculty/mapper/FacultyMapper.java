@@ -6,7 +6,10 @@ import com.ejournal.university.common.mapper.AddressMapper;
 import com.ejournal.university.faculty.dto.FacultyRequestDto;
 import com.ejournal.university.faculty.dto.FacultyResponseDto;
 import com.ejournal.university.faculty.entity.Faculty;
+import com.ejournal.university.info.dto.UniversityResponseDto;
+import com.ejournal.university.info.mapper.UniversityMapper;
 import com.ejournal.university.info.service.UniversityService;
+import com.ejournal.university.teacher.dto.TeacherResponseDto;
 import com.ejournal.university.teacher.mapper.TeacherMapper;
 import com.ejournal.university.teacher.service.TeacherService;
 import lombok.AllArgsConstructor;
@@ -20,23 +23,25 @@ public class FacultyMapper {
         faculty.setOfficeNumber(requestDto.getOfficeNumber());
         faculty.setEmail(requestDto.getEmail());
         faculty.setMobilePhone(requestDto.getMobilePhone());
-        // TODO: add dean mapping
-        // TODO: add university mapping
         return faculty;
     }
 
-    public static FacultyResponseDto mapToDto(Faculty faculty){
-        return FacultyResponseDto.builder()
-                .setFacultyId(faculty.getId())
+    public static FacultyResponseDto basicMapToDto(Faculty faculty){
+        return FacultyResponseDto.builder().setFacultyId(faculty.getId())
                 .setFacultyName(faculty.getFacultyName())
                 .setFacultyDescription(faculty.getFacultyDescription())
                 .setAddress(AddressMapper.mapToDto(faculty.getAddress(), new AddressDto()))
                 .setOfficeNumber(faculty.getOfficeNumber())
                 .setEmail(faculty.getEmail())
                 .setMobilePhone(faculty.getMobilePhone())
-                // TODO: add dean mapping
                 .build();
-        // TODO: add university mapping
+    }
+
+    public static FacultyResponseDto mapToDto(Faculty faculty){
+        FacultyResponseDto responseDto = basicMapToDto(faculty);
+        responseDto.setDean(TeacherMapper.basicMapToDto(faculty.getDean()));
+        responseDto.setUniversity(UniversityMapper.basicMapToDto(faculty.getUniversity()));
+        return responseDto;
     }
 
 }

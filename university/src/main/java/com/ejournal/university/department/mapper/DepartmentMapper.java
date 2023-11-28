@@ -8,8 +8,6 @@ import com.ejournal.university.department.dto.DepartmentResponseDto;
 import com.ejournal.university.department.entity.Department;
 import com.ejournal.university.faculty.mapper.FacultyMapper;
 import com.ejournal.university.teacher.mapper.TeacherMapper;
-import com.ejournal.university.teacher.service.TeacherService;
-import lombok.AllArgsConstructor;
 
 public class DepartmentMapper {
 
@@ -23,7 +21,7 @@ public class DepartmentMapper {
         return department;
     }
 
-    public static DepartmentResponseDto mapToResponseDto(Department department){
+    public static DepartmentResponseDto basicMapToDto(Department department){
         return DepartmentResponseDto.builder()
                 .setDepartmentId(department.getId())
                 .setDepartmentName(department.getDepartmentName())
@@ -37,4 +35,10 @@ public class DepartmentMapper {
                 .build();
     }
 
+    public static DepartmentResponseDto mapToDto(Department department){
+        DepartmentResponseDto responseDto = basicMapToDto(department);
+        responseDto.setHeadOfDepartment(TeacherMapper.basicMapToDto(department.getHeadOfDepartment()));
+        responseDto.setFaculty(FacultyMapper.basicMapToDto(department.getFaculty()));
+        return responseDto;
+    }
 }

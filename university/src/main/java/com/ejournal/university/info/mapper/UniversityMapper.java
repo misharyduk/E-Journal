@@ -6,8 +6,6 @@ import com.ejournal.university.common.mapper.AddressMapper;
 import com.ejournal.university.info.dto.UniversityRequestDto;
 import com.ejournal.university.info.dto.UniversityResponseDto;
 import com.ejournal.university.info.entity.University;
-import com.ejournal.university.teacher.dto.TeacherRequestDto;
-import com.ejournal.university.teacher.dto.TeacherResponseDto;
 import com.ejournal.university.teacher.entity.Teacher;
 import com.ejournal.university.teacher.mapper.TeacherMapper;
 
@@ -24,7 +22,7 @@ public class UniversityMapper {
         return university;
     }
 
-    public static UniversityResponseDto mapToDto(University university){
+    public static UniversityResponseDto basicMapToDto(University university){
         return UniversityResponseDto.builder()
                 .setUniversityId(university.getId())
                 .setUniversityName(university.getUniversityName())
@@ -33,8 +31,12 @@ public class UniversityMapper {
                 .setEmail(university.getEmail())
                 .setMobilePhone(university.getMobilePhone())
                 .setAccreditation(university.getAccreditation())
-                .setRector(TeacherMapper.mapToDto(university.getRector()))
                 .build();
     }
 
+    public static UniversityResponseDto mapToDto(University university) {
+        UniversityResponseDto responseDto = basicMapToDto(university);
+        responseDto.setRector(TeacherMapper.basicMapToDto(university.getRector()));
+        return responseDto;
+    }
 }
