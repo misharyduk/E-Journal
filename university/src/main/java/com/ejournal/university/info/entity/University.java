@@ -20,9 +20,10 @@ public class University {
     private Long id;
     @Column(name = "university_name")
     private String universityName;
+    @Lob
     @Column(name = "university_description")
     private String universityDescription;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
     @Column(name = "mobile_phone")
@@ -31,7 +32,7 @@ public class University {
     private String email;
     @Column(name = "accreditation")
     private String accreditation;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "rector_id")
     private Teacher rector;
     @OneToMany(mappedBy = "university", fetch = FetchType.LAZY)
