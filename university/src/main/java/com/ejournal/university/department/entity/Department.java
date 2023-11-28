@@ -17,10 +17,11 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "faculty_id")
+    @Column(name = "department_id")
     private Long id;
     @Column(name = "department_name")
     private String departmentName;
+    @Lob
     @Column(name = "department_description")
     private String departmentDescription;
     @OneToOne

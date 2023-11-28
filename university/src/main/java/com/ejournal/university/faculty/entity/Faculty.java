@@ -23,6 +23,7 @@ public class Faculty {
     private Long id;
     @Column(name = "faculty_name")
     private String facultyName;
+    @Lob
     @Column(name = "faculty_description")
     private String facultyDescription;
     @OneToOne
@@ -37,12 +38,12 @@ public class Faculty {
     @OneToOne
     @JoinColumn(name = "dean_id")
     private Teacher dean;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "university_id")
+    private University university;
     @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)
     private List<Teacher> teachers = new ArrayList<>();
     @OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY)
     private List<Department> departments = new ArrayList<>();
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "university_id")
-    private University university;
 
 }
