@@ -30,8 +30,6 @@ public class DepartmentMapper {
                 .setOfficeNumber(department.getOfficeNumber())
                 .setEmail(department.getEmail())
                 .setMobilePhone(department.getMobilePhone())
-                // TODO: add head of department mapping
-                // TODO: add faculty mapping
                 .build();
     }
 

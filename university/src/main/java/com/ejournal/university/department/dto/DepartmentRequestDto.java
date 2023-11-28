@@ -14,5 +14,6 @@ public class DepartmentRequestDto {
     private String mobilePhone;
     private String email;
     private Long headOfDepartmentId;
+    private Long facultyId;
 
 }
