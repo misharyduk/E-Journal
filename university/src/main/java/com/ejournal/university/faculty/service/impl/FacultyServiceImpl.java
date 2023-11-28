@@ -8,7 +8,14 @@ import com.ejournal.university.faculty.entity.Faculty;
 import com.ejournal.university.faculty.mapper.FacultyMapper;
 import com.ejournal.university.faculty.repository.FacultyRepository;
 import com.ejournal.university.faculty.service.FacultyService;
+import com.ejournal.university.info.dto.UniversityResponseDto;
+import com.ejournal.university.info.entity.University;
+import com.ejournal.university.info.repository.UniversityRepository;
+import com.ejournal.university.info.service.UniversityService;
 import com.ejournal.university.teacher.dto.TeacherResponseDto;
+import com.ejournal.university.teacher.entity.Teacher;
+import com.ejournal.university.teacher.mapper.TeacherMapper;
+import com.ejournal.university.teacher.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +28,14 @@ import java.util.stream.Collectors;
 public class FacultyServiceImpl implements FacultyService {
 
     private final FacultyRepository facultyRepository;
+    private final UniversityRepository universityRepository;
+    private final TeacherRepository teacherRepository;
 
 //    private static final List<FacultyResponseDto> FACULTIES = new ArrayList<>(){
 //        {
 //            FacultyResponseDto.builder()
 //                    .setFacultyName("Факультет кібербезпеки та програмної інженерії")
-//                    .setFacultyDescription("2100 - здобувачів на факультеті, 137 - професорсько-викдадацький склад, 40- допоміжний склад")
+//                    .setFacultyDescription("2100 - здобувачів на факультеті, 137 - професорсько-викладацький склад, 40- допоміжний склад")
 //                    .setAddress(new AddressDto("Україна", "Київ", "пр. Гузара Любомира", "1", "03058"))
 //                    .setOfficeNumber("корп. 11, каб.205")
 //                    .setEmail("fkpi@npp.nau.edu.ua")
@@ -39,13 +48,25 @@ public class FacultyServiceImpl implements FacultyService {
     @Override
     public FacultyResponseDto create(FacultyRequestDto requestDto) {
         Faculty faculty = FacultyMapper.mapToEntity(requestDto, new Faculty());
-        return FacultyMapper.mapToDto(facultyRepository.createInstance(faculty));
+
+        // fetching university for appropriate mapping
+        University university = universityRepository.fetchInstanceById(requestDto.getUniversityId())
+                .orElseThrow(() -> new ResourceNotFoundException("University", "id", String.valueOf(requestDto.getUniversityId())));
+        faculty.setUniversity(university);
+
+        // fetching dean for appropriate mapping
+        Teacher dean = teacherRepository.fetchInstanceById(requestDto.getDeanId())
+                .orElseThrow(() -> new ResourceNotFoundException("Dean", "id", String.valueOf(requestDto.getUniversityId())));
+        faculty.setDean(dean);
+
+        return fetchById(university.getId());
     }
 
     @Override
     public FacultyResponseDto fetchById(Long id) {
         Faculty faculty = facultyRepository.fetchInstanceById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Faculty", "id", String.valueOf(id)));
+
         return FacultyMapper.mapToDto(faculty);
     }
 
@@ -62,6 +83,14 @@ public class FacultyServiceImpl implements FacultyService {
         Faculty faculty = facultyRepository.fetchInstanceById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Faculty", "id", String.valueOf(id)));
         Faculty updatedFaculty = FacultyMapper.mapToEntity(requestDto, faculty);
+
+        // checking if dean hasn't been updated
+        if(!faculty.getDean().getId().equals(requestDto.getDeanId())){
+            Teacher dean = teacherRepository.fetchInstanceById(requestDto.getDeanId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Dean", "id", String.valueOf(requestDto.getUniversityId())));
+            updatedFaculty.setDean(dean);
+        }
+
         updatedFaculty = facultyRepository.updateInstance(updatedFaculty);
         return FacultyMapper.mapToDto(updatedFaculty);
     }
