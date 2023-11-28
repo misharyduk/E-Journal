@@ -27,7 +27,7 @@ public class Faculty {
     @Lob
     @Column(name = "faculty_description")
     private String facultyDescription;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
     @Column(name = "office_number")

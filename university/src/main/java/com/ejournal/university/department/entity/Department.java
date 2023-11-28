@@ -25,7 +25,7 @@ public class Department {
     @Lob
     @Column(name = "department_description")
     private String departmentDescription;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
     @Column(name = "office_number")
