@@ -33,10 +33,10 @@ public class University {
     private String email;
     @Column(name = "accreditation")
     private String accreditation;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
     @JoinColumn(name = "rector_id")
     private Teacher rector;
-    @OneToMany(mappedBy = "university", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "university", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Faculty> faculties = new ArrayList<>();
 
 }
