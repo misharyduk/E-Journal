@@ -1,6 +1,7 @@
 package com.ejournal.university.info.dto;
 
 import com.ejournal.university.common.dto.AddressDto;
+import com.ejournal.university.teacher.dto.TeacherRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -15,15 +16,7 @@ public class UniversityRequestDto {
     private String mobilePhone;
     private String email;
     private String accreditation;
-    private RectorDto rector;
-
-    @Data
-    @AllArgsConstructor
-    public static class RectorDto {
-        private String firstName;
-        private String lastName;
-        private String middleName;
-    }
+    private TeacherRequestDto rector;
 
     public UniversityRequestDto(){}
     @Override

@@ -2,11 +2,14 @@ package com.ejournal.university.teacher.entity;
 
 import com.ejournal.university.faculty.entity.Faculty;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class Teacher {
 
     @Id
@@ -29,4 +32,12 @@ public class Teacher {
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
+    public Teacher(String firstName, String lastName, String middleName, String mobilePhone, String email, Faculty faculty) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.mobilePhone = mobilePhone;
+        this.email = email;
+        this.faculty = faculty;
+    }
 }

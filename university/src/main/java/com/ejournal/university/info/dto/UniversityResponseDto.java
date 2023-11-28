@@ -2,6 +2,7 @@ package com.ejournal.university.info.dto;
 
 import com.ejournal.university.common.dto.AddressDto;
 import com.ejournal.university.info.dto.builder.UniversityResponseBuilder;
+import com.ejournal.university.teacher.dto.TeacherResponseDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,15 +20,7 @@ public class UniversityResponseDto {
     private String mobilePhone;
     private String email;
     private String accreditation;
-    private RectorDto rector;
-
-    @Data
-    @AllArgsConstructor
-    public static class RectorDto {
-        private String firstName;
-        private String lastName;
-        private String middleName;
-    }
+    private TeacherResponseDto rector;
 
     public UniversityResponseDto(){}
 
@@ -38,7 +31,7 @@ public class UniversityResponseDto {
                                  String mobilePhone,
                                  String email,
                                  String accreditation,
-                                 RectorDto rector) {
+                                 TeacherResponseDto rector) {
         this.universityId = universityId;
         this.universityName = universityName;
         this.universityDescription = universityDescription;
