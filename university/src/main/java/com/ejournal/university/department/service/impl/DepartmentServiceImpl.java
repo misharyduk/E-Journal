@@ -7,6 +7,10 @@ import com.ejournal.university.department.entity.Department;
 import com.ejournal.university.department.mapper.DepartmentMapper;
 import com.ejournal.university.department.repository.DepartmentRepository;
 import com.ejournal.university.department.service.DepartmentService;
+import com.ejournal.university.faculty.entity.Faculty;
+import com.ejournal.university.faculty.repository.FacultyRepository;
+import com.ejournal.university.teacher.entity.Teacher;
+import com.ejournal.university.teacher.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +22,25 @@ import java.util.stream.Collectors;
 public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentRepository departmentRepository;
+    private final FacultyRepository facultyRepository;
+    private final TeacherRepository teacherRepository;
 
     @Override
     public DepartmentResponseDto create(DepartmentRequestDto requestDto) {
         Department department = DepartmentMapper.mapToEntity(requestDto, new Department());
-        return DepartmentMapper.mapToDto(departmentRepository.createInstance(department));
+
+        // fetching faculty for appropriate mapping
+        Faculty faculty = facultyRepository.fetchInstanceById(requestDto.getFacultyId())
+                .orElseThrow(() -> new ResourceNotFoundException("Faculty", "id", String.valueOf(requestDto.getFacultyId())));
+        department.setFaculty(faculty);
+
+        // fetching head of department for appropriate mapping
+        Teacher headOfDepartment = teacherRepository.fetchInstanceById(requestDto.getHeadOfDepartmentId())
+                .orElseThrow(() -> new ResourceNotFoundException("Head of Department", "id", String.valueOf(requestDto.getFacultyId())));
+        department.setHeadOfDepartment(headOfDepartment);
+
+        departmentRepository.createInstance(department);
+        return DepartmentMapper.mapToDto(department);
     }
 
     @Override
@@ -45,6 +63,14 @@ public class DepartmentServiceImpl implements DepartmentService {
         Department department = departmentRepository.fetchInstanceById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Department", "id", String.valueOf(id)));
         Department updatedDepartment = DepartmentMapper.mapToEntity(requestDto, department);
+
+        // checking if head of department hasn't been updated
+        if(!department.getHeadOfDepartment().getId().equals(requestDto.getHeadOfDepartmentId())){
+            Teacher headOfDepartment = teacherRepository.fetchInstanceById(requestDto.getHeadOfDepartmentId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Head of Department", "id", String.valueOf(requestDto.getHeadOfDepartmentId())));
+            updatedDepartment.setHeadOfDepartment(headOfDepartment);
+        }
+
         updatedDepartment = departmentRepository.updateInstance(updatedDepartment);
         return DepartmentMapper.mapToDto(updatedDepartment);
     }
