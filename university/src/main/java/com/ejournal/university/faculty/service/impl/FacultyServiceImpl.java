@@ -55,9 +55,11 @@ public class FacultyServiceImpl implements FacultyService {
         faculty.setUniversity(university);
 
         // fetching dean for appropriate mapping
-        Teacher dean = teacherRepository.fetchInstanceById(requestDto.getDeanId())
-                .orElseThrow(() -> new ResourceNotFoundException("Dean", "id", String.valueOf(requestDto.getUniversityId())));
-        faculty.setDean(dean);
+        if(requestDto.getDeanId() != null) {
+            Teacher dean = teacherRepository.fetchInstanceById(requestDto.getDeanId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Dean", "id", String.valueOf(requestDto.getUniversityId())));
+            faculty.setDean(dean);
+        }
 
         facultyRepository.createInstance(faculty);
         return FacultyMapper.mapToDto(faculty);

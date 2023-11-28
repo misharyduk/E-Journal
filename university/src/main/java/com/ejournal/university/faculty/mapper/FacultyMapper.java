@@ -39,7 +39,8 @@ public class FacultyMapper {
 
     public static FacultyResponseDto mapToDto(Faculty faculty){
         FacultyResponseDto responseDto = basicMapToDto(faculty);
-        responseDto.setDean(TeacherMapper.basicMapToDto(faculty.getDean()));
+        if(faculty.getDean() != null)
+            responseDto.setDean(TeacherMapper.basicMapToDto(faculty.getDean()));
         responseDto.setUniversity(UniversityMapper.basicMapToDto(faculty.getUniversity()));
         return responseDto;
     }
