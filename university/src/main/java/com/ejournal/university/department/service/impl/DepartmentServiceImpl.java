@@ -1,6 +1,9 @@
 package com.ejournal.university.department.service.impl;
 
+import com.ejournal.university.common.dto.PageableRequestDto;
+import com.ejournal.university.common.dto.PageableResponseDto;
 import com.ejournal.university.common.exception.ResourceNotFoundException;
+import com.ejournal.university.common.util.SortFieldValidator;
 import com.ejournal.university.department.dto.DepartmentRequestDto;
 import com.ejournal.university.department.dto.DepartmentResponseDto;
 import com.ejournal.university.department.entity.Department;
@@ -12,6 +15,8 @@ import com.ejournal.university.faculty.repository.FacultyRepository;
 import com.ejournal.university.teacher.entity.Teacher;
 import com.ejournal.university.teacher.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +29,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     private final DepartmentRepository departmentRepository;
     private final FacultyRepository facultyRepository;
     private final TeacherRepository teacherRepository;
+
+    private final DepartmentPaginationService paginationService;
 
     @Override
     public DepartmentResponseDto create(DepartmentRequestDto requestDto) {
@@ -56,6 +63,13 @@ public class DepartmentServiceImpl implements DepartmentService {
         return allDepartments.stream()
                 .map(DepartmentMapper::mapToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public PageableResponseDto<DepartmentResponseDto> fetchPage(PageableRequestDto pageableRequestDto) {
+
+        PageableResponseDto<DepartmentResponseDto> page = paginationService.fetchPage(pageableRequestDto);
+        return page;
     }
 
     @Override
