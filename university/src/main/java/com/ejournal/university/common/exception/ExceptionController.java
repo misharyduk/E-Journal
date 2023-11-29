@@ -10,6 +10,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.time.LocalDateTime;
 
+import static com.ejournal.university.common.util.ServiceConstants.*;
+
 @RestControllerAdvice
 public class ExceptionController extends ResponseEntityExceptionHandler {
 
@@ -21,6 +23,30 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
                         webRequestData.getDescription(false),
                         HttpStatus.NOT_FOUND,
                         exception.getMessage(),
+                        LocalDateTime.now()
+                ));
+    }
+
+    @ExceptionHandler(EntityAlreadyExistsException.class)
+    public ResponseEntity<ErrorDto> entityAlreadyExistsExceptionHandler(EntityAlreadyExistsException exception, WebRequest webRequestData){
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorDto(
+                        webRequestData.getDescription(false),
+                        HttpStatus.BAD_REQUEST,
+                        exception.getMessage(),
+                        LocalDateTime.now()
+                ));
+    }
+
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity<ErrorDto> globalExceptionHandler(Throwable throwable, WebRequest webRequestData){
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ErrorDto(
+                        webRequestData.getDescription(false),
+                        HttpStatus.INTERNAL_SERVER_ERROR,
+                        STATUS_MESSAGE_500,
                         LocalDateTime.now()
                 ));
     }
