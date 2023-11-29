@@ -1,10 +1,16 @@
 package com.ejournal.university.department.controller;
 
+import com.ejournal.university.common.dto.PageableRequestDto;
+import com.ejournal.university.common.dto.PageableResponseDto;
+import com.ejournal.university.common.util.SortFieldValidator;
 import com.ejournal.university.department.dto.DepartmentRequestDto;
 import com.ejournal.university.department.dto.DepartmentResponseDto;
 import com.ejournal.university.common.dto.ResponseDto;
 import com.ejournal.university.department.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +36,12 @@ public class DepartmentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DepartmentResponseDto>> fetchAllDepartments(){
+    public ResponseEntity<PageableResponseDto<DepartmentResponseDto>> fetchPageOfDepartments(PageableRequestDto pageableRequestDto){
 
-        List<DepartmentResponseDto> departmentResponseDTOs = departmentService.fetchAll();
+        PageableResponseDto<DepartmentResponseDto> pageOfDepartments = departmentService.fetchPage(pageableRequestDto);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(departmentResponseDTOs);
+                .body(pageOfDepartments);
     }
 
     @GetMapping("/{departmentId}")
