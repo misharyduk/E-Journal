@@ -64,16 +64,15 @@ CREATE TABLE IF NOT EXISTS address(
     zip_code VARCHAR(255) NOT NULL
 );
 
-ALTER TABLE university ADD FOREIGN KEY (rector_id) REFERENCES teacher(teacher_id);
-ALTER TABLE university ADD FOREIGN KEY (address_id) REFERENCES address(address_id);
+ALTER TABLE university ADD FOREIGN KEY (rector_id) REFERENCES teacher(teacher_id) ON DELETE CASCADE;
+ALTER TABLE university ADD FOREIGN KEY (address_id) REFERENCES address(address_id) ON DELETE SET NULL;
 
+ALTER TABLE faculty ADD FOREIGN KEY (dean_id) REFERENCES teacher(teacher_id) ON DELETE SET NULL;
+ALTER TABLE faculty ADD FOREIGN KEY (university_id) REFERENCES university(university_id) ON DELETE CASCADE;
+ALTER TABLE faculty ADD FOREIGN KEY (address_id) REFERENCES address(address_id) ON DELETE SET NULL;
 
-ALTER TABLE faculty ADD FOREIGN KEY (dean_id) REFERENCES teacher(teacher_id);
-ALTER TABLE faculty ADD FOREIGN KEY (university_id) REFERENCES university(university_id);
-ALTER TABLE faculty ADD FOREIGN KEY (address_id) REFERENCES address(address_id);
+ALTER TABLE department ADD FOREIGN KEY (head_of_department_id) REFERENCES teacher(teacher_id) ON DELETE SET NULL;
+ALTER TABLE department ADD FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id) ON DELETE CASCADE;
+ALTER TABLE department ADD FOREIGN KEY (address_id) REFERENCES address(address_id) ON DELETE SET NULL;
 
-ALTER TABLE department ADD FOREIGN KEY (head_of_department_id) REFERENCES teacher(teacher_id);
-ALTER TABLE department ADD FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id);
-ALTER TABLE department ADD FOREIGN KEY (address_id) REFERENCES address(address_id);
-
-ALTER TABLE teacher ADD FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id)
+ALTER TABLE teacher ADD FOREIGN KEY (faculty_id) REFERENCES faculty(faculty_id) ON DELETE CASCADE;
