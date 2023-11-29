@@ -41,6 +41,8 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Throwable.class)
     public ResponseEntity<ErrorDto> globalExceptionHandler(Throwable throwable, WebRequest webRequestData){
+        System.out.println(throwable.getMessage());
+        throwable.printStackTrace();
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorDto(
