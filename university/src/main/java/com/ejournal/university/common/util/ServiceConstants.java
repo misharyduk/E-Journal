@@ -14,7 +14,7 @@ public class ServiceConstants {
     public static final String STATUS_MESSAGE_417_UPDATE = "Update operation failed";
     public static final String STATUS_MESSAGE_417_DELETE = "Delete operation failed";
     public static final String STATUS_CODE_500 = "500";
-    public static final String STATUS_MESSAGE_500 = "An error occurred. Wait for a while and try again";
+    public static final String STATUS_MESSAGE_500 = "Internal error, please try again after a while or contact E-Journal team";
 
     // BUSINESS LOGIC CONSTANTS
     public static final String INSTANCE_DELETED = " has been deleted successfully";
