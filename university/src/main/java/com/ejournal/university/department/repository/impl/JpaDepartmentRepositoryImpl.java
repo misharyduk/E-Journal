@@ -2,6 +2,8 @@ package com.ejournal.university.department.repository.impl;
 
 import com.ejournal.university.department.entity.Department;
 import com.ejournal.university.department.repository.DepartmentRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -35,4 +37,10 @@ public interface JpaDepartmentRepositoryImpl extends JpaRepository<Department, L
     default void deleteInstance(Department department){
         delete(department);
     }
+
+    @Override
+    default Page<Department> fetchPage(Pageable pageable){
+        return findAll(pageable);
+    }
+
 }
