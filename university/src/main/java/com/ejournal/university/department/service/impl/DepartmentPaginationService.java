@@ -10,6 +10,7 @@ import com.ejournal.university.department.repository.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class DepartmentPaginationService {
 
     private PageableResponseDto<DepartmentResponseDto> fetchOnBasicField(PageableRequestDto pageableRequestDto, String field) {
 
-        PageRequest pageable = PageRequest.of(pageableRequestDto.getPage() - 1, pageableRequestDto.getSize())
+        Pageable pageable = PageRequest.of(pageableRequestDto.getPage() - 1, pageableRequestDto.getSize())
                 .withSort(Sort.Direction.fromString(pageableRequestDto.getDir()), field);
 
         Page<Department> pageOfDepartments = departmentRepository.fetchPage(pageable);
