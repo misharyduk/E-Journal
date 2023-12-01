@@ -1,6 +1,8 @@
 package com.ejournal.university.faculty.service.impl;
 
 import com.ejournal.university.common.dto.AddressDto;
+import com.ejournal.university.common.dto.PageableRequestDto;
+import com.ejournal.university.common.dto.PageableResponseDto;
 import com.ejournal.university.common.entity.Address;
 import com.ejournal.university.common.exception.ResourceNotFoundException;
 import com.ejournal.university.faculty.dto.FacultyRequestDto;
@@ -32,19 +34,7 @@ public class FacultyServiceImpl implements FacultyService {
     private final UniversityRepository universityRepository;
     private final TeacherRepository teacherRepository;
 
-//    private static final List<FacultyResponseDto> FACULTIES = new ArrayList<>(){
-//        {
-//            FacultyResponseDto.builder()
-//                    .setFacultyName("Факультет кібербезпеки та програмної інженерії")
-//                    .setFacultyDescription("2100 - здобувачів на факультеті, 137 - професорсько-викладацький склад, 40- допоміжний склад")
-//                    .setAddress(new AddressDto("Україна", "Київ", "пр. Гузара Любомира", "1", "03058"))
-//                    .setOfficeNumber("корп. 11, каб.205")
-//                    .setEmail("fkpi@npp.nau.edu.ua")
-//                    .setMobilePhone("+38(044) 406-70-08")
-//                    .setDean(new TeacherResponseDto())
-//                    .build();
-//        }
-//    };
+    private final FacultyPaginationService paginationService;
 
     @Override
     public FacultyResponseDto create(FacultyRequestDto requestDto) {
@@ -80,6 +70,12 @@ public class FacultyServiceImpl implements FacultyService {
         return allFaculties.stream()
                 .map(FacultyMapper::mapToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public PageableResponseDto<FacultyResponseDto> fetchPage(PageableRequestDto pageableRequestDto) {
+        PageableResponseDto<FacultyResponseDto> page = paginationService.fetchPage(pageableRequestDto);
+        return page;
     }
 
     @Override
