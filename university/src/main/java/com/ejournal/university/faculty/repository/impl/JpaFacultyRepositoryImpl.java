@@ -1,9 +1,18 @@
 package com.ejournal.university.faculty.repository.impl;
 
+import com.ejournal.university.department.entity.Department;
 import com.ejournal.university.faculty.entity.Faculty;
 import com.ejournal.university.faculty.repository.FacultyRepository;
 import com.ejournal.university.teacher.entity.Teacher;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
