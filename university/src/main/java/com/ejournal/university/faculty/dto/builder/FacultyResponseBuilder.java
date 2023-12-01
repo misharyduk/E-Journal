@@ -17,6 +17,9 @@ public class FacultyResponseBuilder implements Builder<FacultyResponseDto> {
     private String email;
     private TeacherResponseDto dean;
     private UniversityResponseDto university;
+    private Long numberOfDepartments;
+    private Long numberOfTeachers;
+    private Long numberOfStudents;
 
     private FacultyResponseBuilder(){}
 
@@ -69,9 +72,28 @@ public class FacultyResponseBuilder implements Builder<FacultyResponseDto> {
         return this;
     }
 
+    public FacultyResponseBuilder setNumberOfDepartments(Long numberOfDepartments) {
+        this.numberOfDepartments = numberOfDepartments;
+        return this;
+    }
+
+    public FacultyResponseBuilder setNumberOfTeachers(Long numberOfTeachers) {
+        this.numberOfTeachers = numberOfTeachers;
+        return this;
+    }
+
+    public FacultyResponseBuilder setNumberOfStudents(Long numberOfStudents) {
+        this.numberOfStudents = numberOfStudents;
+        return this;
+    }
+
     @Override
     public FacultyResponseDto build() {
-        return new FacultyResponseDto(facultyId, facultyName, facultyDescription,
+        FacultyResponseDto responseDto = new FacultyResponseDto(facultyId, facultyName, facultyDescription,
                 address, officeNumber, mobilePhone, email, dean, university);
+        responseDto.setNumberOfDepartments(numberOfDepartments);
+        responseDto.setNumberOfTeachers(numberOfTeachers);
+        responseDto.setNumberOfStudents(numberOfStudents);
+        return responseDto;
     }
 }
