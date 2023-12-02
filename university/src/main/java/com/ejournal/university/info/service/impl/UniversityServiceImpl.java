@@ -1,6 +1,7 @@
 package com.ejournal.university.info.service.impl;
 
-import com.ejournal.university.common.dto.AddressDto;
+import com.ejournal.university.common.dto.PageableRequestDto;
+import com.ejournal.university.common.dto.PageableResponseDto;
 import com.ejournal.university.common.exception.ResourceNotFoundException;
 import com.ejournal.university.info.dto.UniversityResponseDto;
 import com.ejournal.university.info.dto.UniversityRequestDto;
@@ -23,6 +24,8 @@ public class UniversityServiceImpl implements UniversityService {
 
     private final UniversityRepository universityRepository;
     private final TeacherRepository teacherRepository;
+
+    private final UniversityPaginationService paginationService;
 
     @Override
     public UniversityResponseDto create(UniversityRequestDto requestDto) {
@@ -48,6 +51,12 @@ public class UniversityServiceImpl implements UniversityService {
     }
 
     @Override
+    public PageableResponseDto<UniversityResponseDto> fetchPage(PageableRequestDto pageableRequestDto) {
+        PageableResponseDto<UniversityResponseDto> page = paginationService.fetchPage(pageableRequestDto);
+        return page;
+    }
+
+    @Override
     public UniversityResponseDto update(Long id, UniversityRequestDto requestDto) {
         University university = universityRepository.fetchInstanceById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("University", "id", String.valueOf(id)));
@@ -69,4 +78,6 @@ public class UniversityServiceImpl implements UniversityService {
         universityRepository.deleteInstance(university);
         return true;
     }
+
+
 }
