@@ -20,6 +20,14 @@ public class UniversityResponseDto {
     private String email;
     private String accreditation;
     private TeacherResponseDto rector;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Long numberOfFaculties;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Long numberOfDepartments;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Long numberOfTeachers;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Long numberOfStudents;
 
     public UniversityResponseDto(){}
 

@@ -15,6 +15,10 @@ public class UniversityResponseBuilder implements Builder<UniversityResponseDto>
     private String email;
     private String accreditation;
     private TeacherResponseDto rector;
+    private Long numberOfFaculties;
+    private Long numberOfDepartments;
+    private Long numberOfTeachers;
+    private Long numberOfStudents;
 
     private UniversityResponseBuilder() {
     }
@@ -60,6 +64,26 @@ public class UniversityResponseBuilder implements Builder<UniversityResponseDto>
 
     public UniversityResponseBuilder setRector(TeacherResponseDto rector) {
         this.rector = rector;
+        return this;
+    }
+
+    public UniversityResponseBuilder setNumberOfFaculties(Long numberOfFaculties) {
+        this.numberOfFaculties = numberOfFaculties;
+        return this;
+    }
+
+    public UniversityResponseBuilder setNumberOfDepartments(Long numberOfDepartments) {
+        this.numberOfDepartments = numberOfDepartments;
+        return this;
+    }
+
+    public UniversityResponseBuilder setNumberOfTeachers(Long numberOfTeachers) {
+        this.numberOfTeachers = numberOfTeachers;
+        return this;
+    }
+
+    public UniversityResponseBuilder setNumberOfStudents(Long numberOfStudents) {
+        this.numberOfStudents = numberOfStudents;
         return this;
     }
 
