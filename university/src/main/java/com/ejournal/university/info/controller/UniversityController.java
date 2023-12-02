@@ -1,6 +1,9 @@
 package com.ejournal.university.info.controller;
 
+import com.ejournal.university.common.dto.PageableRequestDto;
+import com.ejournal.university.common.dto.PageableResponseDto;
 import com.ejournal.university.common.dto.ResponseDto;
+import com.ejournal.university.faculty.dto.FacultyResponseDto;
 import com.ejournal.university.info.dto.UniversityResponseDto;
 import com.ejournal.university.info.dto.UniversityRequestDto;
 import com.ejournal.university.info.service.UniversityService;
@@ -29,6 +32,15 @@ public class UniversityController {
                 .body(responseDto);
     }
 
+    @GetMapping
+    public ResponseEntity<PageableResponseDto<UniversityResponseDto>> fetchPageOfUniversities(PageableRequestDto pageableRequestDto){
+
+        PageableResponseDto<UniversityResponseDto> pageOfUniversities = universityService.fetchPage(pageableRequestDto);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(pageOfUniversities);
+    }
+
     @GetMapping("/{universityId}")
     public ResponseEntity<UniversityResponseDto> fetchUniversityDetails(@PathVariable("universityId") Long universityId){
 
@@ -36,15 +48,6 @@ public class UniversityController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(universityResponseDto);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<UniversityResponseDto>> fetchAllUniversities(){
-
-        List<UniversityResponseDto> responseDTOs = universityService.fetchAll();
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(responseDTOs);
     }
 
     @PutMapping("/{universityId}")
