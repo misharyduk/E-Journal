@@ -33,8 +33,8 @@ public class FacultyPaginationRepositoryImpl implements FacultyPaginationReposit
                 facultyRoot.get("facultyDescription").alias("facultyDescription")
         );
 
-        if(direction.equals("asc")) {
-            query.orderBy(criteriaBuilder.asc(facultyRoot.get(field)));
+        if(direction.equals("desc")) {
+            query.orderBy(criteriaBuilder.desc(facultyRoot.get(field)));
         } else {
             query.orderBy(criteriaBuilder.desc(facultyRoot.get(field)));
         }
@@ -120,7 +120,6 @@ public class FacultyPaginationRepositoryImpl implements FacultyPaginationReposit
         Root<Faculty> facultyRoot = criteriaQuery.from(Faculty.class);
         criteriaQuery.select(cb.count(facultyRoot));
 
-        return entityManager.createQuery(criteriaQuery)
-                .getSingleResult();
+        return entityManager.createQuery(criteriaQuery).getSingleResult();
     }
 }

@@ -39,8 +39,7 @@ public class FacultyPaginationService {
         Pageable pageable = PageRequest.of(pageableRequestDto.getPage() - 1, pageableRequestDto.getSize())
                 .withSort(Sort.Direction.fromString(pageableRequestDto.getDir()), field);
 
-        Page<Tuple> pageOfFaculties = facultyPaginationRepository.fetchPage(pageable,
-                field, pageableRequestDto.getDir());
+        Page<Tuple> pageOfFaculties = facultyPaginationRepository.fetchPage(pageable, field, pageableRequestDto.getDir());
         var listOfFacultyDTOs = pageOfFaculties.stream()
                 .map(t -> convertTuple(t, FACULTY_ID))
                 .toList();
