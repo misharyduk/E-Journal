@@ -22,7 +22,6 @@ import static com.ejournal.university.common.util.SortFieldValidator.FacultyFiel
 @RequiredArgsConstructor
 public class FacultyPaginationService {
 
-    private final FacultyRepository facultyRepository;
     private final FacultyPaginationRepository facultyPaginationRepository;
 
     public PageableResponseDto<FacultyResponseDto> fetchPage(PageableRequestDto pageableRequestDto) {
@@ -40,9 +39,10 @@ public class FacultyPaginationService {
         Pageable pageable = PageRequest.of(pageableRequestDto.getPage() - 1, pageableRequestDto.getSize())
                 .withSort(Sort.Direction.fromString(pageableRequestDto.getDir()), field);
 
-        Page<Faculty> pageOfFaculties = facultyPaginationRepository.fetchPage(pageable);
+        Page<Tuple> pageOfFaculties = facultyPaginationRepository.fetchPage(pageable,
+                field, pageableRequestDto.getDir());
         var listOfFacultyDTOs = pageOfFaculties.stream()
-                .map(FacultyMapper::mapToDto)
+                .map(t -> convertTuple(t, FACULTY_ID))
                 .toList();
 
         return new PageableResponseDto<>(

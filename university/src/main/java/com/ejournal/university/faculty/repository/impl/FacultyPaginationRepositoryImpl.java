@@ -3,9 +3,7 @@ package com.ejournal.university.faculty.repository.impl;
 import com.ejournal.university.department.entity.Department;
 import com.ejournal.university.faculty.entity.Faculty;
 import com.ejournal.university.faculty.repository.FacultyPaginationRepository;
-import com.ejournal.university.faculty.repository.FacultyRepository;
 import com.ejournal.university.teacher.entity.Teacher;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Tuple;
@@ -24,8 +22,31 @@ public class FacultyPaginationRepositoryImpl implements FacultyPaginationReposit
     private EntityManager entityManager;
 
     @Override
-    public Page<Faculty> fetchPage(Pageable pageable) {
-        return null;
+    public Page<Tuple> fetchPage(Pageable pageable, String field, String direction) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> query = criteriaBuilder.createTupleQuery();
+        Root<Faculty> facultyRoot = query.from(Faculty.class);
+
+        query.multiselect(
+                facultyRoot.get("id").alias("facultyId"),
+                facultyRoot.get("facultyName").alias("facultyName"),
+                facultyRoot.get("facultyDescription").alias("facultyDescription")
+        );
+
+        if(direction.equals("asc")) {
+            query.orderBy(criteriaBuilder.asc(facultyRoot.get(field)));
+        } else {
+            query.orderBy(criteriaBuilder.desc(facultyRoot.get(field)));
+        }
+
+        List<Tuple> result = entityManager.createQuery(query)
+                .setFirstResult((int) pageable.getOffset())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+
+        long total = getTotalFacultyCount();
+
+        return new PageImpl<>(result, pageable, total);
     }
 
     @Override

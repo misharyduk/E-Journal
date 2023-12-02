@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface FacultyPaginationRepository {
 
-    Page<Faculty> fetchPage(Pageable pageable);
+    Page<Tuple> fetchPage(Pageable pageable, String field, String direction);
 
     Page<Tuple> fetchPageOnDepartments(Pageable pageable);
 
