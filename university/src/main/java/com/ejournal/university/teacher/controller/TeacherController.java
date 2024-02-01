@@ -1,5 +1,7 @@
 package com.ejournal.university.teacher.controller;
 
+import com.ejournal.university.common.dto.PageableRequestDto;
+import com.ejournal.university.common.dto.PageableResponseDto;
 import com.ejournal.university.common.dto.ResponseDto;
 import com.ejournal.university.teacher.dto.TeacherRequestDto;
 import com.ejournal.university.teacher.dto.TeacherResponseDto;
@@ -30,12 +32,12 @@ public class TeacherController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TeacherResponseDto>> fetchAllTeachers(){
+    public ResponseEntity<PageableResponseDto<TeacherResponseDto>> fetchPageOfTeachers(PageableRequestDto pageableRequestDto){
 
-        List<TeacherResponseDto> responseDTOs = teacherService.fetchAll();
+        PageableResponseDto<TeacherResponseDto> pageOfTeachers = teacherService.fetchPage(pageableRequestDto);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(responseDTOs);
+                .body(pageOfTeachers);
     }
 
     @GetMapping("/{teacherId}")
