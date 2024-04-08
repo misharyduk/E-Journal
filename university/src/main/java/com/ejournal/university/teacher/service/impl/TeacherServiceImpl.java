@@ -1,0 +1,90 @@
+package com.ejournal.university.teacher.service.impl;
+
+import com.ejournal.university.common.dto.PageableRequestDto;
+import com.ejournal.university.common.dto.PageableResponseDto;
+import com.ejournal.university.common.exception.ResourceNotFoundException;
+import com.ejournal.university.department.entity.Department;
+import com.ejournal.university.faculty.entity.Faculty;
+import com.ejournal.university.faculty.repository.FacultyRepository;
+import com.ejournal.university.info.dto.UniversityResponseDto;
+import com.ejournal.university.teacher.dto.TeacherRequestDto;
+import com.ejournal.university.teacher.dto.TeacherResponseDto;
+import com.ejournal.university.teacher.entity.Teacher;
+import com.ejournal.university.teacher.mapper.TeacherMapper;
+import com.ejournal.university.teacher.repository.TeacherRepository;
+import com.ejournal.university.teacher.service.TeacherService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class TeacherServiceImpl implements TeacherService {
+
+    private final TeacherRepository teacherRepository;
+    private final FacultyRepository facultyRepository;
+
+    private final TeacherPaginationService paginationService;
+
+    @Override
+    public TeacherResponseDto create(TeacherRequestDto requestDto) {
+        Teacher teacher = TeacherMapper.mapToEntity(requestDto, new Teacher());
+
+        // fetching faculty for appropriate mapping
+        Faculty faculty = facultyRepository.fetchInstanceById(requestDto.getFacultyId())
+                .orElseThrow(() -> new ResourceNotFoundException("Faculty", "id", String.valueOf(requestDto.getFacultyId())));
+        teacher.setFaculty(faculty);
+
+        teacherRepository.createInstance(teacher);
+        return TeacherMapper.mapToDto(teacher);
+    }
+
+    @Override
+    public TeacherResponseDto fetchById(Long id) {
+        Teacher teacher = teacherRepository.fetchInstanceById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Teacher", "id", String.valueOf(id)));
+
+        return TeacherMapper.mapToDto(teacher);
+    }
+
+    @Override
+    public PageableResponseDto<TeacherResponseDto> fetchPage(PageableRequestDto pageableRequestDto){
+        PageableResponseDto<TeacherResponseDto> page = paginationService.fetchPage(pageableRequestDto);
+        return page;
+    }
+
+    @Override
+    public List<TeacherResponseDto> fetchAll() {
+        List<Teacher> allTeachers = teacherRepository.fetchAllInstances();
+        return allTeachers.stream()
+                .map(TeacherMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public TeacherResponseDto update(Long id, TeacherRequestDto requestDto) {
+        Teacher teacher = teacherRepository.fetchInstanceById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Teacher", "id", String.valueOf(id)));
+        Teacher updatedTeacher = TeacherMapper.mapToEntity(requestDto, teacher);
+
+        // checking if head of department hasn't been updated
+        if(!teacher.getFaculty().getId().equals(requestDto.getFacultyId())){
+            Faculty faculty = facultyRepository.fetchInstanceById(requestDto.getFacultyId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Faculty", "id", String.valueOf(requestDto.getFacultyId())));
+            updatedTeacher.setFaculty(faculty);
+        }
+
+        updatedTeacher = teacherRepository.updateInstance(updatedTeacher);
+        return TeacherMapper.mapToDto(updatedTeacher);
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        Teacher teacher = teacherRepository.fetchInstanceById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Teacher", "id", String.valueOf(id)));
+        teacherRepository.deleteInstance(teacher);
+        return true;
+    }
+}

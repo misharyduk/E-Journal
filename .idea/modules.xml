@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/E-Journal.iml" filepath="$PROJECT_DIR$/.idea/E-Journal.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/e_journal.iml" filepath="$PROJECT_DIR$/.idea/e_journal.iml" />
+>>>>>>> feature/university-service
     </modules>
   </component>
 </project>

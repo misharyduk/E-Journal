@@ -7,3 +7,7 @@
 /dataSources/
 /dataSources.local.xml
 /material_theme_project_new.xml
+<<<<<<< HEAD
+=======
+/compiler.xml
+>>>>>>> feature/university-service
