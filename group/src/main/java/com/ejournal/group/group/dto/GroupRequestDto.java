@@ -12,5 +12,6 @@ import java.util.List;
 public class GroupRequestDto {
 
     private Integer groupNumber;
+    private Long departmentId;
 
 }

@@ -18,6 +18,8 @@ public class Group {
     private Long id;
     @Column(name = "group_number")
     private Integer groupNumber;
+    @Column(name = "department_id")
+    private Long departmentId;
     @OneToMany(mappedBy = "group")
     private List<Student> students;
 }

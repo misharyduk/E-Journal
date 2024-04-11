@@ -13,7 +13,8 @@ CREATE TABLE IF NOT EXISTS student(
 
 CREATE TABLE IF NOT EXISTS app_group(
     group_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    group_number INTEGER NOT NULL
+    group_number INTEGER NOT NULL,
+    department_id BIGINT
 );
 
 ALTER TABLE student ADD FOREIGN KEY (group_id) REFERENCES app_group(group_id) ON DELETE SET NULL;
