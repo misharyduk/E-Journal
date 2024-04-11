@@ -1,6 +1,7 @@
 package com.ejournal.group.group.dto;
 
 import com.ejournal.group.group.dto.builder.GroupResponseBuilder;
+import com.ejournal.group.group.service.feign_clients.university.dto.DepartmentResponseDto;
 import com.ejournal.group.student.dto.StudentResponseDto;
 import com.ejournal.group.student.dto.builder.StudentResponseBuilder;
 import com.ejournal.group.student.entity.Student;
@@ -22,6 +23,7 @@ public class GroupResponseDto {
     private Integer groupNumber;
     private List<StudentResponseDto> students;
     private Long numberOfStudents;
+    private DepartmentResponseDto department;
 
     public GroupResponseDto() {
     }
