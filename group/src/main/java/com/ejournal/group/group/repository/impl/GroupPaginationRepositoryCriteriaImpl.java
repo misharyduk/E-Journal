@@ -33,8 +33,8 @@ public class GroupPaginationRepositoryCriteriaImpl implements GroupPaginationRep
         Join<Group, Student> studentJoin = groupRoot.join("students", JoinType.LEFT);
 
         criteriaQuery.multiselect(
-                groupRoot.get("group_id").alias("groupId"),
-                groupRoot.get("group_number").alias("groupNumber"),
+                groupRoot.get("id").alias("groupId"),
+                groupRoot.get("groupNumber").alias("groupNumber"), // TODO fix this - names is equals
                 cb.count(studentJoin).alias("studentsCount")
         );
         criteriaQuery.groupBy(groupRoot);

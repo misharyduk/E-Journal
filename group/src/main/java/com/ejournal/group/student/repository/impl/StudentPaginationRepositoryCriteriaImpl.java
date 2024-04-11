@@ -30,10 +30,11 @@ public class StudentPaginationRepositoryCriteriaImpl implements StudentPaginatio
         Root<Student> studentRoot = criteriaQuery.from(Student.class);
 
         criteriaQuery.multiselect(
-                studentRoot.get("student_id").alias("studentId"),
-                studentRoot.get("first_name").alias("firstName"),
-                studentRoot.get("last_name").alias("lastName"),
-                studentRoot.get("middle_name").alias("middleName"),
+                studentRoot.get("id").alias("studentId"),
+                studentRoot.get("firstName").alias("firstName"),
+                studentRoot.get("lastName").alias("lastName"),
+                studentRoot.get("middleName").alias("middleName"),
+                studentRoot.get("mobilePhone").alias("mobilePhone"),
                 studentRoot.get("email").alias("email")
         );
 
