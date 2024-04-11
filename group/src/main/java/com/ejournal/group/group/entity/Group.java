@@ -17,6 +17,6 @@ public class Group {
     private Long id;
     @Column(name = "group_number")
     private Integer groupNumber;
-    @OneToMany(mappedBy = "group_id")
+    @OneToMany(mappedBy = "group")
     private List<Student> students;
 }
