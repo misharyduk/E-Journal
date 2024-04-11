@@ -20,6 +20,16 @@ public interface JpaStudentRepositoryImpl extends JpaRepository<Student, Long>, 
     }
 
     @Override
+    default List<Student> fetchStudentsByGroupId(Long groupId) {
+        return findStudentsByGroupId(groupId);
+    }
+
+    @Override
+    default Long countStudentByGroupId(Long groupId){
+        return countByGroupId(groupId);
+    }
+
+    @Override
     default Student createInstance(Student student){
         return save(student);
     }
@@ -34,4 +44,7 @@ public interface JpaStudentRepositoryImpl extends JpaRepository<Student, Long>, 
         delete(student);
     }
 
+    List<Student> findStudentsByGroupId(Long id);
+
+    Long countByGroupId(Long groupId);
 }
