@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
+@Table(name = "app_group")
 public class Group {
     @Id
     @SequenceGenerator(name = "group_id_sequence_generator", sequenceName = "group_id_sequence", allocationSize = 1)

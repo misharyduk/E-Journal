@@ -11,9 +11,9 @@ CREATE TABLE IF NOT EXISTS student(
     group_id BIGINT
 );
 
-CREATE TABLE IF NOT EXISTS "group"(
+CREATE TABLE IF NOT EXISTS app_group(
     group_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     group_number INTEGER NOT NULL
 );
 
-ALTER TABLE student ADD FOREIGN KEY (group_id) REFERENCES group(group_id) ON DELETE SET NULL;
+ALTER TABLE student ADD FOREIGN KEY (group_id) REFERENCES app_group(group_id) ON DELETE SET NULL;
