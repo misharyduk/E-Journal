@@ -8,4 +8,7 @@ import java.util.Optional;
 
 public interface StudentRepository extends CommonRepository<Student> {
 
+    List<Student> fetchStudentsByGroupId(Long groupId);
+
+    Long countStudentByGroupId(Long groupId);
 }
