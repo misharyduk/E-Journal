@@ -19,6 +19,11 @@ spring:
         format_sql: true
         show_sql: true
 
+info:
+  group:
+    microservice-name: "GROUP-MS'
+    version: "v1.0.0"
+
 logging:
   level:
     org:
@@ -33,3 +38,16 @@ eureka:
   client:
     service-url:
       default-zone: http://localhost:8070/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+
+endpoints:
+  shutdown:
+    enabled: true

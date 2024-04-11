@@ -20,6 +20,11 @@ spring:
         show_sql: true
         format_sql: true
 
+info:
+  university:
+    microservice-name: "UNIVERSITY-MS'
+    version: "v1.0.0"
+
 logging:
   level:
     org:
