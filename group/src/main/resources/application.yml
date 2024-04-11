@@ -26,3 +26,10 @@ logging:
         orm:
           jdbc:
             bind: trace
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      default-zone: http://localhost:8070/eureka/
