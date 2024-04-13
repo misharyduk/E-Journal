@@ -1,7 +1,7 @@
-package com.ejournal.journal.journal.service.feign_clients.university;
+package com.ejournal.journal.common.feign_client.university;
 
-import com.ejournal.journal.journal.service.feign_clients.university.dto.SubjectResponseDto;
-import com.ejournal.journal.journal.service.feign_clients.university.dto.TeacherResponseDto;
+import com.ejournal.journal.common.feign_client.university.dto.SubjectResponseDto;
+import com.ejournal.journal.common.feign_client.university.dto.TeacherResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

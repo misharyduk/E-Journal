@@ -1,8 +1,8 @@
 package com.ejournal.journal.journal.dto;
 
-import com.ejournal.journal.journal.service.feign_clients.group.dto.GroupResponseDto;
-import com.ejournal.journal.journal.service.feign_clients.university.dto.SubjectResponseDto;
-import com.ejournal.journal.journal.service.feign_clients.university.dto.TeacherResponseDto;
+import com.ejournal.journal.common.feign_client.group.dto.GroupResponseDto;
+import com.ejournal.journal.common.feign_client.university.dto.SubjectResponseDto;
+import com.ejournal.journal.common.feign_client.university.dto.TeacherResponseDto;
 import lombok.Getter;
 import lombok.Setter;
 

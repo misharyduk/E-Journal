@@ -1,4 +1,4 @@
-package com.ejournal.journal.journal.service.feign_clients.group.dto;
+package com.ejournal.journal.common.feign_client.group.dto;
 
 import lombok.Getter;
 import lombok.Setter;
