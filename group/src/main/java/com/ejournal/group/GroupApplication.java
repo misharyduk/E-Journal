@@ -1,4 +1,4 @@
-package com.ejournal.university;
+package com.ejournal.group;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableFeignClients
-public class UniversityApplication {
+public class GroupApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(UniversityApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(GroupApplication.class, args);
+    }
 
 }
