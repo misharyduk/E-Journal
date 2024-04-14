@@ -14,6 +14,7 @@ import com.ejournal.journal.lesson.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -65,8 +66,8 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public PageableResponseDto<LessonResponseDto> fetchPageByJournal(Long journalId, PageableRequestDto pageableRequestDto) {
-        PageRequest pageable = PageRequest.of(pageableRequestDto.getPage(), pageableRequestDto.getSize(),
-                Sort.Direction.ASC, "date");
+        Pageable pageable = PageRequest.of(pageableRequestDto.getPage() - 1, pageableRequestDto.getSize())
+                .withSort(Sort.Direction.ASC, "date");
         Page<Lesson> lessonsPage = lessonRepository.fetchPage(pageable);
         return new PageableResponseDto<>(
                 lessonsPage.getTotalPages(),
