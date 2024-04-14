@@ -1,5 +1,7 @@
 package com.ejournal.journal.journal.service.impl;
 
+import com.ejournal.journal.common.dto.PageableRequestDto;
+import com.ejournal.journal.common.dto.PageableResponseDto;
 import com.ejournal.journal.common.exception.ResourceNotFoundException;
 import com.ejournal.journal.journal.dto.JournalRequestDto;
 import com.ejournal.journal.journal.dto.JournalResponseDto;
@@ -11,10 +13,16 @@ import com.ejournal.journal.common.feign_client.group.dto.GroupResponseDto;
 import com.ejournal.journal.common.feign_client.university.UniversityFeignClient;
 import com.ejournal.journal.common.feign_client.university.dto.SubjectResponseDto;
 import com.ejournal.journal.common.feign_client.university.dto.TeacherResponseDto;
+import com.ejournal.journal.lesson.dto.LessonResponseDto;
+import com.ejournal.journal.lesson.service.LessonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -26,11 +34,14 @@ public class JournalServiceImpl implements JournalService {
     private final UniversityFeignClient universityClient;
 
     private final JournalRepository journalRepository;
+    private final LessonService lessonService;
 
     @Override
-    public Long create(JournalRequestDto requestDto) {
+    public JournalResponseDto create(JournalRequestDto requestDto) {
         Journal journal = new Journal(requestDto.getSubjectId(), requestDto.getGroupId(), requestDto.getTeacherId());
-        return journalRepository.createInstance(journal).getId();
+        journalRepository.createInstance(journal);
+
+        return fillJournalResponse(journal);
     }
 
     @Override
@@ -39,6 +50,40 @@ public class JournalServiceImpl implements JournalService {
                 .orElseThrow(() -> new ResourceNotFoundException("Journal", "id", String.valueOf(id)));
 
         return fillJournalResponse(journal);
+    }
+
+    @Override
+    public JournalResponseDto fetchById(Long id, PageableRequestDto pageableRequestDto) {
+        Journal journal = journalRepository.fetchInstanceById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Journal", "id", String.valueOf(id)));
+
+        if(pageableRequestDto == null){
+            pageableRequestDto = new PageableRequestDto();
+            pageableRequestDto.setPage(1);
+            pageableRequestDto.setSize(10);
+        }
+
+        PageableResponseDto<LessonResponseDto> lessonsPage = lessonService
+                .fetchPageByJournal(journal.getId(), pageableRequestDto);
+
+        JournalResponseDto responseDto = fillJournalResponse(journal);
+        responseDto.setLessons(lessonsPage);
+        return responseDto;
+    }
+
+    @Override
+    public PageableResponseDto<JournalResponseDto> fetchPage(PageableRequestDto pageableRequestDto) {
+        PageRequest pageable = PageRequest.of(pageableRequestDto.getPage(), pageableRequestDto.getSize(),
+                Sort.Direction.fromString(pageableRequestDto.getDir()), pageableRequestDto.getField());
+        Page<Journal> journalsPage = journalRepository.fetchPage(pageable);
+        return new PageableResponseDto<>(
+                journalsPage.getTotalPages(),
+                pageableRequestDto.getPage(),
+                pageableRequestDto.getSize(),
+                pageableRequestDto.getDir(),
+                journalsPage.getTotalElements(),
+                journalsPage.stream().map(this::fillJournalResponse).toList()
+        );
     }
 
     @Override
@@ -56,6 +101,30 @@ public class JournalServiceImpl implements JournalService {
         journalRepository.deleteInstance(journal);
 
         return true;
+    }
+
+    @Override
+    public List<JournalResponseDto> fetchAllBySubject(Long subjectId) {
+        return journalRepository.fetchAllInstancesBySubject(subjectId).stream()
+                .map(this::fillJournalResponse)
+                .sorted(Comparator.comparing(j -> j.getGroup().getGroupNumber()))
+                .toList();
+    }
+
+    @Override
+    public List<JournalResponseDto> fetchAllByTeacher(Long teacherId) {
+        return journalRepository.fetchAllInstancesByTeacher(teacherId).stream()
+                .map(this::fillJournalResponse)
+                .sorted(Comparator.comparing(j -> j.getGroup().getGroupNumber()))
+                .toList();
+    }
+
+    @Override
+    public List<JournalResponseDto> fetchAllByGroup(Long groupId) {
+        return journalRepository.fetchAllInstancesByGroup(groupId).stream()
+                .map(this::fillJournalResponse)
+                .sorted(Comparator.comparing(j -> j.getGroup().getGroupNumber()))
+                .toList();
     }
 
     private JournalResponseDto fillJournalResponse(Journal journal) {

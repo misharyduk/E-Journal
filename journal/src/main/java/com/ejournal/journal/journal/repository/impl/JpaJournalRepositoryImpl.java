@@ -2,6 +2,8 @@ package com.ejournal.journal.journal.repository.impl;
 
 import com.ejournal.journal.journal.entity.Journal;
 import com.ejournal.journal.journal.repository.JournalRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -20,6 +22,26 @@ public interface JpaJournalRepositoryImpl extends JpaRepository<Journal, Long>, 
     }
 
     @Override
+    default Page<Journal> fetchPage(Pageable pageable){
+        return findAll(pageable);
+    }
+
+    @Override
+    default List<Journal> fetchAllInstancesBySubject(Long subjectId){
+        return findAllBySubjectId(subjectId);
+    }
+
+    @Override
+    default List<Journal> fetchAllInstancesByTeacher(Long teacherId){
+        return findAllByTeacherId(teacherId);
+    }
+
+    @Override
+    default List<Journal> fetchAllInstancesByGroup(Long groupId){
+        return findAllByGroupId(groupId);
+    }
+
+    @Override
     default Journal createInstance(Journal journal){
         return save(journal);
     }
@@ -34,4 +56,9 @@ public interface JpaJournalRepositoryImpl extends JpaRepository<Journal, Long>, 
         delete(journal);
     }
 
+    List<Journal> findAllBySubjectId(Long subjectId);
+
+    List<Journal> findAllByTeacherId(Long teacherId);
+
+    List<Journal> findAllByGroupId(Long groupId);
 }
