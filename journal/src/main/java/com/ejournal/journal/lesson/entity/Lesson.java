@@ -15,11 +15,11 @@ public class Lesson {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lesson_id_sequence_generator")
     @Column(name = "lesson_id")
     private Long id;
-    @Column(name = "type")
+    @Column(name = "lesson_type")
     private String type;
-    @Column(name = "date")
+    @Column(name = "lesson_date")
     private Date date;
-    @Column(name = "order")
+    @Column(name = "lesson_order")
     private Integer order;
     @Column(name = "auditory")
     private String auditory;
