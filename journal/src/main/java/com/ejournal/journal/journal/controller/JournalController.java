@@ -55,7 +55,7 @@ public class JournalController {
                 .body(journalPageDto);
     }
 
-    @GetMapping
+    @GetMapping("/{journalId}")
     public ResponseEntity<JournalResponseDto> fetchJournalWithLessonsPage(
             @PathVariable("journalId") Long journalId,
             @RequestParam(required = false) PageableRequestDto pageableRequestDto){
