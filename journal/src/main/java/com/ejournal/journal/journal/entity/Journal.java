@@ -1,7 +1,10 @@
 package com.ejournal.journal.journal.entity;
 
+import com.ejournal.journal.lesson.entity.Lesson;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -18,6 +21,8 @@ public class Journal {
     private Long groupId;
     @Column(name = "teacher_id")
     private Long teacherId;
+    @OneToMany(mappedBy = "journal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Lesson> lessons;
 
     public Journal(Long subjectId, Long groupId, Long teacherId) {
         this.subjectId = subjectId;
