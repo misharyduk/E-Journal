@@ -3,6 +3,8 @@ package com.ejournal.journal.journal.service.impl;
 import com.ejournal.journal.common.dto.PageableRequestDto;
 import com.ejournal.journal.common.dto.PageableResponseDto;
 import com.ejournal.journal.common.exception.ResourceNotFoundException;
+import com.ejournal.journal.common.util.SortFieldValidator;
+import com.ejournal.journal.common.util.SortFieldValidator.JournalField;
 import com.ejournal.journal.journal.dto.JournalRequestDto;
 import com.ejournal.journal.journal.dto.JournalResponseDto;
 import com.ejournal.journal.journal.entity.Journal;
@@ -18,6 +20,7 @@ import com.ejournal.journal.lesson.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -73,8 +76,12 @@ public class JournalServiceImpl implements JournalService {
 
     @Override
     public PageableResponseDto<JournalResponseDto> fetchPage(PageableRequestDto pageableRequestDto) {
-        PageRequest pageable = PageRequest.of(pageableRequestDto.getPage(), pageableRequestDto.getSize(),
-                Sort.Direction.fromString(pageableRequestDto.getDir()), pageableRequestDto.getField());
+
+        String validSortFieldName = JournalField.validate(pageableRequestDto.getField()).getValidHQLField();
+
+        Pageable pageable = PageRequest.of(pageableRequestDto.getPage() - 1, pageableRequestDto.getSize())
+                .withSort(Sort.Direction.fromString(pageableRequestDto.getDir()), validSortFieldName);
+
         Page<Journal> journalsPage = journalRepository.fetchPage(pageable);
         return new PageableResponseDto<>(
                 journalsPage.getTotalPages(),

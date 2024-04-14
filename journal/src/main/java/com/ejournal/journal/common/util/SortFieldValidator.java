@@ -9,13 +9,14 @@ import java.util.Set;
 public class SortFieldValidator {
 
     @Getter
-    public enum GroupField{
+    public enum JournalField{
 
-        GROUP_ID(Set.of("id", "identifier"), "id"),
-        GROUP_NUMBER(Set.of("number", "group", "name", "group_number", "group_name"), "groupNumber"),
-        STUDENTS(Set.of("students", "student"), "students");
+        JOURNAL_ID(Set.of("id", "identifier"), "id"),
+        GROUP_ID(Set.of("group", "group_id", "group_number", "group_name", "groupId"), "groupId"),
+        TEACHER_ID(Set.of("teacher", "teacher_id", "teacher_number", "teacher_name", "teacherId"), "teacherId"),
+        SUBJECT_ID(Set.of("subject", "subject_id", "subject_number", "subject_name", "subjectId"), "subjectId");
 
-        private GroupField(Collection<String> fieldNameVariations, String validHQLField){
+        private JournalField(Collection<String> fieldNameVariations, String validHQLField){
             this.fieldNameVariations = fieldNameVariations;
             this.validHQLField = validHQLField;
         }
@@ -23,37 +24,12 @@ public class SortFieldValidator {
         private final Collection<String> fieldNameVariations;
         private final String validHQLField;
 
-        public static GroupField validate(String inputFieldName){
-            EnumSet<GroupField> enumSet = EnumSet.allOf(GroupField.class);
+        public static JournalField validate(String inputFieldName){
+            EnumSet<JournalField> enumSet = EnumSet.allOf(JournalField.class);
             return enumSet.stream()
                     .filter(field -> field.getFieldNameVariations().contains(inputFieldName))
                     .findFirst()
-                    .orElse(GROUP_ID);
+                    .orElse(JOURNAL_ID);
         }
     }
-
-    @Getter
-    public enum StudentField {
-
-        STUDENT_ID(Set.of("id", "identifier", "number"), "id"),
-        FIRST_NAME(Set.of("first_name", "firstName", "first"), "firstName"),
-        LAST_NAME(Set.of("last_name", "lastName", "last", "surname", "name"), "lastName");
-
-        StudentField(Collection<String> fieldNameVariations, String validHQLField){
-            this.fieldNameVariations = fieldNameVariations;
-            this.validHQLField = validHQLField;
-        }
-
-        private final Collection<String> fieldNameVariations;
-        private final String validHQLField;
-
-        public static StudentField validate(String inputFieldName){
-            EnumSet<StudentField> enumSet = EnumSet.allOf(StudentField.class);
-            return enumSet.stream()
-                    .filter(field -> field.getFieldNameVariations().contains(inputFieldName))
-                    .findFirst()
-                    .orElse(STUDENT_ID);
-        }
-        }
-
 }
