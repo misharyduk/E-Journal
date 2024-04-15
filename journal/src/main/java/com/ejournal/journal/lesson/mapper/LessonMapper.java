@@ -15,6 +15,7 @@ public class LessonMapper {
     }
 
     public static LessonResponseDto mapToDto(Lesson lesson, LessonResponseDto lessonResponseDto){
+        lessonResponseDto.setId(lesson.getId());
         lessonResponseDto.setType(lesson.getType());
         lessonResponseDto.setDate(lesson.getDate());
         lessonResponseDto.setOrder(lesson.getOrder());
