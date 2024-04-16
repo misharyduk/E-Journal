@@ -24,6 +24,10 @@ public interface JpaAcademicModuleRepositoryImpl extends JpaRepository<AcademicM
         return save(module);
     }
 
+    @Override
+    default AcademicModule saveInstance(AcademicModule module){
+        return save(module);
+    }
 
     @Override
     default void deleteModule(AcademicModule module){

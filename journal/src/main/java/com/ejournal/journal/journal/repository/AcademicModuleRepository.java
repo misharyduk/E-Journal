@@ -13,6 +13,8 @@ public interface AcademicModuleRepository {
 
     AcademicModule createInstance(AcademicModule module);
 
+    AcademicModule saveInstance(AcademicModule module);
+
     void deleteModule(AcademicModule module);
 
 }
