@@ -14,8 +14,9 @@ public class ExerciseWork {
     private Long id;
     @Column(name = "work_number")
     private Integer workNumber;
+    @Column(name = "exercise_work_type")
     @Enumerated(EnumType.STRING)
-    private ExerciseWorkType lessonType;
+    private ExerciseWorkType exerciseWorkType;
     @JoinColumn(name = "academic_module_id")
     @ManyToOne
     private AcademicModule academicModule;
