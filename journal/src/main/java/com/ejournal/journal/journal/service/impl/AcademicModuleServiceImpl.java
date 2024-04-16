@@ -3,7 +3,6 @@ package com.ejournal.journal.journal.service.impl;
 import com.ejournal.journal.common.exception.ResourceNotFoundException;
 import com.ejournal.journal.journal.dto.AcademicModuleRequestDto;
 import com.ejournal.journal.journal.dto.AcademicModuleResponseDto;
-import com.ejournal.journal.journal.dto.ExerciseWorkRequestDto;
 import com.ejournal.journal.journal.dto.ExerciseWorkResponseDto;
 import com.ejournal.journal.journal.entity.Journal;
 import com.ejournal.journal.journal.entity.academic_entities.AcademicModule;
@@ -26,7 +25,7 @@ public class AcademicModuleServiceImpl implements AcademicModuleService {
     public List<AcademicModuleResponseDto> fetchAllByJournal(Long journalId) {
         return academicModuleRepository.fetchAllModulesByJournal(journalId)
                 .stream()
-                .map(m -> new AcademicModuleResponseDto(m.getId(), m.getModuleNumber()))
+                .map(this::fillAcademicModuleResponseDto)
                 .toList();
     }
 
@@ -34,7 +33,7 @@ public class AcademicModuleServiceImpl implements AcademicModuleService {
     public AcademicModuleResponseDto fetchById(Long moduleId) {
         AcademicModule academicModule = academicModuleRepository.fetchModuleById(moduleId)
                 .orElseThrow(() -> new ResourceNotFoundException("Module", "id", String.valueOf(moduleId)));
-        return new AcademicModuleResponseDto(academicModule.getId(), academicModule.getModuleNumber());
+        return fillAcademicModuleResponseDto(academicModule);
     }
 
     @Override
@@ -48,7 +47,7 @@ public class AcademicModuleServiceImpl implements AcademicModuleService {
 
         academicModuleRepository.createInstance(academicModule);
 
-        return new AcademicModuleResponseDto(academicModule.getId(), academicModule.getModuleNumber());
+        return fillAcademicModuleResponseDto(academicModule);
     }
 
     @Override
@@ -65,7 +64,7 @@ public class AcademicModuleServiceImpl implements AcademicModuleService {
     private AcademicModuleResponseDto fillAcademicModuleResponseDto(AcademicModule academicModule){
         AcademicModuleResponseDto responseDto = new AcademicModuleResponseDto(academicModule.getId(), academicModule.getModuleNumber());
         responseDto.setExerciseWorks(academicModule.getExerciseWorks().stream()
-                .map(w -> new ExerciseWorkResponseDto(w.getId(), w.getWorkNumber(), w.getLessonType().toString().toLowerCase())).toList());
+                .map(w -> new ExerciseWorkResponseDto(w.getId(), w.getWorkNumber(), w.getExerciseWorkType().toString().toLowerCase())).toList());
         return responseDto;
     }
 }
