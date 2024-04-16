@@ -8,7 +8,8 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity @Getter @Setter
+@Entity @Table(name = "academic_module")
+@Getter @Setter
 public class AcademicModule {
     @Id
     @SequenceGenerator(name = "acad_module_id_sequence_generator", sequenceName = "acad_module_id_sequence", allocationSize = 1)
