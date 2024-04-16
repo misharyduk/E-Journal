@@ -5,6 +5,5 @@ import lombok.Getter;
 @Getter
 public enum ExerciseWorkType {
     LABORATORY,
-    INDIVIDUAL,
-    LECTURE
+    INDIVIDUAL
 }
