@@ -8,10 +8,13 @@ import com.ejournal.journal.lesson_journal.dto.LessonResponseDto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter @Setter
 public class JournalResponseDto {
     private Long id;
     private String semesterNumber;
+    private List<AcademicModuleResponseDto> academicModules;
     private SubjectResponseDto subject;
     private GroupResponseDto group;
     private TeacherResponseDto teacher;

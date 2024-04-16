@@ -4,6 +4,7 @@ import com.ejournal.journal.common.dto.PageableRequestDto;
 import com.ejournal.journal.common.dto.PageableResponseDto;
 import com.ejournal.journal.common.exception.ResourceNotFoundException;
 import com.ejournal.journal.common.util.SortFieldValidator.JournalField;
+import com.ejournal.journal.journal.dto.AcademicModuleResponseDto;
 import com.ejournal.journal.journal.dto.JournalRequestDto;
 import com.ejournal.journal.journal.dto.JournalResponseDto;
 import com.ejournal.journal.journal.entity.Journal;
@@ -139,6 +140,8 @@ public class JournalServiceImpl implements JournalService {
         JournalResponseDto responseDto = new JournalResponseDto();
         responseDto.setId(journal.getId());
         responseDto.setSemesterNumber(journal.getSemesterNumber().getValue());
+        responseDto.setAcademicModules(journal.getAcademicModules().stream()
+                .map(m -> new AcademicModuleResponseDto(m.getId(), m.getModuleNumber())).toList());
 
         // Map Group
         ResponseEntity<GroupResponseDto> groupDto = groupClient.fetchGroup(journal.getGroupId());

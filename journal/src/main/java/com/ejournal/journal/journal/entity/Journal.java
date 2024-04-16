@@ -1,5 +1,6 @@
 package com.ejournal.journal.journal.entity;
 
+import com.ejournal.journal.journal.entity.academic_entities.AcademicModule;
 import com.ejournal.journal.journal.entity.academic_entities.SemesterNumber;
 import com.ejournal.journal.lesson_journal.entity.Lesson;
 import jakarta.persistence.*;
@@ -18,6 +19,8 @@ public class Journal {
     private Long id;
     @Enumerated(EnumType.STRING)
     private SemesterNumber semesterNumber;
+    @OneToMany(mappedBy = "journal", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<AcademicModule> academicModules;
     @Column(name = "subject_id")
     private Long subjectId;
     @Column(name = "group_id")
