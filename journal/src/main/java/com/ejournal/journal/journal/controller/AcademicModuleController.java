@@ -55,7 +55,7 @@ public class AcademicModuleController {
         academicModuleService.delete(moduleId);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new ResponseDto(STATUS_CODE_200, "Department" + INSTANCE_DELETED));
+                .body(new ResponseDto(STATUS_CODE_200, "Academic Module" + INSTANCE_DELETED));
     }
 
 }

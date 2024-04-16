@@ -3,6 +3,8 @@ package com.ejournal.journal.journal.service.impl;
 import com.ejournal.journal.common.exception.ResourceNotFoundException;
 import com.ejournal.journal.journal.dto.AcademicModuleRequestDto;
 import com.ejournal.journal.journal.dto.AcademicModuleResponseDto;
+import com.ejournal.journal.journal.dto.ExerciseWorkRequestDto;
+import com.ejournal.journal.journal.dto.ExerciseWorkResponseDto;
 import com.ejournal.journal.journal.entity.Journal;
 import com.ejournal.journal.journal.entity.academic_entities.AcademicModule;
 import com.ejournal.journal.journal.repository.AcademicModuleRepository;
@@ -58,5 +60,12 @@ public class AcademicModuleServiceImpl implements AcademicModuleService {
         academicModuleRepository.deleteModule(academicModule);
 
         return true;
+    }
+
+    private AcademicModuleResponseDto fillAcademicModuleResponseDto(AcademicModule academicModule){
+        AcademicModuleResponseDto responseDto = new AcademicModuleResponseDto(academicModule.getId(), academicModule.getModuleNumber());
+        responseDto.setExerciseWorks(academicModule.getExerciseWorks().stream()
+                .map(w -> new ExerciseWorkResponseDto(w.getId(), w.getWorkNumber(), w.getLessonType().toString().toLowerCase())).toList());
+        return responseDto;
     }
 }
