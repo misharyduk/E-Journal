@@ -1,11 +1,10 @@
-package com.ejournal.journal.lesson.service;
+package com.ejournal.journal.lesson_journal.service;
 
 import com.ejournal.journal.common.dto.PageableRequestDto;
 import com.ejournal.journal.common.dto.PageableResponseDto;
 import com.ejournal.journal.common.service.CommonCrudService;
-import com.ejournal.journal.journal.dto.JournalResponseDto;
-import com.ejournal.journal.lesson.dto.LessonRequestDto;
-import com.ejournal.journal.lesson.dto.LessonResponseDto;
+import com.ejournal.journal.lesson_journal.dto.LessonRequestDto;
+import com.ejournal.journal.lesson_journal.dto.LessonResponseDto;
 
 public interface LessonService extends CommonCrudService<LessonRequestDto, LessonResponseDto> {
 

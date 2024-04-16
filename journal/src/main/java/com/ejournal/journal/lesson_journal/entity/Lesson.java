@@ -1,4 +1,4 @@
-package com.ejournal.journal.lesson.entity;
+package com.ejournal.journal.lesson_journal.entity;
 
 import com.ejournal.journal.journal.entity.Journal;
 import jakarta.persistence.*;

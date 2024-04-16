@@ -1,17 +1,13 @@
-package com.ejournal.journal.lesson.controller;
+package com.ejournal.journal.lesson_journal.controller;
 
 import com.ejournal.journal.common.dto.ResponseDto;
-import com.ejournal.journal.journal.dto.JournalRequestDto;
-import com.ejournal.journal.journal.dto.JournalResponseDto;
-import com.ejournal.journal.lesson.dto.LessonRequestDto;
-import com.ejournal.journal.lesson.dto.LessonResponseDto;
-import com.ejournal.journal.lesson.service.LessonService;
+import com.ejournal.journal.lesson_journal.dto.LessonRequestDto;
+import com.ejournal.journal.lesson_journal.dto.LessonResponseDto;
+import com.ejournal.journal.lesson_journal.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static com.ejournal.journal.common.util.ServiceConstants.INSTANCE_DELETED;
 

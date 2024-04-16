@@ -1,10 +1,5 @@
-package com.ejournal.journal.lesson.dto;
+package com.ejournal.journal.lesson_journal.dto;
 
-import com.ejournal.journal.journal.dto.JournalResponseDto;
-import com.ejournal.journal.journal.entity.Journal;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 

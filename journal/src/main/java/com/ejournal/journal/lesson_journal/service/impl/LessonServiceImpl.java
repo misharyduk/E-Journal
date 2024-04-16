@@ -1,16 +1,16 @@
-package com.ejournal.journal.lesson.service.impl;
+package com.ejournal.journal.lesson_journal.service.impl;
 
 import com.ejournal.journal.common.dto.PageableRequestDto;
 import com.ejournal.journal.common.dto.PageableResponseDto;
 import com.ejournal.journal.common.exception.ResourceNotFoundException;
 import com.ejournal.journal.journal.entity.Journal;
 import com.ejournal.journal.journal.repository.JournalRepository;
-import com.ejournal.journal.lesson.dto.LessonRequestDto;
-import com.ejournal.journal.lesson.dto.LessonResponseDto;
-import com.ejournal.journal.lesson.entity.Lesson;
-import com.ejournal.journal.lesson.mapper.LessonMapper;
-import com.ejournal.journal.lesson.repository.LessonRepository;
-import com.ejournal.journal.lesson.service.LessonService;
+import com.ejournal.journal.lesson_journal.dto.LessonRequestDto;
+import com.ejournal.journal.lesson_journal.dto.LessonResponseDto;
+import com.ejournal.journal.lesson_journal.entity.Lesson;
+import com.ejournal.journal.lesson_journal.mapper.LessonMapper;
+import com.ejournal.journal.lesson_journal.repository.LessonRepository;
+import com.ejournal.journal.lesson_journal.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

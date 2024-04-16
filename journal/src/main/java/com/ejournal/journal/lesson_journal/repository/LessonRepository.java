@@ -1,7 +1,7 @@
-package com.ejournal.journal.lesson.repository;
+package com.ejournal.journal.lesson_journal.repository;
 
 import com.ejournal.journal.common.repository.CommonRepository;
-import com.ejournal.journal.lesson.entity.Lesson;
+import com.ejournal.journal.lesson_journal.entity.Lesson;
 
 public interface LessonRepository extends CommonRepository<Lesson> {
 }

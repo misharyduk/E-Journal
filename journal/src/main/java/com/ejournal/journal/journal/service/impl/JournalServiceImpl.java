@@ -3,11 +3,11 @@ package com.ejournal.journal.journal.service.impl;
 import com.ejournal.journal.common.dto.PageableRequestDto;
 import com.ejournal.journal.common.dto.PageableResponseDto;
 import com.ejournal.journal.common.exception.ResourceNotFoundException;
-import com.ejournal.journal.common.util.SortFieldValidator;
 import com.ejournal.journal.common.util.SortFieldValidator.JournalField;
 import com.ejournal.journal.journal.dto.JournalRequestDto;
 import com.ejournal.journal.journal.dto.JournalResponseDto;
 import com.ejournal.journal.journal.entity.Journal;
+import com.ejournal.journal.journal.entity.academic_entities.SemesterNumber;
 import com.ejournal.journal.journal.repository.JournalRepository;
 import com.ejournal.journal.journal.service.JournalService;
 import com.ejournal.journal.common.feign_client.group.GroupFeignClient;
@@ -15,8 +15,8 @@ import com.ejournal.journal.common.feign_client.group.dto.GroupResponseDto;
 import com.ejournal.journal.common.feign_client.university.UniversityFeignClient;
 import com.ejournal.journal.common.feign_client.university.dto.SubjectResponseDto;
 import com.ejournal.journal.common.feign_client.university.dto.TeacherResponseDto;
-import com.ejournal.journal.lesson.dto.LessonResponseDto;
-import com.ejournal.journal.lesson.service.LessonService;
+import com.ejournal.journal.lesson_journal.dto.LessonResponseDto;
+import com.ejournal.journal.lesson_journal.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,7 +41,8 @@ public class JournalServiceImpl implements JournalService {
 
     @Override
     public JournalResponseDto create(JournalRequestDto requestDto) {
-        Journal journal = new Journal(requestDto.getSubjectId(), requestDto.getGroupId(), requestDto.getTeacherId());
+        SemesterNumber semesterNumber = SemesterNumber.valueOf(requestDto.getSemesterNumber().toUpperCase());
+        Journal journal = new Journal(semesterNumber, requestDto.getSubjectId(), requestDto.getGroupId(), requestDto.getTeacherId());
         journalRepository.createInstance(journal);
 
         return fillJournalResponse(journal);
@@ -137,6 +138,7 @@ public class JournalServiceImpl implements JournalService {
     private JournalResponseDto fillJournalResponse(Journal journal) {
         JournalResponseDto responseDto = new JournalResponseDto();
         responseDto.setId(journal.getId());
+        responseDto.setSemesterNumber(journal.getSemesterNumber().getValue());
 
         // Map Group
         ResponseEntity<GroupResponseDto> groupDto = groupClient.fetchGroup(journal.getGroupId());

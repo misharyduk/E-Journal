@@ -1,6 +1,7 @@
 package com.ejournal.journal.journal.entity;
 
-import com.ejournal.journal.lesson.entity.Lesson;
+import com.ejournal.journal.journal.entity.academic_entities.SemesterNumber;
+import com.ejournal.journal.lesson_journal.entity.Lesson;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,6 +16,8 @@ public class Journal {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "journal_id_sequence_generator")
     @Column(name = "journal_id")
     private Long id;
+    @Enumerated(EnumType.STRING)
+    private SemesterNumber semesterNumber;
     @Column(name = "subject_id")
     private Long subjectId;
     @Column(name = "group_id")
@@ -24,7 +27,8 @@ public class Journal {
     @OneToMany(mappedBy = "journal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Lesson> lessons;
 
-    public Journal(Long subjectId, Long groupId, Long teacherId) {
+    public Journal(SemesterNumber semesterNumber, Long subjectId, Long groupId, Long teacherId) {
+        this.semesterNumber = semesterNumber;
         this.subjectId = subjectId;
         this.groupId = groupId;
         this.teacherId = teacherId;

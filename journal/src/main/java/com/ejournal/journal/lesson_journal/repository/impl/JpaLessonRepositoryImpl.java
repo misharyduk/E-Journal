@@ -1,7 +1,7 @@
-package com.ejournal.journal.lesson.repository.impl;
+package com.ejournal.journal.lesson_journal.repository.impl;
 
-import com.ejournal.journal.lesson.entity.Lesson;
-import com.ejournal.journal.lesson.repository.LessonRepository;
+import com.ejournal.journal.lesson_journal.entity.Lesson;
+import com.ejournal.journal.lesson_journal.repository.LessonRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

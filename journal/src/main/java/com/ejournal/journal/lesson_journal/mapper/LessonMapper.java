@@ -1,8 +1,8 @@
-package com.ejournal.journal.lesson.mapper;
+package com.ejournal.journal.lesson_journal.mapper;
 
-import com.ejournal.journal.lesson.dto.LessonRequestDto;
-import com.ejournal.journal.lesson.dto.LessonResponseDto;
-import com.ejournal.journal.lesson.entity.Lesson;
+import com.ejournal.journal.lesson_journal.dto.LessonRequestDto;
+import com.ejournal.journal.lesson_journal.dto.LessonResponseDto;
+import com.ejournal.journal.lesson_journal.entity.Lesson;
 
 public class LessonMapper {
 

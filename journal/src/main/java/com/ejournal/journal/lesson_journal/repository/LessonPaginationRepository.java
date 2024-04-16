@@ -1,4 +1,4 @@
-package com.ejournal.journal.lesson.repository;
+package com.ejournal.journal.lesson_journal.repository;
 
 import jakarta.persistence.Tuple;
 import org.springframework.data.domain.Page;

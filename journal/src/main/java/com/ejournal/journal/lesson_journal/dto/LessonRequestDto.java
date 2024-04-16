@@ -1,4 +1,4 @@
-package com.ejournal.journal.lesson.dto;
+package com.ejournal.journal.lesson_journal.dto;
 
 import lombok.Getter;
 import lombok.Setter;

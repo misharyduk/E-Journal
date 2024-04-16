@@ -1,13 +1,12 @@
-package com.ejournal.journal.lesson.repository.impl;
+package com.ejournal.journal.lesson_journal.repository.impl;
 
-import com.ejournal.journal.lesson.entity.Lesson;
-import com.ejournal.journal.lesson.repository.LessonPaginationRepository;
+import com.ejournal.journal.lesson_journal.entity.Lesson;
+import com.ejournal.journal.lesson_journal.repository.LessonPaginationRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Tuple;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
