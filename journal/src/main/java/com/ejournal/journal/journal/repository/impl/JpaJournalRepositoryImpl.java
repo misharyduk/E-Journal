@@ -5,6 +5,7 @@ import com.ejournal.journal.journal.repository.JournalRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +34,7 @@ public interface JpaJournalRepositoryImpl extends JpaRepository<Journal, Long>, 
 
     @Override
     default List<Journal> fetchAllInstancesByTeacher(Long teacherId){
-        return findAllByTeacherId(teacherId);
+        return findAllByLectureTeacherIdOrPracticalTeacherId(teacherId);
     }
 
     @Override
@@ -58,7 +59,8 @@ public interface JpaJournalRepositoryImpl extends JpaRepository<Journal, Long>, 
 
     List<Journal> findAllBySubjectId(Long subjectId);
 
-    List<Journal> findAllByTeacherId(Long teacherId);
+    @Query("from Journal where lectureTeacherId=?1 OR practicalTeacherId=?1")
+    List<Journal> findAllByLectureTeacherIdOrPracticalTeacherId(Long teacherId);
 
     List<Journal> findAllByGroupId(Long groupId);
 }
