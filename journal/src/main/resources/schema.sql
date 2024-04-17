@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS journal(
     journal_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     group_id BIGINT NOT NULL,
     subject_id BIGINT NOT NULL,
-    teacher_id BIGINT NOT NULL
+    lecture_teacher_id BIGINT NOT NULL,
+    practical_teacher_id BIGINT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS lesson(

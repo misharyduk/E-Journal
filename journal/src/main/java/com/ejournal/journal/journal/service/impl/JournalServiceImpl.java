@@ -4,11 +4,11 @@ import com.ejournal.journal.common.dto.PageableRequestDto;
 import com.ejournal.journal.common.dto.PageableResponseDto;
 import com.ejournal.journal.common.exception.ResourceNotFoundException;
 import com.ejournal.journal.common.util.SortFieldValidator.JournalField;
-import com.ejournal.journal.journal.dto.AcademicModuleResponseDto;
 import com.ejournal.journal.journal.dto.JournalRequestDto;
 import com.ejournal.journal.journal.dto.JournalResponseDto;
 import com.ejournal.journal.journal.entity.Journal;
 import com.ejournal.journal.journal.entity.academic_entities.SemesterNumber;
+import com.ejournal.journal.journal.mapper.JournalMapper;
 import com.ejournal.journal.journal.repository.JournalRepository;
 import com.ejournal.journal.journal.service.JournalService;
 import com.ejournal.journal.common.feign_client.group.GroupFeignClient;
@@ -43,7 +43,7 @@ public class JournalServiceImpl implements JournalService {
     @Override
     public JournalResponseDto create(JournalRequestDto requestDto) {
         SemesterNumber semesterNumber = SemesterNumber.valueOf(requestDto.getSemesterNumber().toUpperCase());
-        Journal journal = new Journal(semesterNumber, requestDto.getSubjectId(), requestDto.getGroupId(), requestDto.getTeacherId());
+        Journal journal = JournalMapper.mapToEntity(requestDto, new Journal());
         journalRepository.createInstance(journal);
 
         return fillJournalResponse(journal);
@@ -137,11 +137,7 @@ public class JournalServiceImpl implements JournalService {
     }
 
     private JournalResponseDto fillJournalResponse(Journal journal) {
-        JournalResponseDto responseDto = new JournalResponseDto();
-        responseDto.setId(journal.getId());
-        responseDto.setSemesterNumber(journal.getSemesterNumber().getValue());
-        responseDto.setAcademicModules(journal.getAcademicModules().stream()
-                .map(m -> new AcademicModuleResponseDto(m.getId(), m.getModuleNumber())).toList());
+        JournalResponseDto responseDto = JournalMapper.mapToDto(journal);
 
         // Map Group
         ResponseEntity<GroupResponseDto> groupDto = groupClient.fetchGroup(journal.getGroupId());
@@ -157,12 +153,20 @@ public class JournalServiceImpl implements JournalService {
 
         responseDto.setSubject(subjectDto.getBody());
 
-        // Map Teacher
-        ResponseEntity<TeacherResponseDto> teacherDto = universityClient.fetchTeacher(journal.getTeacherId());
-        if(teacherDto.getBody() == null)
-            throw new ResourceNotFoundException("Teacher", "id", String.valueOf(journal.getTeacherId()));
+        // Map Lecture Teacher
+        ResponseEntity<TeacherResponseDto> lectureTeacher = universityClient.fetchTeacher(journal.getLectureTeacherId());
+        if(lectureTeacher.getBody() == null)
+            throw new ResourceNotFoundException("Teacher", "id", String.valueOf(journal.getLectureTeacherId()));
 
-        responseDto.setTeacher(teacherDto.getBody());
+        responseDto.setLectureTeacher(lectureTeacher.getBody());
+
+        // Map Practical Teacher
+        ResponseEntity<TeacherResponseDto> practicalTeacher = universityClient.fetchTeacher(journal.getPracticalTeacherId());
+        if(practicalTeacher.getBody() == null)
+            throw new ResourceNotFoundException("Teacher", "id", String.valueOf(journal.getPracticalTeacherId()));
+
+        responseDto.setPracticalTeacher(practicalTeacher.getBody());
+
         return responseDto;
     }
 }

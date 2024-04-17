@@ -17,6 +17,7 @@ public class JournalResponseDto {
     private List<AcademicModuleResponseDto> academicModules;
     private SubjectResponseDto subject;
     private GroupResponseDto group;
-    private TeacherResponseDto teacher;
+    private TeacherResponseDto lectureTeacher;
+    private TeacherResponseDto practicalTeacher;
     private PageableResponseDto<LessonResponseDto> lessons;
 }

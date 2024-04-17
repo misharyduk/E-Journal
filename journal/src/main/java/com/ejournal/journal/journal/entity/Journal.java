@@ -27,15 +27,18 @@ public class Journal {
     private Long subjectId;
     @Column(name = "group_id")
     private Long groupId;
-    @Column(name = "teacher_id")
-    private Long teacherId;
+    @Column(name = "lecture_teacher_id")
+    private Long lectureTeacherId;
+    @Column(name = "practical_teacher_id")
+    private Long practicalTeacherId;
     @OneToMany(mappedBy = "journal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Lesson> lessons = new ArrayList<>();
 
-    public Journal(SemesterNumber semesterNumber, Long subjectId, Long groupId, Long teacherId) {
+    public Journal(SemesterNumber semesterNumber, Long subjectId, Long groupId, Long lectureTeacherId, Long practicalTeacherId) {
         this.semesterNumber = semesterNumber;
         this.subjectId = subjectId;
         this.groupId = groupId;
-        this.teacherId = teacherId;
+        this.lectureTeacherId = lectureTeacherId;
+        this.practicalTeacherId = practicalTeacherId;
     }
 }

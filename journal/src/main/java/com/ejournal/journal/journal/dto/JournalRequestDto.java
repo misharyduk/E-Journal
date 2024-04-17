@@ -9,5 +9,6 @@ public class JournalRequestDto {
     private String semesterNumber;
     private Long subjectId;
     private Long groupId;
-    private Long teacherId;
+    private Long lectureTeacherId;
+    private Long practicalTeacherId;
 }
