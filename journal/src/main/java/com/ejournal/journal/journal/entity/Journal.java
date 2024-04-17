@@ -21,6 +21,10 @@ public class Journal {
     @Column(name = "semester_number")
     @Enumerated(EnumType.STRING)
     private SemesterNumber semesterNumber;
+    @Column(name = "first_acad_year")
+    private Integer firstAcademicYear;
+    @Column(name = "second_acad_year")
+    private Integer secondAcademicYear;
     @OneToMany(mappedBy = "journal", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<AcademicModule> academicModules = new ArrayList<>();
     @Column(name = "subject_id")

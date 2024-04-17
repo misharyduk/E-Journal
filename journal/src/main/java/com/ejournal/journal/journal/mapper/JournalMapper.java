@@ -14,6 +14,8 @@ public class JournalMapper {
         journal.setLectureTeacherId(requestDto.getLectureTeacherId());
         journal.setPracticalTeacherId(requestDto.getPracticalTeacherId());
         journal.setSemesterNumber(SemesterNumber.valueOf(requestDto.getSemesterNumber().toUpperCase()));
+        journal.setFirstAcademicYear(requestDto.getFirstAcademicYear());
+        journal.setSecondAcademicYear(requestDto.getSecondAcademicYear());
         return journal;
     }
 
@@ -21,6 +23,8 @@ public class JournalMapper {
         JournalResponseDto responseDto = new JournalResponseDto();
         responseDto.setId(journal.getId());
         responseDto.setSemesterNumber(journal.getSemesterNumber().getValue());
+        responseDto.setFirstAcademicYear(journal.getFirstAcademicYear());
+        responseDto.setSecondAcademicYear(journal.getSecondAcademicYear());
         responseDto.setAcademicModules(journal.getAcademicModules().stream()
                 .map(m -> new AcademicModuleResponseDto(m.getId(), m.getModuleNumber())).toList());
         return responseDto;

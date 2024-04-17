@@ -14,6 +14,8 @@ import java.util.List;
 public class JournalResponseDto {
     private Long id;
     private String semesterNumber;
+    private Integer firstAcademicYear;
+    private Integer secondAcademicYear;
     private List<AcademicModuleResponseDto> academicModules;
     private SubjectResponseDto subject;
     private GroupResponseDto group;
