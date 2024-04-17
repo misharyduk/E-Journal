@@ -68,6 +68,7 @@ public class GroupServiceImpl implements GroupService {
         List<StudentResponseDto> students = studentService.fetchByGroupId(group.getId());
 
         GroupResponseDto responseDto = GroupMapper.mapToDto(group);
+        responseDto.setNumberOfStudents((long) students.size());
         responseDto.setDepartment(departmentDto.getBody());
         return responseDto;
     }
