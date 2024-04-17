@@ -52,10 +52,13 @@ public class ExerciseWorkController {
 
     @DeleteMapping("/{exerciseWorkId}")
     public ResponseEntity<ResponseDto> deleteExerciseWork(@PathVariable("exerciseWorkId") Long exerciseWorkId){
-        exerciseWorkService.delete(exerciseWorkId);
-        return ResponseEntity
+        boolean isWorkDeleted = exerciseWorkService.delete(exerciseWorkId);
+        if(isWorkDeleted)
+            return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ResponseDto(STATUS_CODE_200, "Exercise Work" + INSTANCE_DELETED));
+        else
+            throw new RuntimeException("Cannot delete work with id " + exerciseWorkId);
     }
 
 }

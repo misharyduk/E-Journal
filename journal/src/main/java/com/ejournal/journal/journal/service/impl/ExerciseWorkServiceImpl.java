@@ -62,6 +62,9 @@ public class ExerciseWorkServiceImpl implements ExerciseWorkService {
         ExerciseWork exerciseWork = exerciseWorkRepository.fetchExerciseWorkById(exerciseWorkId)
                 .orElseThrow(() -> new ResourceNotFoundException("Exercise Work", "id", String.valueOf(exerciseWorkId)));
 
+        AcademicModule academicModule = exerciseWork.getAcademicModule();
+        academicModule.getExerciseWorks().remove(exerciseWork);
+
         exerciseWorkRepository.deleteExerciseWork(exerciseWork);
 
         return true;
