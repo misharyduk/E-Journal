@@ -5,6 +5,8 @@ CREATE SEQUENCE exer_work_id_sequence INCREMENT BY 1;
 
 CREATE TABLE IF NOT EXISTS journal(
     semester_number VARCHAR(10) CHECK(semester_number IN ('FIRST', 'SECOND')),
+    first_acad_year INT NOT NULL,
+    second_acad_year INT NOT NULL,
     journal_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     group_id BIGINT NOT NULL,
     subject_id BIGINT NOT NULL,
