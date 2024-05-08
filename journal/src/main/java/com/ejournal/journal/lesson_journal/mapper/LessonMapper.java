@@ -20,7 +20,6 @@ public class LessonMapper {
         lessonResponseDto.setDate(lesson.getDate());
         lessonResponseDto.setOrder(lesson.getOrder());
         lessonResponseDto.setAuditory(lesson.getAuditory());
-        lessonResponseDto.setJournalId(lesson.getJournal().getId());
         return lessonResponseDto;
     }
 

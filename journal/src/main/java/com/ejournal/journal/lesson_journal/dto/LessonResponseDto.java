@@ -1,9 +1,11 @@
 package com.ejournal.journal.lesson_journal.dto;
 
+import com.ejournal.journal.lesson_journal.entity.LessonAttendance;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter @Setter
 public class LessonResponseDto {
@@ -12,5 +14,5 @@ public class LessonResponseDto {
     private Date date;
     private Integer order;
     private String auditory;
-    private Long journalId;
+    private List<LessonAttendanceResponseDto> lessonAttendances;
 }

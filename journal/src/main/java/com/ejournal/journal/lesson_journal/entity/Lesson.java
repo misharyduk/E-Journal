@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -23,7 +24,9 @@ public class Lesson {
     private Integer order;
     @Column(name = "auditory")
     private String auditory;
-    @JoinColumn(name = "journal_id")
+    @JoinColumn(name = "les_journal_id")
     @ManyToOne
-    private Journal journal;
+    private LessonJournal lessonJournal;
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private List<LessonAttendance> lessonAttendances;
 }

@@ -1,0 +1,17 @@
+package com.ejournal.journal.lesson_journal.service;
+
+import com.ejournal.journal.exercise_journal.dto.PracticeJournalResponseDto;
+import com.ejournal.journal.exercise_journal.dto.WorkStudentMarkRequestDto;
+import com.ejournal.journal.lesson_journal.dto.LessonJournalResponseDto;
+import com.ejournal.journal.lesson_journal.dto.StudentAttendanceRequestDto;
+
+public interface LessonJournalService {
+
+    LessonJournalResponseDto fetchById(Long id);
+
+    LessonJournalResponseDto markStudentAttendance(Long lessonJournalId, StudentAttendanceRequestDto attendanceRequestDto);
+
+    LessonJournalResponseDto updateStudentAttendance(Long lessonJournalId, Long attendanceId, StudentAttendanceRequestDto attendanceRequestDto);
+
+
+}
