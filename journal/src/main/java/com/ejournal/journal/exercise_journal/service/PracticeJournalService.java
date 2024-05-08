@@ -12,12 +12,10 @@ import java.util.List;
 
 public interface PracticeJournalService {
 
-    PracticeJournalResponseDto fetchById(Long id, PageableRequestDto worksPageableRequestDto);
+    PracticeJournalResponseDto fetchById(Long id);
 
-    PracticeJournalResponseDto markStudentGrade(Long practiceJournalId, WorkStudentMarkRequestDto markRequestDto, PageableRequestDto worksPageableRequestDto);
+    PracticeJournalResponseDto markStudentGrade(Long practiceJournalId, WorkStudentMarkRequestDto markRequestDto);
 
-    PracticeJournalResponseDto updateStudentGrade(Long practiceJournalId, Long gradeId, PageableRequestDto worksPageableRequestDto);
-
-    PracticeJournalResponseDto deleteStudentGrade(Long practiceJournalId, Long gradeId, PageableRequestDto worksPageableRequestDto);
+    PracticeJournalResponseDto updateStudentGrade(Long practiceJournalId, Long gradeId, WorkStudentMarkRequestDto markRequestDto);
 
 }
