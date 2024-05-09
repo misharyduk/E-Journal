@@ -4,6 +4,11 @@ import com.ejournal.journal.common.dto.PageableRequestDto;
 import com.ejournal.journal.common.dto.PageableResponseDto;
 import com.ejournal.journal.common.exception.ResourceNotFoundException;
 import com.ejournal.journal.common.util.SortFieldValidator.JournalField;
+import com.ejournal.journal.control_journal.entity.ControlJournal;
+import com.ejournal.journal.control_journal.repository.ControlJournalRepository;
+import com.ejournal.journal.exercise_journal.entity.PracticeJournal;
+import com.ejournal.journal.exercise_journal.repository.PracticeJournalRepository;
+import com.ejournal.journal.exercise_journal.service.PracticeJournalService;
 import com.ejournal.journal.journal.dto.JournalRequestDto;
 import com.ejournal.journal.journal.dto.JournalResponseDto;
 import com.ejournal.journal.journal.entity.Journal;
@@ -17,6 +22,8 @@ import com.ejournal.journal.common.feign_client.university.UniversityFeignClient
 import com.ejournal.journal.common.feign_client.university.dto.SubjectResponseDto;
 import com.ejournal.journal.common.feign_client.university.dto.TeacherResponseDto;
 import com.ejournal.journal.lesson_journal.dto.LessonResponseDto;
+import com.ejournal.journal.lesson_journal.entity.LessonJournal;
+import com.ejournal.journal.lesson_journal.repository.LessonJournalRepository;
 import com.ejournal.journal.lesson_journal.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,12 +45,32 @@ public class JournalServiceImpl implements JournalService {
     private final UniversityFeignClient universityClient;
 
     private final JournalRepository journalRepository;
+    private final PracticeJournalRepository practiceJournalRepository;
+    private final LessonJournalRepository lessonJournalRepository;
+    private final ControlJournalRepository controlJournalRepository;
     private final LessonService lessonService;
 
     @Override
     public JournalResponseDto create(JournalRequestDto requestDto) {
         SemesterNumber semesterNumber = SemesterNumber.valueOf(requestDto.getSemesterNumber().toUpperCase());
         Journal journal = JournalMapper.mapToEntity(requestDto, new Journal());
+
+        PracticeJournal practiceJournal = new PracticeJournal();
+        practiceJournalRepository.savePracticeJournal(practiceJournal);
+        journal.setPracticeLessonJournalId(practiceJournal.getId());
+
+        LessonJournal lectureLessonJournal = new LessonJournal();
+        lessonJournalRepository.saveLessonJournal(lectureLessonJournal);
+        journal.setLectureLessonJournalId(lectureLessonJournal.getId());
+
+        LessonJournal practiceLessonJournal = new LessonJournal();
+        lessonJournalRepository.saveLessonJournal(practiceLessonJournal);
+        journal.setPracticeLessonJournalId(practiceLessonJournal.getId());
+
+        ControlJournal controlJournal = new ControlJournal();
+        controlJournalRepository.saveControlJournal(controlJournal);
+        journal.setControlJournalId(controlJournal.getId());
+
         journalRepository.createInstance(journal);
 
         return fillJournalResponse(journal);

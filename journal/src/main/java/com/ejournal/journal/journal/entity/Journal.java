@@ -35,8 +35,15 @@ public class Journal {
     private Long lectureTeacherId;
     @Column(name = "practical_teacher_id")
     private Long practicalTeacherId;
-    @OneToMany(mappedBy = "journal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Lesson> lessons = new ArrayList<>();
+
+    @Column(name = "lecture_lesson_journal_id")
+    private Long lectureLessonJournalId;
+    @Column(name = "practice_lesson_journal_id")
+    private Long practiceLessonJournalId;
+    @Column(name = "exercise_work_journal_id")
+    private Long exerciseWorkJournalId;
+    @Column(name = "control_journal_id")
+    private Long controlJournalId;
 
     public Journal(SemesterNumber semesterNumber, Long subjectId, Long groupId, Long lectureTeacherId, Long practicalTeacherId) {
         this.semesterNumber = semesterNumber;
