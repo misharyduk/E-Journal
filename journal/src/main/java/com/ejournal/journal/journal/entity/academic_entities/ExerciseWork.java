@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,7 @@ public class ExerciseWork {
     @ManyToOne(fetch = FetchType.EAGER)
     private AcademicModule academicModule;
     @OneToMany(mappedBy = "exerciseWork", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private List<WorkStudent> workStudents;
+    private List<WorkStudent> workStudents = new ArrayList<>();
     @JoinColumn(name = "prac_journal_id")
     @ManyToOne(cascade = CascadeType.PERSIST)
     private PracticeJournal practiceJournal;
