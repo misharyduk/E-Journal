@@ -15,6 +15,11 @@ public interface JpaAcademicModuleRepositoryImpl extends JpaRepository<AcademicM
     }
 
     @Override
+    default List<AcademicModule> fetchAllModulesByControlJournal(Long controlJournalId){
+        return findAllByJournalControlJournalId(controlJournalId);
+    }
+
+    @Override
     default Optional<AcademicModule> fetchModuleById(Long moduleId){
         return findById(moduleId);
     }
@@ -35,4 +40,6 @@ public interface JpaAcademicModuleRepositoryImpl extends JpaRepository<AcademicM
     }
 
     List<AcademicModule> findAllByJournalId(Long journalId);
+
+    List<AcademicModule> findAllByJournalControlJournalId(Long controlJournalId);
 }

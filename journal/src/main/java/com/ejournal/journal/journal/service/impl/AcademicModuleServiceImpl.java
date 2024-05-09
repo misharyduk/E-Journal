@@ -6,6 +6,7 @@ import com.ejournal.journal.journal.dto.AcademicModuleResponseDto;
 import com.ejournal.journal.journal.dto.ExerciseWorkResponseDto;
 import com.ejournal.journal.journal.entity.Journal;
 import com.ejournal.journal.journal.entity.academic_entities.AcademicModule;
+import com.ejournal.journal.journal.entity.academic_entities.ControlWork;
 import com.ejournal.journal.journal.repository.AcademicModuleRepository;
 import com.ejournal.journal.journal.repository.JournalRepository;
 import com.ejournal.journal.journal.service.AcademicModuleService;
@@ -40,6 +41,10 @@ public class AcademicModuleServiceImpl implements AcademicModuleService {
     public AcademicModuleResponseDto create(AcademicModuleRequestDto module) {
         AcademicModule academicModule = new AcademicModule();
         academicModule.setModuleNumber(module.getModuleNumber());
+
+        ControlWork controlWork = new ControlWork();
+        controlWork.setExecutionDate(module.getControlWorkExecutionDate());
+        academicModule.setControlWork(controlWork);
 
         Journal journal = journalRepository.fetchInstanceById(module.getJournalId())
                 .orElseThrow(() -> new ResourceNotFoundException("Journal", "id", String.valueOf(module.getJournalId())));

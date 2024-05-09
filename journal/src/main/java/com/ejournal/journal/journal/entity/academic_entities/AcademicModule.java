@@ -1,5 +1,7 @@
 package com.ejournal.journal.journal.entity.academic_entities;
 
+import com.ejournal.journal.control_journal.entity.ControlJournal;
+import com.ejournal.journal.control_journal.entity.ModuleStudentControl;
 import com.ejournal.journal.journal.entity.Journal;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -21,6 +23,9 @@ public class AcademicModule {
     @JoinColumn(name = "journal_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Journal journal;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "academicModule")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "academicModule")
     private List<ExerciseWork> exerciseWorks = new ArrayList<>();
+    @JoinColumn(name = "control_work_id")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private ControlWork controlWork;
 }

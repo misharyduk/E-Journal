@@ -1,6 +1,5 @@
 package com.ejournal.journal.journal.dto;
 
-import jakarta.persistence.Column;
 import lombok.*;
 
 import java.util.List;
@@ -10,6 +9,7 @@ public class AcademicModuleResponseDto {
     private Long id;
     private Integer moduleNumber;
     private List<ExerciseWorkResponseDto> exerciseWorks;
+    private ControlWorkResponseDto controlWork;
 
     public AcademicModuleResponseDto(Long id, Integer moduleNumber) {
         this.id = id;

@@ -9,6 +9,8 @@ public interface AcademicModuleRepository {
 
     List<AcademicModule> fetchAllModulesByJournal(Long journalId);
 
+    List<AcademicModule> fetchAllModulesByControlJournal(Long controlJournalId);
+
     Optional<AcademicModule> fetchModuleById(Long moduleId);
 
     AcademicModule createInstance(AcademicModule module);
