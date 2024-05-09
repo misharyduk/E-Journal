@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Table(name = "practice_journal")
@@ -16,5 +17,5 @@ public class PracticeJournal {
     @Column(name = "practice_journal_id")
     private Long id;
     @OneToMany(mappedBy = "practiceJournal", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private List<ExerciseWork> exerciseWorks;
+    private List<ExerciseWork> exerciseWorks = new ArrayList<>();
 }

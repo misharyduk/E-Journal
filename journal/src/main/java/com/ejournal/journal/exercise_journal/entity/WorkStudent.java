@@ -23,7 +23,7 @@ public class WorkStudent {
     private Date defendDate;
     @Column(name = "mark")
     private Float mark;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "exer_work_id")
     private ExerciseWork exerciseWork;
 }
