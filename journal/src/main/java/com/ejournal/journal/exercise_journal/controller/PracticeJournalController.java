@@ -5,6 +5,8 @@ import com.ejournal.journal.common.dto.PageableResponseDto;
 import com.ejournal.journal.exercise_journal.dto.PracticeJournalResponseDto;
 import com.ejournal.journal.exercise_journal.dto.WorkStudentMarkRequestDto;
 import com.ejournal.journal.exercise_journal.service.PracticeJournalService;
+import com.ejournal.journal.journal.dto.ExerciseWorkRequestDto;
+import com.ejournal.journal.journal.dto.ExerciseWorkResponseDto;
 import com.ejournal.journal.journal.dto.JournalResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,9 +28,19 @@ public class PracticeJournalController {
                 .body(practiceJournal);
     }
 
+    @PostMapping("/{practiceJournalId}/works")
+    public ResponseEntity<PracticeJournalResponseDto> addExerciseWorkToJournal(@PathVariable("practiceJournalId") Long practiceJournalId,
+                                                                               @RequestBody ExerciseWorkRequestDto exerciseWorkRequestDto){
+
+        PracticeJournalResponseDto practiceJournal = practiceJournalService.createExerciseWork(practiceJournalId, exerciseWorkRequestDto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(practiceJournal);
+    }
+
     @PostMapping("/{practiceJournalId}/grades")
     public ResponseEntity<PracticeJournalResponseDto> setGrade(@PathVariable("practiceJournalId") Long practiceJournalId,
-                                                               WorkStudentMarkRequestDto markRequestDto){
+                                                               @RequestBody WorkStudentMarkRequestDto markRequestDto){
         PracticeJournalResponseDto practiceJournal = practiceJournalService.markStudentGrade(practiceJournalId, markRequestDto);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -38,7 +50,7 @@ public class PracticeJournalController {
     @PutMapping("/{practiceJournalId}/grades/{gradeId}")
     public ResponseEntity<PracticeJournalResponseDto> updateGrade(@PathVariable("practiceJournalId") Long practiceJournalId,
                                                                   @PathVariable("gradeId") Long gradeId,
-                                                                  WorkStudentMarkRequestDto markRequestDto){
+                                                                  @RequestBody WorkStudentMarkRequestDto markRequestDto){
         PracticeJournalResponseDto practiceJournal = practiceJournalService.updateStudentGrade(practiceJournalId, gradeId, markRequestDto);
         return ResponseEntity
                 .status(HttpStatus.OK)

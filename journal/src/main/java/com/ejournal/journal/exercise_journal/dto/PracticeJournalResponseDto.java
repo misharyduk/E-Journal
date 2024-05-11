@@ -1,6 +1,7 @@
 package com.ejournal.journal.exercise_journal.dto;
 
 import com.ejournal.journal.exercise_journal.entity.WorkStudent;
+import com.ejournal.journal.journal.dto.AcademicModuleResponseDto;
 import com.ejournal.journal.journal.dto.ExerciseWorkResponseDto;
 import com.ejournal.journal.journal.entity.academic_entities.ExerciseWork;
 import jakarta.persistence.FetchType;
@@ -15,6 +16,7 @@ import java.util.List;
 public class PracticeJournalResponseDto {
 
     private Long id;
+    private List<AcademicModuleResponseDto> academicModules;
     private List<ExerciseWorkResponseDto> exerciseWorks;
 
 }
