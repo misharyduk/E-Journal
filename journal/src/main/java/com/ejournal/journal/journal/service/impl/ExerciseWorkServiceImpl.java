@@ -44,19 +44,6 @@ public class ExerciseWorkServiceImpl implements ExerciseWorkService {
     }
 
     @Override
-    public ExerciseWorkResponseDto create(ExerciseWorkRequestDto exerciseWorkRequestDto) {
-        ExerciseWork exerciseWork = ExerciseWorkMapper.mapToEntity(exerciseWorkRequestDto, new ExerciseWork());
-
-        AcademicModule academicModule = academicModuleRepository.fetchModuleById(exerciseWorkRequestDto.getModuleId())
-                .orElseThrow(() -> new ResourceNotFoundException("Module", "id", String.valueOf(exerciseWorkRequestDto.getModuleId())));
-        exerciseWork.setAcademicModule(academicModule);
-
-        exerciseWorkRepository.createInstance(exerciseWork);
-
-        return ExerciseWorkMapper.mapToDto(exerciseWork);
-    }
-
-    @Override
     public boolean delete(Long exerciseWorkId) {
 
         ExerciseWork exerciseWork = exerciseWorkRepository.fetchExerciseWorkById(exerciseWorkId)

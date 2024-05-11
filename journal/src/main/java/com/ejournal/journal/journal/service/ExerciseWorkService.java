@@ -13,8 +13,6 @@ public interface ExerciseWorkService {
 
     ExerciseWorkResponseDto fetchById(Long exerciseWorkId);
 
-    ExerciseWorkResponseDto create(ExerciseWorkRequestDto exerciseWorkRequestDto);
-
     boolean delete(Long exerciseWorkId);
 
 }

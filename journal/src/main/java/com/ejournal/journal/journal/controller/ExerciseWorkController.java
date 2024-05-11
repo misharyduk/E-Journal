@@ -23,15 +23,6 @@ public class ExerciseWorkController {
 
     private final ExerciseWorkService exerciseWorkService;
 
-    @PostMapping
-    public ResponseEntity<ExerciseWorkResponseDto> addExerciseWorkToJournal(@RequestBody ExerciseWorkRequestDto exerciseWorkRequestDto){
-
-        ExerciseWorkResponseDto exerciseWork = exerciseWorkService.create(exerciseWorkRequestDto);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(exerciseWork);
-    }
-
     @GetMapping(params = "journalId")
     public ResponseEntity<List<ExerciseWorkResponseDto>> fetchAllExerciseWorksByJournal(@RequestParam("journalId") Long journalId){
 

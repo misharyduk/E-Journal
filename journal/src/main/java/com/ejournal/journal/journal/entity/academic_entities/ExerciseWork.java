@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity @Table(name = "exercise_work")
 @Getter @Setter
 public class ExerciseWork {
     @Id
