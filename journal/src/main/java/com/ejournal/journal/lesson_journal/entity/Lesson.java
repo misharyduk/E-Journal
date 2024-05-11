@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,5 +29,5 @@ public class Lesson {
     @ManyToOne
     private LessonJournal lessonJournal;
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private List<LessonAttendance> lessonAttendances;
+    private List<LessonAttendance> lessonAttendances = new ArrayList<>();
 }

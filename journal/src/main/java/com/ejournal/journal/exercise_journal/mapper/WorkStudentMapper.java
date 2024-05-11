@@ -17,10 +17,10 @@ public class WorkStudentMapper {
 
     public static WorkStudent mapMarkRequest(WorkStudentMarkRequestDto workStudentMarkRequestDto){
         WorkStudent workStudent = new WorkStudent();
-        workStudent.setStudentId(workStudent.getStudentId());
-        workStudent.setExecutionDate(workStudent.getExecutionDate());
-        workStudent.setDefendDate(workStudent.getDefendDate());
-        workStudent.setMark(workStudent.getMark());
+        workStudent.setStudentId(workStudentMarkRequestDto.getStudentId());
+        workStudent.setExecutionDate(workStudentMarkRequestDto.getExecutionDate());
+        workStudent.setDefendDate(workStudentMarkRequestDto.getDefendDate());
+        workStudent.setMark(workStudentMarkRequestDto.getMark());
         return workStudent;
     }
 }
