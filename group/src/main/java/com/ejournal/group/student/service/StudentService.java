@@ -17,4 +17,5 @@ public interface StudentService extends CommonCrudService<StudentRequestDto, Stu
     List<StudentResponseDto> fetchByGroupId(Long groupId);
 
     Long countByGroupId(Long groupId);
+
 }

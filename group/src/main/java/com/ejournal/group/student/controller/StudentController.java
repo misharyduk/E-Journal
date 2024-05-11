@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.ejournal.group.common.util.ServiceConstants.INSTANCE_DELETED;
 
 @RestController
@@ -36,6 +38,15 @@ public class StudentController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(pageOfStudents);
+    }
+
+    @GetMapping("/group/{groupId}")
+    public ResponseEntity<List<StudentResponseDto>> fetchAllStudentsOfGroup(@PathVariable("groupId") Long groupId){
+
+        List<StudentResponseDto> listOfStudents = studentService.fetchByGroupId(groupId);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(listOfStudents);
     }
 
     @GetMapping("/{studentId}")
