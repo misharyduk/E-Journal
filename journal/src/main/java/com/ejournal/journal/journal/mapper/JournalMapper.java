@@ -27,6 +27,10 @@ public class JournalMapper {
         responseDto.setSecondAcademicYear(journal.getSecondAcademicYear());
         responseDto.setAcademicModules(journal.getAcademicModules().stream()
                 .map(m -> new AcademicModuleResponseDto(m.getId(), m.getModuleNumber())).toList());
+        responseDto.setLectureLessonsJournalId(journal.getLectureLessonJournalId());
+        responseDto.setPracticeLessonsJournalId(journal.getPracticeLessonJournalId());
+        responseDto.setExerciseJournalId(journal.getExerciseWorkJournalId());
+        responseDto.setControlJournalId(journal.getControlJournalId());
         return responseDto;
     }
 }

@@ -21,5 +21,9 @@ public class JournalResponseDto {
     private GroupResponseDto group;
     private TeacherResponseDto lectureTeacher;
     private TeacherResponseDto practicalTeacher;
-    private PageableResponseDto<LessonResponseDto> lessons;
+
+    private Long lectureLessonsJournalId;
+    private Long practiceLessonsJournalId;
+    private Long exerciseJournalId;
+    private Long controlJournalId;
 }
