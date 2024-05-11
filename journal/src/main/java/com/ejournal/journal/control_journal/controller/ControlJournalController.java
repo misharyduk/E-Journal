@@ -26,8 +26,17 @@ public class ControlJournalController {
     @PutMapping("/{controlJournalId}/modules/{moduleId}/grades")
     public ResponseEntity<ControlJournalResponseDto> updateWorkFinalGrade(@PathVariable("controlJournalId") Long controlJournalId,
                                                                            @PathVariable("moduleId") Long moduleId,
-                                                                           ControlMarkRequestDto markRequestDto){
+                                                                           @RequestBody ControlMarkRequestDto markRequestDto){
         ControlJournalResponseDto controlJournal = controlJournalService.updateControlJournalGrade(controlJournalId, moduleId, markRequestDto);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(controlJournal);
+    }
+
+    @PutMapping("/{controlJournalId}/semester/grades")
+    public ResponseEntity<ControlJournalResponseDto> updateSemesterGrade(@PathVariable("controlJournalId") Long controlJournalId,
+                                                                          @RequestBody ControlMarkRequestDto markRequestDto){
+        ControlJournalResponseDto controlJournal = controlJournalService.updateSemesterGrade(controlJournalId, markRequestDto);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(controlJournal);

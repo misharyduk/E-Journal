@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Entity @Table(name = "control_work")
 @Getter @Setter
 public class ControlWork {
     @Id
@@ -20,6 +20,9 @@ public class ControlWork {
     private Long id;
     @Column(name = "exec_date")
     private Date executionDate;
+    @JoinTable(name = "control_work_and_control_work_student",
+            joinColumns = @JoinColumn(name = "control_work_id"),
+            inverseJoinColumns = @JoinColumn(name = "control_work_student_id"))
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<ControlWorkStudent> controlWorkStudents = new ArrayList<>();
 }

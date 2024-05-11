@@ -18,5 +18,5 @@ public class ControlJournalResponseDto {
     private Long id;
     private List<AcademicModuleResponseDto> academicModules;
     private List<ModuleStudentControlResponseDto> moduleStudentControls;
-    private SemesterStudentGradeResponseDto semesterStudentGrade;
+    private List<SemesterStudentGradeResponseDto> semesterStudentGrades;
 }

@@ -1,18 +1,22 @@
 package com.ejournal.journal.control_journal.service.impl;
 
 import com.ejournal.journal.common.exception.ResourceNotFoundException;
+import com.ejournal.journal.common.feign_client.group.GroupFeignClient;
+import com.ejournal.journal.common.feign_client.group.dto.StudentResponseDto;
 import com.ejournal.journal.control_journal.dto.ControlJournalResponseDto;
 import com.ejournal.journal.control_journal.dto.ControlMarkRequestDto;
 import com.ejournal.journal.control_journal.dto.SemesterStudentGradeResponseDto;
 import com.ejournal.journal.control_journal.entity.ControlJournal;
 import com.ejournal.journal.control_journal.entity.ControlWorkStudent;
 import com.ejournal.journal.control_journal.entity.ModuleStudentControl;
+import com.ejournal.journal.control_journal.entity.SemesterStudentGrade;
 import com.ejournal.journal.control_journal.mapper.ModuleStudentControlMapper;
 import com.ejournal.journal.control_journal.repository.ControlJournalRepository;
 import com.ejournal.journal.control_journal.repository.ModuleStudentControlRepository;
 import com.ejournal.journal.control_journal.service.ControlJournalService;
 import com.ejournal.journal.journal.dto.AcademicModuleResponseDto;
 import com.ejournal.journal.journal.dto.ControlWorkResponseDto;
+import com.ejournal.journal.journal.entity.Journal;
 import com.ejournal.journal.journal.entity.academic_entities.AcademicModule;
 import com.ejournal.journal.journal.mapper.AcademicModuleMapper;
 import com.ejournal.journal.journal.repository.AcademicModuleRepository;
@@ -28,6 +32,9 @@ public class ControlJournalServiceImpl implements ControlJournalService {
     private final ControlJournalRepository controlJournalRepository;
     private final AcademicModuleRepository academicModuleRepository;
 
+    // Feign Clients
+    private final GroupFeignClient groupFeignClient;
+
     @Override
     public ControlJournalResponseDto fetchById(Long controlJournalId) {
         ControlJournal controlJournal = controlJournalRepository.fetchControlJournal(controlJournalId)
@@ -38,6 +45,28 @@ public class ControlJournalServiceImpl implements ControlJournalService {
         return mapControlJournalToResponseDto(controlJournal, academicModules);
     }
 
+    @Override
+    public Journal enrichAndSaveControlJournal(Journal journal) {
+        ControlJournal controlJournal = new ControlJournal();
+
+        List<StudentResponseDto> listOfStudents = groupFeignClient.fetchAllStudentsOfGroup(journal.getGroupId()).getBody();
+
+        for(AcademicModule academicModule : journal.getAcademicModules()) {
+            List<ModuleStudentControl> moduleStudentControls = listOfStudents.stream()
+                    .map(s -> new ModuleStudentControl(s.getId(), academicModule.getId(), 0.0, new ControlWorkStudent(0.0, s.getId()), 0.0))
+                    .toList();
+            controlJournal.getModuleStudentControls().addAll(moduleStudentControls);
+        }
+
+        List<SemesterStudentGrade> semesterStudentGrades = listOfStudents.stream()
+                .map(s -> new SemesterStudentGrade(s.getId(), 0.0))
+                .toList();
+        controlJournal.setSemesterStudentGrades(semesterStudentGrades);
+
+        controlJournalRepository.saveControlJournal(controlJournal);
+        journal.setControlJournalId(controlJournal.getId());
+        return journal;
+    }
 
 
     @Override
@@ -55,7 +84,7 @@ public class ControlJournalServiceImpl implements ControlJournalService {
                 moduleStudentControl.setWorkSumGrade(markRequestDto.getMark());
                 break;
             case "control-grade":
-                if(moduleStudentControl.getControlWorkStudent() != null)
+                if(moduleStudentControl.getControlWorkStudent() != null) // TODO this object cannot be null. test
                     moduleStudentControl.getControlWorkStudent().setMark(markRequestDto.getMark());
                 else {
                     ControlWorkStudent controlWorkStudent = new ControlWorkStudent();
@@ -76,16 +105,33 @@ public class ControlJournalServiceImpl implements ControlJournalService {
         return mapControlJournalToResponseDto(controlJournal, academicModules);
     }
 
+    @Override
+    public ControlJournalResponseDto updateSemesterGrade(Long controlJournalId, ControlMarkRequestDto markRequestDto) {
+        ControlJournal controlJournal = controlJournalRepository.fetchControlJournal(controlJournalId)
+                .orElseThrow(() -> new ResourceNotFoundException("Control journal", "id", String.valueOf(controlJournalId)));
+
+        SemesterStudentGrade semesterStudentGrade = controlJournal.getSemesterStudentGrades().stream()
+                .filter(s -> s.getStudentId().equals(markRequestDto.getStudentId()))
+                .findFirst()
+                .get();
+
+        semesterStudentGrade.setGrade(markRequestDto.getMark());
+
+        controlJournalRepository.saveControlJournal(controlJournal);
+
+        List<AcademicModule> academicModules = academicModuleRepository.fetchAllModulesByControlJournal(controlJournalId);
+
+        return mapControlJournalToResponseDto(controlJournal, academicModules);
+    }
+
     private ControlJournalResponseDto mapControlJournalToResponseDto(ControlJournal controlJournal, List<AcademicModule> academicModules) {
         return ControlJournalResponseDto.builder()
                 .id(controlJournal.getId())
                 .academicModules(academicModules.stream().map(this::mapAcademicModuleToDto).toList())
                 .moduleStudentControls(controlJournal.getModuleStudentControls().stream().map(ModuleStudentControlMapper::mapToDto).toList())
-                .semesterStudentGrade(new SemesterStudentGradeResponseDto(
-                        controlJournal.getSemesterStudentGrade().getId(),
-                        controlJournal.getSemesterStudentGrade().getStudentId(),
-                        controlJournal.getSemesterStudentGrade().getGrade()
-                ))
+                .semesterStudentGrades(
+                        controlJournal.getSemesterStudentGrades().stream().map(s -> new SemesterStudentGradeResponseDto(s.getId(), s.getStudentId(), s.getGrade())).toList()
+                )
                 .build();
     }
 
