@@ -18,15 +18,6 @@ public class LessonController {
 
     private final LessonService lessonService;
 
-    @PostMapping
-    public ResponseEntity<LessonResponseDto> createLesson(@RequestBody LessonRequestDto lessonRequestDto){
-
-        LessonResponseDto lessonResponseDto = lessonService.create(lessonRequestDto);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(lessonResponseDto);
-    }
-
     @GetMapping("/{lessonId}")
     public ResponseEntity<LessonResponseDto> fetchLesson(@PathVariable("lessonId") Long lessonId){
 

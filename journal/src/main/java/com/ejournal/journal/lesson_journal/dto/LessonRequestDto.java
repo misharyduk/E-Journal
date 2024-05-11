@@ -11,5 +11,4 @@ public class LessonRequestDto {
     private Date date;
     private Integer order;
     private String auditory;
-    private Long journalId;
 }

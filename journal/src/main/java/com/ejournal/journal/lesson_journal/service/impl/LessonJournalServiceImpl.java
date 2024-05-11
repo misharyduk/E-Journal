@@ -9,11 +9,9 @@ import com.ejournal.journal.exercise_journal.mapper.WorkStudentMapper;
 import com.ejournal.journal.exercise_journal.repository.PracticeJournalRepository;
 import com.ejournal.journal.exercise_journal.repository.WorkStudentRepository;
 import com.ejournal.journal.exercise_journal.service.PracticeJournalService;
+import com.ejournal.journal.journal.entity.Journal;
 import com.ejournal.journal.journal.entity.academic_entities.ExerciseWork;
-import com.ejournal.journal.lesson_journal.dto.LessonAttendanceResponseDto;
-import com.ejournal.journal.lesson_journal.dto.LessonJournalResponseDto;
-import com.ejournal.journal.lesson_journal.dto.LessonResponseDto;
-import com.ejournal.journal.lesson_journal.dto.StudentAttendanceRequestDto;
+import com.ejournal.journal.lesson_journal.dto.*;
 import com.ejournal.journal.lesson_journal.entity.Lesson;
 import com.ejournal.journal.lesson_journal.entity.LessonAttendance;
 import com.ejournal.journal.lesson_journal.entity.LessonJournal;
@@ -38,6 +36,43 @@ public class LessonJournalServiceImpl implements LessonJournalService {
     public LessonJournalResponseDto fetchById(Long lessonJournalId) {
         LessonJournal lessonJournal = lessonJournalRepository.fetchLessonJournal(lessonJournalId)
                 .orElseThrow(() -> new ResourceNotFoundException("Lesson journal", "id", String.valueOf(lessonJournalId)));
+        return LessonJournalResponseDto.builder()
+                .id(lessonJournal.getId())
+                .lessons(lessonJournal.getLessons().stream()
+                        .map(this::mapLessonDto)
+                        .toList())
+                .build();
+    }
+
+    @Override
+    public Journal enrichAndSaveLessonJournal(Journal journal, String lessonJournalType) {
+        LessonJournal lessonJournal = new LessonJournal();
+        lessonJournalRepository.saveLessonJournal(lessonJournal);
+        if(lessonJournalType.equals("LECTURE")){
+            journal.setLectureLessonJournalId(lessonJournal.getId());
+        } else {
+            journal.setPracticeLessonJournalId(lessonJournal.getId());
+        }
+        return journal;
+    }
+
+    @Override
+    public LessonJournalResponseDto createLesson(Long lessonJournalId, LessonRequestDto lessonRequestDto) {
+
+        if(lessonJournalId == null || lessonJournalId <= 0)
+            throw new RuntimeException("Journal id cannot be less than 1");
+
+        LessonJournal lessonJournal = lessonJournalRepository.fetchLessonJournal(lessonJournalId)
+                .orElseThrow(() -> new ResourceNotFoundException("Lesson journal", "id", String.valueOf(lessonJournalId)));
+
+        Lesson lesson = LessonMapper.mapToEntity(lessonRequestDto, new Lesson());
+
+        lessonJournal.getLessons().add(lesson);
+        lesson.setLessonJournal(lessonJournal);
+
+        lessonRepository.createInstance(lesson);
+        lessonJournalRepository.saveLessonJournal(lessonJournal);
+
         return LessonJournalResponseDto.builder()
                 .id(lessonJournal.getId())
                 .lessons(lessonJournal.getLessons().stream()

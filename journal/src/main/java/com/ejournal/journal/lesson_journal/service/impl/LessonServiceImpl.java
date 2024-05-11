@@ -26,20 +26,6 @@ public class LessonServiceImpl implements LessonService {
     private final JournalRepository journalRepository;
 
     @Override
-    public LessonResponseDto create(LessonRequestDto requestDto) {
-        Lesson lesson = LessonMapper.mapToEntity(requestDto, new Lesson());
-
-        if(requestDto.getJournalId() == null || requestDto.getJournalId() <= 0)
-            throw new RuntimeException("Journal id cannot be less than 1");
-
-        Journal journal = journalRepository.fetchInstanceById(requestDto.getJournalId())
-                .orElseThrow(() -> new ResourceNotFoundException("Journal", "id", String.valueOf(requestDto.getJournalId())));
-        lesson.setJournal(journal);
-
-        return LessonMapper.mapToDto(lessonRepository.createInstance(lesson), new LessonResponseDto());
-    }
-
-    @Override
     public LessonResponseDto fetchById(Long id) {
         Lesson lessonFromDb = lessonRepository.fetchInstanceById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Lesson", "id", String.valueOf(id)));
