@@ -8,6 +8,7 @@ import java.util.Date;
 @Getter @Setter
 public class AcademicModuleRequestDto {
     private Integer moduleNumber;
-    private Long journalId;
+    private Date startDate;
+    private Date endDate;
     private Date controlWorkExecutionDate;
 }

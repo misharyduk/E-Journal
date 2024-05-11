@@ -11,6 +11,8 @@ public interface AcademicModuleRepository {
 
     List<AcademicModule> fetchAllModulesByControlJournal(Long controlJournalId);
 
+    List<AcademicModule> fetchAllModulesByExerciseJournal(Long exerciseJournalId);
+
     Optional<AcademicModule> fetchModuleById(Long moduleId);
 
     AcademicModule createInstance(AcademicModule module);
@@ -18,5 +20,4 @@ public interface AcademicModuleRepository {
     AcademicModule saveInstance(AcademicModule module);
 
     void deleteModule(AcademicModule module);
-
 }

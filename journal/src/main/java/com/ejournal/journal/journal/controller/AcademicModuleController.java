@@ -23,15 +23,6 @@ public class AcademicModuleController {
 
     private final AcademicModuleService academicModuleService;
 
-    @PostMapping
-    public ResponseEntity<AcademicModuleResponseDto> addModuleToJournal(@RequestBody AcademicModuleRequestDto academicModuleRequestDto){
-
-        AcademicModuleResponseDto academicModule = academicModuleService.create(academicModuleRequestDto);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(academicModule);
-    }
-
     @GetMapping(params = "journalId")
     public ResponseEntity<List<AcademicModuleResponseDto>> fetchAllModulesByJournal(@RequestParam("journalId") Long journalId){
 

@@ -13,7 +13,7 @@ public interface AcademicModuleService {
 
     AcademicModuleResponseDto fetchById(Long moduleId);
 
-    AcademicModuleResponseDto create(AcademicModuleRequestDto module);
+    AcademicModule create(Long journalId, AcademicModuleRequestDto module);
 
     boolean delete(Long moduleId);
 

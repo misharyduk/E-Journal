@@ -2,12 +2,15 @@ package com.ejournal.journal.journal.dto;
 
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Getter @Setter @NoArgsConstructor
 public class AcademicModuleResponseDto {
     private Long id;
     private Integer moduleNumber;
+    private Date startDate;
+    private Date endDate;
     private List<ExerciseWorkResponseDto> exerciseWorks;
     private ControlWorkResponseDto controlWork;
 

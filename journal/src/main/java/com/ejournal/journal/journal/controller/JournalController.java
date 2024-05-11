@@ -2,6 +2,7 @@ package com.ejournal.journal.journal.controller;
 
 import com.ejournal.journal.common.dto.PageableRequestDto;
 import com.ejournal.journal.common.dto.PageableResponseDto;
+import com.ejournal.journal.journal.dto.AcademicModuleRequestDto;
 import com.ejournal.journal.journal.dto.JournalRequestDto;
 import com.ejournal.journal.journal.dto.JournalResponseDto;
 import com.ejournal.journal.journal.service.JournalService;
@@ -20,9 +21,19 @@ public class JournalController {
     private final JournalService journalService;
 
     @PostMapping
-    public ResponseEntity<JournalResponseDto> createJournal(@RequestBody JournalRequestDto journalRequestDto){
+    public ResponseEntity<Long> createJournal(@RequestBody JournalRequestDto journalRequestDto){
 
-        JournalResponseDto journal = journalService.create(journalRequestDto);
+        Long journalId = journalService.create(journalRequestDto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(journalId);
+    }
+
+    @PostMapping("/modules/{journalId}")
+    public ResponseEntity<JournalResponseDto> enrichJournalWithModules(@PathVariable("journalId") Long journalId,
+                                                                       @RequestBody List<AcademicModuleRequestDto> modulesRequestDto){
+
+        JournalResponseDto journal = journalService.enrichJournalWithModules(journalId, modulesRequestDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(journal);

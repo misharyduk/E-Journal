@@ -38,21 +38,23 @@ public class AcademicModuleServiceImpl implements AcademicModuleService {
     }
 
     @Override
-    public AcademicModuleResponseDto create(AcademicModuleRequestDto module) {
+    public AcademicModule create(Long journalId, AcademicModuleRequestDto module) {
         AcademicModule academicModule = new AcademicModule();
         academicModule.setModuleNumber(module.getModuleNumber());
+        academicModule.setModuleStartDate(module.getStartDate());
+        academicModule.setModuleEndDate(module.getEndDate());
 
         ControlWork controlWork = new ControlWork();
         controlWork.setExecutionDate(module.getControlWorkExecutionDate());
         academicModule.setControlWork(controlWork);
 
-        Journal journal = journalRepository.fetchInstanceById(module.getJournalId())
-                .orElseThrow(() -> new ResourceNotFoundException("Journal", "id", String.valueOf(module.getJournalId())));
+        Journal journal = journalRepository.fetchInstanceById(journalId)
+                .orElseThrow(() -> new ResourceNotFoundException("Journal", "id", String.valueOf(journalId)));
         academicModule.setJournal(journal);
 
         academicModuleRepository.createInstance(academicModule);
 
-        return fillAcademicModuleResponseDto(academicModule);
+        return academicModule;
     }
 
     @Override

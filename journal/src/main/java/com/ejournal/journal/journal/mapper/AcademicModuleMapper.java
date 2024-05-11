@@ -10,6 +10,8 @@ public class AcademicModuleMapper {
         AcademicModuleResponseDto responseDto = new AcademicModuleResponseDto();
         responseDto.setId(academicModule.getId());
         responseDto.setModuleNumber(academicModule.getModuleNumber());
+        responseDto.setStartDate(academicModule.getModuleStartDate());
+        responseDto.setEndDate(academicModule.getModuleEndDate());
         return responseDto;
     }
 }

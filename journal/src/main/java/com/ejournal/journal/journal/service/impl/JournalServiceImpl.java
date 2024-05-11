@@ -6,15 +6,19 @@ import com.ejournal.journal.common.exception.ResourceNotFoundException;
 import com.ejournal.journal.common.util.SortFieldValidator.JournalField;
 import com.ejournal.journal.control_journal.entity.ControlJournal;
 import com.ejournal.journal.control_journal.repository.ControlJournalRepository;
+import com.ejournal.journal.control_journal.service.ControlJournalService;
 import com.ejournal.journal.exercise_journal.entity.PracticeJournal;
 import com.ejournal.journal.exercise_journal.repository.PracticeJournalRepository;
 import com.ejournal.journal.exercise_journal.service.PracticeJournalService;
+import com.ejournal.journal.journal.dto.AcademicModuleRequestDto;
 import com.ejournal.journal.journal.dto.JournalRequestDto;
 import com.ejournal.journal.journal.dto.JournalResponseDto;
 import com.ejournal.journal.journal.entity.Journal;
+import com.ejournal.journal.journal.entity.academic_entities.AcademicModule;
 import com.ejournal.journal.journal.entity.academic_entities.SemesterNumber;
 import com.ejournal.journal.journal.mapper.JournalMapper;
 import com.ejournal.journal.journal.repository.JournalRepository;
+import com.ejournal.journal.journal.service.AcademicModuleService;
 import com.ejournal.journal.journal.service.JournalService;
 import com.ejournal.journal.common.feign_client.group.GroupFeignClient;
 import com.ejournal.journal.common.feign_client.group.dto.GroupResponseDto;
@@ -24,6 +28,7 @@ import com.ejournal.journal.common.feign_client.university.dto.TeacherResponseDt
 import com.ejournal.journal.lesson_journal.dto.LessonResponseDto;
 import com.ejournal.journal.lesson_journal.entity.LessonJournal;
 import com.ejournal.journal.lesson_journal.repository.LessonJournalRepository;
+import com.ejournal.journal.lesson_journal.service.LessonJournalService;
 import com.ejournal.journal.lesson_journal.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -45,41 +50,53 @@ public class JournalServiceImpl implements JournalService {
     private final UniversityFeignClient universityClient;
 
     private final JournalRepository journalRepository;
-    private final PracticeJournalRepository practiceJournalRepository;
-    private final LessonJournalRepository lessonJournalRepository;
-    private final ControlJournalRepository controlJournalRepository;
+    private final PracticeJournalService practiceJournalService;
+    private final LessonJournalService lessonJournalService;
+    private final ControlJournalService controlJournalService;
     private final LessonService lessonService;
+    private final AcademicModuleService academicModuleService;
 
     @Override
-    public JournalResponseDto create(JournalRequestDto requestDto) {
-        SemesterNumber semesterNumber = SemesterNumber.valueOf(requestDto.getSemesterNumber().toUpperCase());
+    public Long create(JournalRequestDto requestDto) {
         Journal journal = JournalMapper.mapToEntity(requestDto, new Journal());
-
-        PracticeJournal practiceJournal = new PracticeJournal();
-        practiceJournalRepository.savePracticeJournal(practiceJournal);
-        journal.setPracticeLessonJournalId(practiceJournal.getId());
-
-        LessonJournal lectureLessonJournal = new LessonJournal();
-        lessonJournalRepository.saveLessonJournal(lectureLessonJournal);
-        journal.setLectureLessonJournalId(lectureLessonJournal.getId());
-
-        LessonJournal practiceLessonJournal = new LessonJournal();
-        lessonJournalRepository.saveLessonJournal(practiceLessonJournal);
-        journal.setPracticeLessonJournalId(practiceLessonJournal.getId());
-
-        ControlJournal controlJournal = new ControlJournal();
-        controlJournalRepository.saveControlJournal(controlJournal);
-        journal.setControlJournalId(controlJournal.getId());
 
         journalRepository.createInstance(journal);
 
-        return fillJournalResponse(journal);
+        return journal.getId();
     }
 
     @Override
     public JournalResponseDto fetchById(Long id) {
         Journal journal = journalRepository.fetchInstanceById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Journal", "id", String.valueOf(id)));
+
+        return fillJournalResponse(journal);
+    }
+
+    @Override
+    public JournalResponseDto enrichJournalWithModules(Long journalId, List<AcademicModuleRequestDto> modulesRequestDto) {
+        Journal journal = journalRepository.fetchInstanceById(journalId)
+                .orElseThrow(() -> new ResourceNotFoundException("Journal", "id", String.valueOf(journalId)));
+
+        List<AcademicModule> academicModules = modulesRequestDto.stream()
+                .map(m -> academicModuleService.create(journalId, m))
+                .toList();
+
+        journal.getAcademicModules().addAll(academicModules);
+
+        // create exercise journal
+        journal = practiceJournalService.enrichAndSavePracticeJournal(journal);
+
+        // create lecture journal
+        journal = lessonJournalService.enrichAndSaveLessonJournal(journal, "LECTURE");
+
+        // create practice journal
+        journal = lessonJournalService.enrichAndSaveLessonJournal(journal, "PRACTICE");
+
+        // create control journal
+        journal = controlJournalService.enrichAndSaveControlJournal(journal);
+
+        journalRepository.updateInstance(journal);
 
         return fillJournalResponse(journal);
     }
@@ -95,12 +112,7 @@ public class JournalServiceImpl implements JournalService {
             pageableRequestDto.setSize(10);
         }
 
-        PageableResponseDto<LessonResponseDto> lessonsPage = lessonService
-                .fetchPageByJournal(journal.getId(), pageableRequestDto);
-
-        JournalResponseDto responseDto = fillJournalResponse(journal);
-        responseDto.setLessons(lessonsPage);
-        return responseDto;
+        return fillJournalResponse(journal);
     }
 
     @Override

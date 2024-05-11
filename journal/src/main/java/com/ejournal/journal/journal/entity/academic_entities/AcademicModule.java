@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity @Table(name = "academic_module")
@@ -20,6 +21,10 @@ public class AcademicModule {
     private Long id;
     @Column(name = "module_number")
     private Integer moduleNumber;
+    @Column(name = "start_date")
+    private Date moduleStartDate;
+    @Column(name = "end_date")
+    private Date moduleEndDate;
     @JoinColumn(name = "journal_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Journal journal;
