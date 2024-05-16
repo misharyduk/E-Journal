@@ -3,16 +3,15 @@ package com.ejournal.journal.lesson_journal.controller;
 import com.ejournal.journal.exercise_journal.dto.PracticeJournalResponseDto;
 import com.ejournal.journal.exercise_journal.dto.WorkStudentMarkRequestDto;
 import com.ejournal.journal.exercise_journal.service.PracticeJournalService;
-import com.ejournal.journal.lesson_journal.dto.LessonJournalResponseDto;
-import com.ejournal.journal.lesson_journal.dto.LessonRequestDto;
-import com.ejournal.journal.lesson_journal.dto.LessonResponseDto;
-import com.ejournal.journal.lesson_journal.dto.StudentAttendanceRequestDto;
+import com.ejournal.journal.lesson_journal.dto.*;
 import com.ejournal.journal.lesson_journal.service.LessonJournalService;
 import com.ejournal.journal.lesson_journal.service.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/lessonjournal")
@@ -58,5 +57,9 @@ public class LessonJournalController {
                 .status(HttpStatus.OK)
                 .body(lessonJournal);
     }
-
+//    @GetMapping("/{lessonJournalId}/attendances/by-group")
+//    public ResponseEntity<List<LessonAttendanceByStudentsDto>> getLessonsJournalByGroupStudents(
+//            @PathVariable("lessonJournalId") Long lessonJournalId){
+//
+//    }
 }
