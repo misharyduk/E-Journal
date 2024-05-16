@@ -14,8 +14,10 @@ public class AcademicModuleResponseDto {
     private List<ExerciseWorkResponseDto> exerciseWorks;
     private ControlWorkResponseDto controlWork;
 
-    public AcademicModuleResponseDto(Long id, Integer moduleNumber) {
+    public AcademicModuleResponseDto(Long id, Integer moduleNumber, Date startDate, Date endDate) {
         this.id = id;
         this.moduleNumber = moduleNumber;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 }
