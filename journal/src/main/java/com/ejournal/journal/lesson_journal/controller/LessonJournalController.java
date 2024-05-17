@@ -57,9 +57,4 @@ public class LessonJournalController {
                 .status(HttpStatus.OK)
                 .body(lessonJournal);
     }
-//    @GetMapping("/{lessonJournalId}/attendances/by-group")
-//    public ResponseEntity<List<LessonAttendanceByStudentsDto>> getLessonsJournalByGroupStudents(
-//            @PathVariable("lessonJournalId") Long lessonJournalId){
-//
-//    }
 }

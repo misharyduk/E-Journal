@@ -1,16 +1,7 @@
 package com.ejournal.journal.lesson_journal.service.impl;
 
 import com.ejournal.journal.common.exception.ResourceNotFoundException;
-import com.ejournal.journal.exercise_journal.dto.PracticeJournalResponseDto;
-import com.ejournal.journal.exercise_journal.dto.WorkStudentMarkRequestDto;
-import com.ejournal.journal.exercise_journal.entity.PracticeJournal;
-import com.ejournal.journal.exercise_journal.entity.WorkStudent;
-import com.ejournal.journal.exercise_journal.mapper.WorkStudentMapper;
-import com.ejournal.journal.exercise_journal.repository.PracticeJournalRepository;
-import com.ejournal.journal.exercise_journal.repository.WorkStudentRepository;
-import com.ejournal.journal.exercise_journal.service.PracticeJournalService;
 import com.ejournal.journal.journal.entity.Journal;
-import com.ejournal.journal.journal.entity.academic_entities.ExerciseWork;
 import com.ejournal.journal.lesson_journal.dto.*;
 import com.ejournal.journal.lesson_journal.entity.Lesson;
 import com.ejournal.journal.lesson_journal.entity.LessonAttendance;
@@ -30,7 +21,6 @@ public class LessonJournalServiceImpl implements LessonJournalService {
     private final LessonJournalRepository lessonJournalRepository;
     private final LessonRepository lessonRepository;
     private final LessonAttendanceRepository lessonAttendanceRepository;
-
 
     @Override
     public LessonJournalResponseDto fetchById(Long lessonJournalId) {
@@ -90,7 +80,14 @@ public class LessonJournalServiceImpl implements LessonJournalService {
                 .orElseThrow(() -> new ResourceNotFoundException("Lesson", "id", String.valueOf(attendanceRequestDto.getLessonId())));
 
         LessonAttendance lessonAttendance = new LessonAttendance();
-        lessonAttendance.setAttendanceValue(attendanceRequestDto.getAttendanceValue());
+        String validAttendanceValue = switch (attendanceRequestDto.getAttendanceValue()) {
+            case "not-present" -> "н";
+            case "ill" -> "хв";
+            case "not-attestation" -> "н/а";
+            default -> attendanceRequestDto.getAttendanceValue();
+        };
+
+        lessonAttendance.setAttendanceValue(validAttendanceValue);
         lessonAttendance.setStudentId(attendanceRequestDto.getStudentId());
         lessonAttendance.setLesson(lesson);
 
@@ -113,7 +110,13 @@ public class LessonJournalServiceImpl implements LessonJournalService {
                 .orElseThrow(() -> new ResourceNotFoundException("Attendance", "id", String.valueOf(attendanceId)));
 
         if(attendanceRequestDto.getAttendanceValue() != null && !attendanceRequestDto.getAttendanceValue().isBlank()){
-            lessonAttendance.setAttendanceValue(attendanceRequestDto.getAttendanceValue());
+            String validAttendanceValue = switch (attendanceRequestDto.getAttendanceValue()) {
+                case "not-present" -> "н";
+                case "ill" -> "хв";
+                case "not-attestation" -> "н/а";
+                default -> null;
+            };
+            lessonAttendance.setAttendanceValue(validAttendanceValue);
             lessonAttendanceRepository.saveLessonAttendance(lessonAttendance);
         } else {
             Lesson lesson = lessonAttendance.getLesson();

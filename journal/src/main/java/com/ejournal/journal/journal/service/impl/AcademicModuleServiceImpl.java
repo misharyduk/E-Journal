@@ -69,7 +69,7 @@ public class AcademicModuleServiceImpl implements AcademicModuleService {
     }
 
     private AcademicModuleResponseDto fillAcademicModuleResponseDto(AcademicModule academicModule){
-        AcademicModuleResponseDto responseDto = new AcademicModuleResponseDto(academicModule.getId(), academicModule.getModuleNumber());
+        AcademicModuleResponseDto responseDto = new AcademicModuleResponseDto(academicModule.getId(), academicModule.getModuleNumber(), academicModule.getModuleStartDate(), academicModule.getModuleEndDate());
         responseDto.setExerciseWorks(academicModule.getExerciseWorks().stream()
                 .map(w -> new ExerciseWorkResponseDto(w.getId(), w.getWorkNumber(), w.getExerciseWorkType().toString().toLowerCase())).toList());
         return responseDto;

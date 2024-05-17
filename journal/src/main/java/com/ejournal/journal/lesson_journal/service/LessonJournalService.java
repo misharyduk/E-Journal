@@ -3,10 +3,9 @@ package com.ejournal.journal.lesson_journal.service;
 import com.ejournal.journal.exercise_journal.dto.PracticeJournalResponseDto;
 import com.ejournal.journal.exercise_journal.dto.WorkStudentMarkRequestDto;
 import com.ejournal.journal.journal.entity.Journal;
-import com.ejournal.journal.lesson_journal.dto.LessonJournalResponseDto;
-import com.ejournal.journal.lesson_journal.dto.LessonRequestDto;
-import com.ejournal.journal.lesson_journal.dto.LessonResponseDto;
-import com.ejournal.journal.lesson_journal.dto.StudentAttendanceRequestDto;
+import com.ejournal.journal.lesson_journal.dto.*;
+
+import java.util.List;
 
 public interface LessonJournalService {
 
@@ -19,4 +18,6 @@ public interface LessonJournalService {
     LessonJournalResponseDto updateStudentAttendance(Long lessonJournalId, Long attendanceId, StudentAttendanceRequestDto attendanceRequestDto);
 
     LessonJournalResponseDto createLesson(Long lessonJournalId, LessonRequestDto lessonRequestDto);
+
+//    List<LessonAttendanceByStudentsDto> fetchLessonJournalByGroupStudents(Long lessonJournalId, Long groupId);
 }
