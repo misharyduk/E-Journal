@@ -84,16 +84,16 @@ CREATE TABLE IF NOT EXISTS work_student
 (
     work_student_id BIGINT      NOT NULL AUTO_INCREMENT PRIMARY KEY,
     student_id      BIGINT      NOT NULL,
-    exec_date       TIMESTAMP   NOT NULL,
-    def_date        TIMESTAMP   NOT NULL,
-    mark            DOUBLE      NOT NULL,
+    exec_date       TIMESTAMP,
+    def_date        TIMESTAMP,
+    mark            DOUBLE,
     exer_work_id    BIGINT      NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS control_work
 (
     contr_work_id BIGINT      NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    exec_date     TIMESTAMP   NOT NULL
+    exec_date     TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS control_work_student
