@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,7 +38,9 @@ public class CalendarPlanServiceImpl implements CalendarPlanService {
             throw new ResourceNotFoundException("Calendar plan", "id", String.valueOf(calendarPlanId));
 
         CalendarPlan calendarPlan = calendarPlanOpt.get();
-        return mapCalendarPlanResponseDto(calendarPlan);
+        List<CalendarPlanRecord> calendarPlanRecords = calendarPlanRecordRepository.fetchCalendarPlanRecordInLimitByCalendar(calendarPlan.getId(), limit);
+
+        return mapCalendarPlanResponseDto(calendarPlan, calendarPlanRecords);
     }
 
     @Override
@@ -112,6 +115,22 @@ public class CalendarPlanServiceImpl implements CalendarPlanService {
         return CalendarPlanResponseDto.builder()
                 .id(calendarPlan.getId())
                 .calendarPlanRecords(calendarPlan.getCalendarPlanRecords().stream()
+                        .map(r -> CalendarPlanRecordResponseDto.builder()
+                                .id(r.getId())
+                                .lessonId(r.getLessonId())
+                                .lessonNumber(r.getLessonNumber())
+                                .lessonDate(r.getLessonDate())
+                                .themeName(r.getThemeName())
+                                .individualAssignment(r.getIndividualAssignment())
+                                .individualAssignmentDate(r.getIndividualAssignmentDate())
+                                .build()).toList())
+                .build();
+    }
+
+    private static CalendarPlanResponseDto mapCalendarPlanResponseDto(CalendarPlan calendarPlan, List<CalendarPlanRecord> calendarPlanRecords) {
+        return CalendarPlanResponseDto.builder()
+                .id(calendarPlan.getId())
+                .calendarPlanRecords(calendarPlanRecords.stream()
                         .map(r -> CalendarPlanRecordResponseDto.builder()
                                 .id(r.getId())
                                 .lessonId(r.getLessonId())

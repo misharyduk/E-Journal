@@ -34,6 +34,10 @@ public class GatewayServerApplication {
                         .path("/analytics/**")
                         .filters(f -> f.rewritePath("/analytics/(?<segment>.*)", "/${segment}"))
                         .uri("lb://ANALYTICS")
+                ).route(r -> r
+                        .path("/calendarplan/**")
+                        .filters(f -> f.rewritePath("/calendarplan/(?<segment>.*)", "/${segment}"))
+                        .uri("lb://CALENDARPLAN")
                 ).build();
     }
 }

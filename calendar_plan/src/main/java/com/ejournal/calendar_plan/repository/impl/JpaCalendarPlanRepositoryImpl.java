@@ -24,6 +24,6 @@ public interface JpaCalendarPlanRepositoryImpl extends JpaRepository<CalendarPla
         return save(calendarPlan);
     }
 
-    @Query("FROM CalendarPlan p LEFT JOIN CalendarPlanRecord r WHERE p.id=?1 ORDER BY r.lessonDate LIMIT ?2")
+    @Query("FROM CalendarPlan p LEFT JOIN CalendarPlanRecord r ON r.calendarPlan.id=p.id WHERE p.id=?1 ORDER BY r.lessonDate LIMIT ?2")
     Optional<CalendarPlan> findByIdCalendarPlanRecordsLimit(Long calendarPlanId, Integer limit);
 }
