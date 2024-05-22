@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 public class CalendarPlanRecordRequestDto {
 
-    private Long lessonNumber;
+    private Integer lessonNumber;
     private String themeName;
     private String individualAssignment;
     private Date individualAssignmentDate;

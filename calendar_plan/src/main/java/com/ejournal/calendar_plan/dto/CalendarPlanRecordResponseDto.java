@@ -17,7 +17,7 @@ public class CalendarPlanRecordResponseDto {
 
     private Long id;
     private Long lessonId;
-    private Long lessonNumber;
+    private Integer lessonNumber;
     private Date lessonDate;
     private String themeName;
     private String individualAssignment;

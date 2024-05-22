@@ -19,7 +19,7 @@ public class CalendarPlanRecord {
     @Column(name = "lesson_id")
     private Long lessonId;
     @Column(name = "lesson_number")
-    private Long lessonNumber;
+    private Integer lessonNumber;
     @Column(name = "lesson_date") // TODO think about removing this field as it's duplicate from Lesson class
     private Date lessonDate;
     @Column(name = "theme_name", columnDefinition = "CLOB")
@@ -34,7 +34,7 @@ public class CalendarPlanRecord {
     @ManyToOne
     private CalendarPlan calendarPlan;
 
-    public CalendarPlanRecord(Long lessonId, Long lessonNumber, Date lessonDate, String themeName, String individualAssignment, Date individualAssignmentDate) {
+    public CalendarPlanRecord(Long lessonId, Integer lessonNumber, Date lessonDate, String themeName, String individualAssignment, Date individualAssignmentDate) {
         this.lessonId = lessonId;
         this.lessonNumber = lessonNumber;
         this.lessonDate = lessonDate;
