@@ -6,6 +6,7 @@ import com.ejournal.journal.lesson_journal.dto.*;
 import com.ejournal.journal.lesson_journal.entity.Lesson;
 import com.ejournal.journal.lesson_journal.entity.LessonAttendance;
 import com.ejournal.journal.lesson_journal.entity.LessonJournal;
+import com.ejournal.journal.lesson_journal.entity.LessonRepeat;
 import com.ejournal.journal.lesson_journal.mapper.LessonMapper;
 import com.ejournal.journal.lesson_journal.repository.LessonAttendanceRepository;
 import com.ejournal.journal.lesson_journal.repository.LessonJournalRepository;
@@ -14,6 +15,11 @@ import com.ejournal.journal.lesson_journal.service.LessonJournalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.EnumSet;
+import java.util.Locale;
+
 @Service
 @RequiredArgsConstructor
 public class LessonJournalServiceImpl implements LessonJournalService {
@@ -21,6 +27,8 @@ public class LessonJournalServiceImpl implements LessonJournalService {
     private final LessonJournalRepository lessonJournalRepository;
     private final LessonRepository lessonRepository;
     private final LessonAttendanceRepository lessonAttendanceRepository;
+
+    private static final Locale uaLocale = new Locale("uk", "UA");
 
     @Override
     public LessonJournalResponseDto fetchById(Long lessonJournalId) {
@@ -55,13 +63,129 @@ public class LessonJournalServiceImpl implements LessonJournalService {
         LessonJournal lessonJournal = lessonJournalRepository.fetchLessonJournal(lessonJournalId)
                 .orElseThrow(() -> new ResourceNotFoundException("Lesson journal", "id", String.valueOf(lessonJournalId)));
 
-        Lesson lesson = LessonMapper.mapToEntity(lessonRequestDto, new Lesson());
+        // repeat lesson
+        LessonRepeat lessonRepeat = EnumSet.allOf(LessonRepeat.class).stream()
+                .filter(lr -> lr.getValue().equalsIgnoreCase(lessonRequestDto.getRepeat())).findFirst().get();
 
-        lessonJournal.getLessons().add(lesson);
-        lesson.setLessonJournal(lessonJournal);
+        switch (lessonRepeat) {
+            case ONCE -> saveLesson(lessonJournal, lessonRequestDto);
+            case ONCE_A_WEEK_PER_MONTH -> {
+                Calendar calendar = Calendar.getInstance(uaLocale);
+                calendar.setTime(lessonRequestDto.getDate());
 
-        lessonRepository.createInstance(lesson);
-        lessonJournalRepository.saveLessonJournal(lessonJournal);
+                Calendar calendarNextMonth = getNextMonthFirstDay(lessonRequestDto.getDate());
+                while (calendar.before(calendarNextMonth)){
+                    saveLesson(lessonJournal, lessonRequestDto);
+                    calendar.add(Calendar.WEEK_OF_YEAR, 1);
+                    lessonRequestDto.setDate(calendar.getTime());
+                }
+            }
+            case ONCE_A_WEEK_PER_SEMESTER -> {
+                Calendar requestDate = Calendar.getInstance(uaLocale);
+                requestDate.setTime(lessonRequestDto.getDate());
+
+                Calendar startOfFirstSemester = Calendar.getInstance(uaLocale);
+                requestDate.setTime(lessonRequestDto.getDate());
+                startOfFirstSemester.set(Calendar.DAY_OF_MONTH, 1);
+                startOfFirstSemester.set(Calendar.MONTH, Calendar.AUGUST);
+
+                Calendar endOfCurrentSemester = Calendar.getInstance(uaLocale);
+                requestDate.setTime(lessonRequestDto.getDate());
+                endOfCurrentSemester.set(Calendar.DAY_OF_MONTH, 31);
+
+                if(requestDate.after(startOfFirstSemester)){ // first semester
+                    endOfCurrentSemester.set(Calendar.MONTH, Calendar.DECEMBER);
+                } else { // second semester
+                    endOfCurrentSemester.set(Calendar.MONTH, Calendar.MAY);
+                }
+
+                while (requestDate.before(endOfCurrentSemester)){
+                    saveLesson(lessonJournal, lessonRequestDto);
+                    requestDate.add(Calendar.WEEK_OF_YEAR, 1);
+                    lessonRequestDto.setDate(requestDate.getTime());
+                }
+            }
+            case ONCE_AN_EVEN_WEEK_PER_MONTH -> {
+                Calendar calendar = Calendar.getInstance(uaLocale);
+                calendar.setTime(lessonRequestDto.getDate());
+
+                Calendar calendarNextMonth = getNextMonthFirstDay(lessonRequestDto.getDate());
+                while (calendar.before(calendarNextMonth)){
+                    if(calendar.get(Calendar.WEEK_OF_MONTH) % 2 == 0) {
+                        saveLesson(lessonJournal, lessonRequestDto);
+                    }
+                    calendar.add(Calendar.WEEK_OF_YEAR, 1);
+                    lessonRequestDto.setDate(calendar.getTime());
+                }
+            }
+            case ONCE_AN_ODD_WEEK_PER_MONTH -> {
+                Calendar calendar = Calendar.getInstance(uaLocale);
+                calendar.setTime(lessonRequestDto.getDate());
+
+                Calendar calendarNextMonth = getNextMonthFirstDay(lessonRequestDto.getDate());
+                while (calendar.before(calendarNextMonth)){
+                    if(calendar.get(Calendar.WEEK_OF_MONTH) % 2 != 0) {
+                        saveLesson(lessonJournal, lessonRequestDto);
+                    }
+                    calendar.add(Calendar.WEEK_OF_YEAR, 1);
+                    lessonRequestDto.setDate(calendar.getTime());
+                }
+            }
+            case ONCE_AN_EVEN_WEEK_PER_SEMESTER -> {
+                Calendar requestDate = Calendar.getInstance(uaLocale);
+                requestDate.setTime(lessonRequestDto.getDate());
+
+                Calendar startOfFirstSemester = Calendar.getInstance(uaLocale);
+                requestDate.setTime(lessonRequestDto.getDate());
+                startOfFirstSemester.set(Calendar.DAY_OF_MONTH, 1);
+                startOfFirstSemester.set(Calendar.MONTH, Calendar.AUGUST);
+
+                Calendar endOfCurrentSemester = Calendar.getInstance(uaLocale);
+                requestDate.setTime(lessonRequestDto.getDate());
+                endOfCurrentSemester.set(Calendar.DAY_OF_MONTH, 31);
+
+                if(requestDate.after(startOfFirstSemester)){ // first semester
+                    endOfCurrentSemester.set(Calendar.MONTH, Calendar.DECEMBER);
+                } else { // second semester
+                    endOfCurrentSemester.set(Calendar.MONTH, Calendar.MAY);
+                }
+
+                while (requestDate.before(endOfCurrentSemester)){
+                    if(requestDate.get(Calendar.WEEK_OF_YEAR) % 2 == 0) {
+                        saveLesson(lessonJournal, lessonRequestDto);
+                    }
+                    requestDate.add(Calendar.WEEK_OF_YEAR, 1);
+                    lessonRequestDto.setDate(requestDate.getTime());
+                }
+            }
+            case ONCE_AN_ODD_WEEK_PER_SEMESTER -> {
+                Calendar requestDate = Calendar.getInstance(uaLocale);
+                requestDate.setTime(lessonRequestDto.getDate());
+
+                Calendar startOfFirstSemester = Calendar.getInstance(uaLocale);
+                requestDate.setTime(lessonRequestDto.getDate());
+                startOfFirstSemester.set(Calendar.DAY_OF_MONTH, 1);
+                startOfFirstSemester.set(Calendar.MONTH, Calendar.AUGUST);
+
+                Calendar endOfCurrentSemester = Calendar.getInstance(uaLocale);
+                requestDate.setTime(lessonRequestDto.getDate());
+                endOfCurrentSemester.set(Calendar.DAY_OF_MONTH, 31);
+
+                if(requestDate.after(startOfFirstSemester)){ // first semester
+                    endOfCurrentSemester.set(Calendar.MONTH, Calendar.DECEMBER);
+                } else { // second semester
+                    endOfCurrentSemester.set(Calendar.MONTH, Calendar.MAY);
+                }
+
+                while (requestDate.before(endOfCurrentSemester)){
+                    if(requestDate.get(Calendar.WEEK_OF_YEAR) % 2 != 0) {
+                        saveLesson(lessonJournal, lessonRequestDto);
+                    }
+                    requestDate.add(Calendar.WEEK_OF_YEAR, 1);
+                    lessonRequestDto.setDate(requestDate.getTime());
+                }
+            }
+        }
 
         return LessonJournalResponseDto.builder()
                 .id(lessonJournal.getId())
@@ -69,6 +193,26 @@ public class LessonJournalServiceImpl implements LessonJournalService {
                         .map(this::mapLessonDto)
                         .toList())
                 .build();
+    }
+
+    private Calendar getNextMonthFirstDay(Date sourceDate){
+        Calendar calendarNextMonth = Calendar.getInstance(uaLocale);
+        calendarNextMonth.setTime(sourceDate);
+        calendarNextMonth.set(Calendar.DAY_OF_MONTH, 1);
+        calendarNextMonth.add(Calendar.MONTH, 1);
+        return calendarNextMonth;
+    }
+
+    private LessonJournal saveLesson(LessonJournal lessonJournal, LessonRequestDto lessonRequestDto) {
+
+        Lesson lesson = LessonMapper.mapToEntity(lessonRequestDto, new Lesson());
+
+        lessonJournal.getLessons().add(lesson);
+        lesson.setLessonJournal(lessonJournal);
+
+        lessonRepository.createInstance(lesson);
+        lessonJournalRepository.saveLessonJournal(lessonJournal);
+        return lessonJournal;
     }
 
     @Override
