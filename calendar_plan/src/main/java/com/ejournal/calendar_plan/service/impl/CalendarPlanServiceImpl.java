@@ -48,9 +48,8 @@ public class CalendarPlanServiceImpl implements CalendarPlanService {
         calendarPlan.setJournalId(requestDto.getJournalId());
         requestDto.getCalendarLessons().stream()
                 .map(l -> new CalendarPlanRecord(l.getLessonId(), l.getLessonDate()))
+                .peek(l -> l.setCalendarPlan(calendarPlan))
                 .forEach(l -> calendarPlan.getCalendarPlanRecords().add(l));
-
-        calendarPlan.getCalendarPlanRecords().forEach(calendarPlanRecordRepository::saveCalendarPlanRecord);
 
         CalendarPlan calendarPlanFromDb = calendarPlanRepository.saveCalendarPlan(calendarPlan);
         return mapCalendarPlanResponseDto(calendarPlanFromDb);
