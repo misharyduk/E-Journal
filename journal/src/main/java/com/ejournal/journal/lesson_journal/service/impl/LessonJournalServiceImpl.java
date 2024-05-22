@@ -15,10 +15,7 @@ import com.ejournal.journal.lesson_journal.service.LessonJournalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.Locale;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +35,7 @@ public class LessonJournalServiceImpl implements LessonJournalService {
                 .id(lessonJournal.getId())
                 .lessons(lessonJournal.getLessons().stream()
                         .map(this::mapLessonDto)
+                        .sorted(Comparator.comparing(LessonResponseDto::getDate))
                         .toList())
                 .build();
     }
