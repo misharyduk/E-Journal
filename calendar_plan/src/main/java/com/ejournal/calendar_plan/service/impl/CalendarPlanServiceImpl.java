@@ -50,6 +50,8 @@ public class CalendarPlanServiceImpl implements CalendarPlanService {
                 .map(l -> new CalendarPlanRecord(l.getLessonId(), l.getLessonDate()))
                 .forEach(l -> calendarPlan.getCalendarPlanRecords().add(l));
 
+        calendarPlan.getCalendarPlanRecords().forEach(calendarPlanRecordRepository::saveCalendarPlanRecord);
+
         CalendarPlan calendarPlanFromDb = calendarPlanRepository.saveCalendarPlan(calendarPlan);
         return mapCalendarPlanResponseDto(calendarPlanFromDb);
     }
@@ -67,6 +69,8 @@ public class CalendarPlanServiceImpl implements CalendarPlanService {
                 .orElseThrow(() -> new ResourceNotFoundException("Calendar Plan Record", "id", String.valueOf(recordId)));
 
         mapCalendarPlanRecord(calendarPlanRecord, requestDto);
+
+        calendarPlanRecordRepository.saveCalendarPlanRecord(calendarPlanRecord);
 
         CalendarPlan calendarPlanFromDb = calendarPlanRepository.saveCalendarPlan(calendarPlan);
         return mapCalendarPlanResponseDto(calendarPlanFromDb);
