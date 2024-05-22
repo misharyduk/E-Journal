@@ -39,6 +39,17 @@ public class LessonJournalController {
                 .body(lessonJournal);
     }
 
+    @PutMapping("/{lessonJournalId}/lessons/{lessonId}")
+    public ResponseEntity<LessonJournalResponseDto> createLesson(@PathVariable("lessonJournalId") Long lessonJournalId,
+                                                                 @PathVariable("lessonId") Long lessonId,
+                                                                 @RequestBody LessonRequestDto lessonRequestDto){
+
+        LessonJournalResponseDto lessonJournal = lessonJournalService.updateLesson(lessonJournalId, lessonId, lessonRequestDto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(lessonJournal);
+    }
+
     @PostMapping("/{lessonJournalId}/attendances")
     public ResponseEntity<LessonJournalResponseDto> setAttendance(@PathVariable("lessonJournalId") Long lessonJournalId,
                                                                   @RequestBody StudentAttendanceRequestDto attendanceRequestDto){

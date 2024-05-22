@@ -19,5 +19,7 @@ public interface LessonJournalService {
 
     LessonJournalResponseDto createLesson(Long lessonJournalId, LessonRequestDto lessonRequestDto);
 
+    LessonJournalResponseDto updateLesson(Long lessonJournalId, Long lessonId, LessonRequestDto lessonRequestDto);
+
 //    List<LessonAttendanceByStudentsDto> fetchLessonJournalByGroupStudents(Long lessonJournalId, Long groupId);
 }

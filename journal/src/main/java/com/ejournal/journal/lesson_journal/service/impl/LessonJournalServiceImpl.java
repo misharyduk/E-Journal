@@ -216,6 +216,34 @@ public class LessonJournalServiceImpl implements LessonJournalService {
                 .build();
     }
 
+    @Override
+    public LessonJournalResponseDto updateLesson(Long lessonJournalId, Long lessonId, LessonRequestDto lessonRequestDto) {
+        if(lessonId == null || lessonId <= 0)
+            throw new RuntimeException("Lesson id cannot be less than 1");
+
+        Lesson lesson = lessonRepository.fetchInstanceById(lessonId)
+                .orElseThrow(() -> new ResourceNotFoundException("Lesson", "id", String.valueOf(lessonId)));
+
+        LessonMapper.mapToEntity(lessonRequestDto, lesson);
+
+        lessonRepository.updateInstance(lesson);
+
+        if(lessonJournalId == null || lessonJournalId <= 0)
+            throw new RuntimeException("Journal id cannot be less than 1");
+
+        LessonJournal lessonJournal = lessonJournalRepository.fetchLessonJournal(lessonJournalId)
+                .orElseThrow(() -> new ResourceNotFoundException("Lesson journal", "id", String.valueOf(lessonJournalId)));
+
+        return LessonJournalResponseDto.builder()
+                .id(lessonJournal.getId())
+                .calendarPlanId(lessonJournal.getCalendarPlanId())
+                .lessons(lessonJournal.getLessons().stream()
+                        .map(this::mapLessonDto)
+                        .toList())
+                .build();
+
+    }
+
     private Calendar getNextMonthFirstDay(Date sourceDate){
         Calendar calendarNextMonth = Calendar.getInstance(uaLocale);
         calendarNextMonth.setTime(sourceDate);
