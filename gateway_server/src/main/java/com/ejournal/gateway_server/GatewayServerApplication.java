@@ -38,6 +38,7 @@ public class GatewayServerApplication {
                         .path("/calendarplan/**")
                         .filters(f -> f.rewritePath("/calendarplan/(?<segment>.*)", "/${segment}"))
                         .uri("lb://CALENDARPLAN")
-                ).build();
+                )
+                .build();
     }
 }
