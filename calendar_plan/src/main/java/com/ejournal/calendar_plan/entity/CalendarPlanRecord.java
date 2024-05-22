@@ -41,6 +41,8 @@ public class CalendarPlanRecord {
         this.individualAssignmentDate = individualAssignmentDate;
     }
 
-
-
+    public CalendarPlanRecord(Long lessonId, Date lessonDate) {
+        this.lessonId = lessonId;
+        this.lessonDate = lessonDate;
+    }
 }
