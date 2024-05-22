@@ -40,6 +40,7 @@ public class LessonJournalServiceImpl implements LessonJournalService {
                 .orElseThrow(() -> new ResourceNotFoundException("Lesson journal", "id", String.valueOf(lessonJournalId)));
         return LessonJournalResponseDto.builder()
                 .id(lessonJournal.getId())
+                .calendarPlanId(lessonJournal.getCalendarPlanId())
                 .lessons(lessonJournal.getLessons().stream()
                         .map(this::mapLessonDto)
                         .sorted(Comparator.comparing(LessonResponseDto::getDate))
@@ -208,6 +209,7 @@ public class LessonJournalServiceImpl implements LessonJournalService {
 
         return LessonJournalResponseDto.builder()
                 .id(lessonJournal.getId())
+                .calendarPlanId(lessonJournal.getCalendarPlanId())
                 .lessons(lessonJournal.getLessons().stream()
                         .map(this::mapLessonDto)
                         .toList())
@@ -265,6 +267,7 @@ public class LessonJournalServiceImpl implements LessonJournalService {
         lessonJournalRepository.saveLessonJournal(lessonJournal);
         return LessonJournalResponseDto.builder()
                 .id(lessonJournal.getId())
+                .calendarPlanId(lessonJournal.getCalendarPlanId())
                 .lessons(lessonJournal.getLessons().stream()
                         .map(this::mapLessonDto)
                         .toList())
@@ -298,6 +301,7 @@ public class LessonJournalServiceImpl implements LessonJournalService {
 
         return LessonJournalResponseDto.builder()
                 .id(lessonJournal.getId())
+                .calendarPlanId(lessonJournal.getCalendarPlanId())
                 .lessons(lessonJournal.getLessons().stream()
                         .map(this::mapLessonDto)
                         .toList())

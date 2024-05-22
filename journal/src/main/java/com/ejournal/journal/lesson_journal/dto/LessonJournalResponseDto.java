@@ -10,6 +10,7 @@ import java.util.List;
 public class LessonJournalResponseDto {
 
     private Long id;
+    private Long calendarPlanId;
     private List<LessonResponseDto> lessons;
 
 }
