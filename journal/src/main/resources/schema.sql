@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS journal
 
 CREATE TABLE IF NOT EXISTS lesson_journal
 (
-    lesson_journal_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY
+    lesson_journal_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    calendar_plan_id BIGINT
 );
 
 CREATE TABLE IF NOT EXISTS practice_journal

@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: calendar_plan
+    name: calendarplan
   datasource:
     url: jdbc:h2:mem:calendarplandb
     username: sa

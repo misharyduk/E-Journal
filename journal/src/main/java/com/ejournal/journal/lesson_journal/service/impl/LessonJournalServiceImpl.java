@@ -1,6 +1,10 @@
 package com.ejournal.journal.lesson_journal.service.impl;
 
 import com.ejournal.journal.common.exception.ResourceNotFoundException;
+import com.ejournal.journal.common.feign_client.calendar_plan.CalendarPlanFeignClient;
+import com.ejournal.journal.common.feign_client.calendar_plan.dto.CalendarLessonRequestDto;
+import com.ejournal.journal.common.feign_client.calendar_plan.dto.CalendarPlanRequestDto;
+import com.ejournal.journal.common.feign_client.calendar_plan.dto.CalendarPlanResponseDto;
 import com.ejournal.journal.journal.entity.Journal;
 import com.ejournal.journal.lesson_journal.dto.*;
 import com.ejournal.journal.lesson_journal.entity.Lesson;
@@ -25,6 +29,9 @@ public class LessonJournalServiceImpl implements LessonJournalService {
     private final LessonRepository lessonRepository;
     private final LessonAttendanceRepository lessonAttendanceRepository;
 
+    // Feign Clients
+    private final CalendarPlanFeignClient calendarPlanFeignClient;
+
     private static final Locale uaLocale = new Locale("uk", "UA");
 
     @Override
@@ -43,12 +50,24 @@ public class LessonJournalServiceImpl implements LessonJournalService {
     @Override
     public Journal enrichAndSaveLessonJournal(Journal journal, String lessonJournalType) {
         LessonJournal lessonJournal = new LessonJournal();
+
         lessonJournalRepository.saveLessonJournal(lessonJournal);
         if(lessonJournalType.equals("LECTURE")){
             journal.setLectureLessonJournalId(lessonJournal.getId());
         } else {
             journal.setPracticeLessonJournalId(lessonJournal.getId());
         }
+
+        // create calendar plan
+        CalendarPlanRequestDto calendarPlanRequestDto = new CalendarPlanRequestDto();
+        calendarPlanRequestDto.setJournalId(lessonJournal.getId());
+        calendarPlanRequestDto.setCalendarLessons(new ArrayList<>());
+
+        CalendarPlanResponseDto calendarPlan = calendarPlanFeignClient.createCalendarPlan(calendarPlanRequestDto).getBody();
+        lessonJournal.setCalendarPlanId(calendarPlan.getId());
+
+        lessonJournalRepository.saveLessonJournal(lessonJournal);
+
         return journal;
     }
 
@@ -66,7 +85,9 @@ public class LessonJournalServiceImpl implements LessonJournalService {
                 .filter(lr -> lr.getValue().equalsIgnoreCase(lessonRequestDto.getRepeat())).findFirst().get();
 
         switch (lessonRepeat) {
-            case ONCE -> saveLesson(lessonJournal, lessonRequestDto);
+            case ONCE -> {
+                saveLesson(lessonJournal, lessonRequestDto);
+            }
             case ONCE_A_WEEK_PER_MONTH -> {
                 Calendar calendar = Calendar.getInstance(uaLocale);
                 calendar.setTime(lessonRequestDto.getDate());
@@ -209,6 +230,11 @@ public class LessonJournalServiceImpl implements LessonJournalService {
         lesson.setLessonJournal(lessonJournal);
 
         lessonRepository.createInstance(lesson);
+
+        System.out.println("Calendar plan id: " + lessonJournal.getCalendarPlanId());
+
+        calendarPlanFeignClient.addCalendarPlanRecord(lessonJournal.getCalendarPlanId(), new CalendarLessonRequestDto(lesson.getId(), lesson.getDate()));
+
         lessonJournalRepository.saveLessonJournal(lessonJournal);
         return lessonJournal;
     }

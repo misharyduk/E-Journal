@@ -1,9 +1,6 @@
 package com.ejournal.calendar_plan.service.impl;
 
-import com.ejournal.calendar_plan.dto.CalendarPlanRecordRequestDto;
-import com.ejournal.calendar_plan.dto.CalendarPlanRecordResponseDto;
-import com.ejournal.calendar_plan.dto.CalendarPlanRequestDto;
-import com.ejournal.calendar_plan.dto.CalendarPlanResponseDto;
+import com.ejournal.calendar_plan.dto.*;
 import com.ejournal.calendar_plan.entity.CalendarPlan;
 import com.ejournal.calendar_plan.entity.CalendarPlanRecord;
 import com.ejournal.calendar_plan.exception.ResourceNotFoundException;
@@ -13,6 +10,7 @@ import com.ejournal.calendar_plan.service.CalendarPlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -56,7 +54,25 @@ public class CalendarPlanServiceImpl implements CalendarPlanService {
     }
 
     @Override
-    public CalendarPlanResponseDto updateCalendarPlanRecord(Long calendarPlanId, Long recordId, CalendarPlanRecordRequestDto requestDto) {
+    public CalendarPlanResponseDto addCalendarPlanRecord(Long calendarPlanId, CalendarPlanRecordCreateRequestDto calendarPlanRecordCreateRequestDto) {
+        Optional<CalendarPlan> calendarPlanOpt = calendarPlanRepository.fetchCalendarPlan(calendarPlanId);
+        if(calendarPlanOpt.isEmpty())
+            throw new ResourceNotFoundException("Calendar plan", "id", String.valueOf(calendarPlanId));
+
+        CalendarPlan calendarPlan = calendarPlanOpt.get();
+
+        CalendarPlanRecord calendarPlanRecord = new CalendarPlanRecord();
+        mapCalendarPlanCreateRecord(calendarPlanRecord, calendarPlanRecordCreateRequestDto);
+        calendarPlanRecord.setCalendarPlan(calendarPlan);
+
+        calendarPlan.getCalendarPlanRecords().add(calendarPlanRecord);
+
+        CalendarPlan calendarPlanFromDb = calendarPlanRepository.saveCalendarPlan(calendarPlan);
+        return mapCalendarPlanResponseDto(calendarPlanFromDb);
+    }
+
+    @Override
+    public CalendarPlanResponseDto updateCalendarPlanRecord(Long calendarPlanId, Long recordId, CalendarPlanRecordUpdateRequestDto requestDto) {
         Optional<CalendarPlan> calendarPlanOpt = calendarPlanRepository.fetchCalendarPlan(calendarPlanId);
         if(calendarPlanOpt.isEmpty())
             throw new ResourceNotFoundException("Calendar plan", "id", String.valueOf(calendarPlanId));
@@ -67,15 +83,25 @@ public class CalendarPlanServiceImpl implements CalendarPlanService {
                 .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("Calendar Plan Record", "id", String.valueOf(recordId)));
 
-        mapCalendarPlanRecord(calendarPlanRecord, requestDto);
+        mapCalendarPlanUpdateRecord(calendarPlanRecord, requestDto);
 
+        // TODO remove this saving
         calendarPlanRecordRepository.saveCalendarPlanRecord(calendarPlanRecord);
 
         CalendarPlan calendarPlanFromDb = calendarPlanRepository.saveCalendarPlan(calendarPlan);
         return mapCalendarPlanResponseDto(calendarPlanFromDb);
     }
 
-    private static void mapCalendarPlanRecord(CalendarPlanRecord calendarPlanRecord, CalendarPlanRecordRequestDto requestDto){
+    private void mapCalendarPlanCreateRecord(CalendarPlanRecord calendarPlanRecord, CalendarPlanRecordCreateRequestDto requestDto) {
+        calendarPlanRecord.setLessonId(requestDto.getLessonId());
+        calendarPlanRecord.setLessonNumber(requestDto.getLessonNumber());
+        calendarPlanRecord.setLessonDate(requestDto.getLessonDate());
+        calendarPlanRecord.setThemeName(requestDto.getThemeName());
+        calendarPlanRecord.setIndividualAssignment(requestDto.getIndividualAssignment());
+        calendarPlanRecord.setIndividualAssignmentDate(requestDto.getIndividualAssignmentDate());
+    }
+
+    private static void mapCalendarPlanUpdateRecord(CalendarPlanRecord calendarPlanRecord, CalendarPlanRecordUpdateRequestDto requestDto){
         calendarPlanRecord.setLessonNumber(requestDto.getLessonNumber());
         calendarPlanRecord.setThemeName(requestDto.getThemeName());
         calendarPlanRecord.setIndividualAssignment(requestDto.getIndividualAssignment());

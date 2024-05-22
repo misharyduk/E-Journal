@@ -15,6 +15,8 @@ public class LessonJournal {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "lesson_journal_id_sequence_generator")
     @Column(name = "lesson_journal_id")
     private Long id;
+    @Column(name = "calendar_plan_id")
+    private Long calendarPlanId;
     @OneToMany(mappedBy = "lessonJournal", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Lesson> lessons = new ArrayList<>();
 }
