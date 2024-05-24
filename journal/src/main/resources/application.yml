@@ -5,12 +5,12 @@ spring:
   application:
     name: journal
   datasource:
-    url: jdbc:h2:mem:journaltestdb
-    username: sa
-    password: ''
-  h2:
-    console:
-      enabled: true
+    url: jdbc:postgresql://localhost:5432/e-journal-db
+    username: mike
+    password: password
+  sql:
+    init:
+      mode: always
   jpa:
     properties:
       hibernate:

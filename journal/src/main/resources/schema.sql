@@ -1,20 +1,20 @@
-CREATE SEQUENCE journal_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE lesson_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE acad_module_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE exer_work_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE contr_work_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE lesson_attend_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE lesson_journal_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE practice_journal_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE work_student_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE control_journal_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE sem_stud_grade_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE cont_work_student_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE mod_stud_contr_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS journal_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS lesson_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS acad_module_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS exer_work_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS contr_work_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS lesson_attend_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS lesson_journal_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS practice_journal_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS work_student_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS control_journal_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS sem_stud_grade_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS cont_work_student_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS mod_stud_contr_id_sequence INCREMENT BY 1;
 
 CREATE TABLE IF NOT EXISTS journal
 (
-    journal_id                 BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    journal_id                 BIGINT NOT NULL PRIMARY KEY,
     semester_number            VARCHAR(10) CHECK (semester_number IN ('FIRST', 'SECOND')),
     first_acad_year            INT    NOT NULL,
     second_acad_year           INT    NOT NULL,
@@ -30,23 +30,23 @@ CREATE TABLE IF NOT EXISTS journal
 
 CREATE TABLE IF NOT EXISTS lesson_journal
 (
-    lesson_journal_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    lesson_journal_id BIGINT NOT NULL PRIMARY KEY,
     calendar_plan_id BIGINT
 );
 
 CREATE TABLE IF NOT EXISTS practice_journal
 (
-    practice_journal_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY
+    practice_journal_id BIGINT NOT NULL PRIMARY KEY
 );
 
 CREATE TABLE IF NOT EXISTS control_journal
 (
-    control_journal_id        BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY
+    control_journal_id        BIGINT NOT NULL PRIMARY KEY
 );
 
 CREATE TABLE IF NOT EXISTS academic_module
 (
-    acad_module_id  BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    acad_module_id  BIGINT NOT NULL PRIMARY KEY,
     module_number   INT    NOT NULL,
     start_date      TIMESTAMP NOT NULL,
     end_date      TIMESTAMP NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS academic_module
 
 CREATE TABLE IF NOT EXISTS lesson
 (
-    lesson_id      BIGINT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    lesson_id      BIGINT       NOT NULL PRIMARY KEY,
     lesson_type    VARCHAR(100) NOT NULL,
     lesson_date    TIMESTAMP    NOT NULL,
     lesson_order   INT          NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS lesson
 
 CREATE TABLE IF NOT EXISTS lesson_attendance
 (
-    lesson_attend_id BIGINT      NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    lesson_attend_id BIGINT      NOT NULL PRIMARY KEY,
     attendance_val   VARCHAR(25) NOT NULL,
     student_id       BIGINT      NOT NULL,
     lesson_id        BIGINT      NOT NULL
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS lesson_attendance
 
 CREATE TABLE IF NOT EXISTS exercise_work
 (
-    exer_work_id       BIGINT      NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    exer_work_id       BIGINT      NOT NULL PRIMARY KEY,
     work_number        INT         NOT NULL,
     exercise_work_type VARCHAR(50) NOT NULL CHECK (exercise_work_type IN ('LABORATORY', 'INDIVIDUAL')),
     academic_module_id BIGINT      NOT NULL,
@@ -83,35 +83,35 @@ CREATE TABLE IF NOT EXISTS exercise_work
 
 CREATE TABLE IF NOT EXISTS work_student
 (
-    work_student_id BIGINT      NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    work_student_id BIGINT      NOT NULL PRIMARY KEY,
     student_id      BIGINT      NOT NULL,
     exec_date       TIMESTAMP,
     def_date        TIMESTAMP,
-    mark            DOUBLE,
+    mark            double precision,
     exer_work_id    BIGINT      NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS control_work
 (
-    contr_work_id BIGINT      NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    contr_work_id BIGINT      NOT NULL PRIMARY KEY,
     exec_date     TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS control_work_student
 (
-    cont_work_student_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    cont_work_student_id BIGINT NOT NULL PRIMARY KEY,
     student_id           BIGINT,
-    mark                 DOUBLE
+    mark                 double precision
 );
 
 CREATE TABLE IF NOT EXISTS module_student_control
 (
-    mod_stud_contr_id       BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    mod_stud_contr_id       BIGINT NOT NULL PRIMARY KEY,
     student_id              BIGINT,
     module_id               BIGINT,
-    work_sum_grade          DOUBLE,
+    work_sum_grade          double precision,
     control_work_student_id BIGINT,
-    final_grade             DOUBLE
+    final_grade             double precision
 );
 
 CREATE TABLE IF NOT EXISTS control_journal_and_module_student_control
@@ -134,9 +134,9 @@ CREATE TABLE IF NOT EXISTS control_work_and_control_work_student
 
 CREATE TABLE IF NOT EXISTS semester_student_grade
 (
-    sem_stud_grade_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    sem_stud_grade_id BIGINT NOT NULL PRIMARY KEY,
     student_id        BIGINT,
-    mark              DOUBLE
+    mark              double precision
 );
 
 ALTER TABLE journal ADD FOREIGN KEY (lecture_lesson_journal_id) REFERENCES lesson_journal (lesson_journal_id) ON DELETE SET NULL;
