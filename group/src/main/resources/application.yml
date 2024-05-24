@@ -5,12 +5,12 @@ spring:
   application:
     name: group
   datasource:
-    url: jdbc:h2:mem:grouptestdb
-    username: sa
-    password: ''
-  h2:
-    console:
-      enabled: true
+    url: jdbc:postgresql://localhost:5432/e_journal_group_db
+    username: mike
+    password: password
+  sql:
+    init:
+      mode: always
   jpa:
     hibernate:
       ddl-auto: validate
