@@ -6,12 +6,12 @@ spring:
   application:
     name: university
   datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password: ''
-  h2:
-    console:
-      enabled: true
+    url: jdbc:postgresql://localhost:5432/e_journal_university_db
+    username: mike
+    password: password
+  sql:
+    init:
+      mode: always
   jpa:
     hibernate:
       ddl-auto: validate

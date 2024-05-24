@@ -1,14 +1,14 @@
-CREATE SEQUENCE university_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE faculty_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE department_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE subject_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE teacher_id_sequence INCREMENT BY 1;
-CREATE SEQUENCE address_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS university_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS faculty_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS department_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS subject_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS teacher_id_sequence INCREMENT BY 1;
+CREATE SEQUENCE IF NOT EXISTS address_id_sequence INCREMENT BY 1;
 
 CREATE TABLE IF NOT EXISTS university(
-    university_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    university_id BIGINT NOT NULL PRIMARY KEY,
     university_name VARCHAR(255) NOT NULL,
-    university_description CLOB(2K) DEFAULT NULL,
+    university_description TEXT DEFAULT NULL,
     address_id BIGINT DEFAULT NULL,
     mobile_phone VARCHAR(255) DEFAULT NULL,
     email VARCHAR(255) DEFAULT NULL,
@@ -17,9 +17,9 @@ CREATE TABLE IF NOT EXISTS university(
 );
 
 CREATE TABLE IF NOT EXISTS faculty(
-    faculty_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    faculty_id BIGINT NOT NULL PRIMARY KEY,
     faculty_name VARCHAR(255) NOT NULL,
-    faculty_description CLOB(2K) DEFAULT NULL,
+    faculty_description TEXT DEFAULT NULL,
     address_id BIGINT DEFAULT NULL,
     office_number VARCHAR(255) DEFAULT NULL,
     mobile_phone VARCHAR(255) DEFAULT NULL,
@@ -29,9 +29,9 @@ CREATE TABLE IF NOT EXISTS faculty(
 );
 
 CREATE TABLE IF NOT EXISTS department(
-    department_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    department_id BIGINT NOT NULL PRIMARY KEY,
     department_name VARCHAR(255) NOT NULL,
-    department_description CLOB(2K) DEFAULT NULL,
+    department_description TEXT DEFAULT NULL,
     address_id BIGINT DEFAULT NULL,
     office_number VARCHAR(255) DEFAULT NULL,
     mobile_phone VARCHAR(255) DEFAULT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS department(
 );
 
 CREATE TABLE IF NOT EXISTS teacher(
-    teacher_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    teacher_id BIGINT NOT NULL PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
     middle_name VARCHAR(255) NOT NULL,
@@ -51,12 +51,12 @@ CREATE TABLE IF NOT EXISTS teacher(
 );
 
 CREATE TABLE IF NOT EXISTS subject(
-    subject_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    subject_id BIGINT NOT NULL PRIMARY KEY,
     subject_name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS address(
-    address_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    address_id BIGINT NOT NULL PRIMARY KEY,
     country VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
     street VARCHAR(255) NOT NULL,
