@@ -1,0 +1,22 @@
+server:
+  port: 8071
+
+spring:
+  application:
+    name: config_server
+  profiles:
+    active: git
+  cloud:
+    config:
+      server:
+        git:
+          uri: "https://github.com/misharyduk/e-journal-config.git"
+          username: ${GITHUB_USER}
+          password: ${GITHUB_PAT}
+          default-label: main
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+
+encrypt:
+  key: "c5650c1a533088653a8188a806845f973f431bda"
