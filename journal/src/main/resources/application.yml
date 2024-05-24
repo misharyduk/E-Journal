@@ -5,7 +5,7 @@ spring:
   application:
     name: journal
   datasource:
-    url: jdbc:postgresql://localhost:5432/e-journal-db
+    url: jdbc:postgresql://localhost:5432/e_journal_journal_db
     username: mike
     password: password
   sql:
