@@ -5,6 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
+
+import java.time.Duration;
 
 import static org.springframework.cloud.gateway.support.RouteMetadataUtils.CONNECT_TIMEOUT_ATTR;
 import static org.springframework.cloud.gateway.support.RouteMetadataUtils.RESPONSE_TIMEOUT_ATTR;
@@ -24,7 +27,13 @@ public class GatewayServerApplication {
                         .filters(f -> f.rewritePath("/university/(?<segment>.*)", "/${segment}")
                                 .circuitBreaker(circBreakConfig -> circBreakConfig
                                         .setName("universityCircuitBreaker")
-                                        .setFallbackUri("forward:/contactSupport")))
+                                        .setFallbackUri("forward:/contactSupport"))
+                                .retry(retryConfig -> retryConfig
+                                        .setMethods(HttpMethod.GET)
+                                        .setRetries(3)
+                                        .setBackoff(Duration.ofMillis(1000),
+                                                    Duration.ofMillis(5000),
+                                                2, true)))
                         .uri("lb://UNIVERSITY")
                 )
                 .route(r -> r
