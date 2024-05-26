@@ -6,6 +6,9 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 
+import static org.springframework.cloud.gateway.support.RouteMetadataUtils.CONNECT_TIMEOUT_ATTR;
+import static org.springframework.cloud.gateway.support.RouteMetadataUtils.RESPONSE_TIMEOUT_ATTR;
+
 @SpringBootApplication
 public class GatewayServerApplication {
 
@@ -41,10 +44,9 @@ public class GatewayServerApplication {
                         .uri("lb://JOURNAL")
                 ).route(r -> r
                         .path("/analytics/**")
-                        .filters(f -> f.rewritePath("/analytics/(?<segment>.*)", "/${segment}")
-                                .circuitBreaker(circBreakConfig -> circBreakConfig
-                                        .setName("analyticsCircuitBreaker")
-                                        .setFallbackUri("forward:/contactSupport")))
+                        .filters(f -> f.rewritePath("/analytics/(?<segment>.*)", "/${segment}"))
+                        .metadata(CONNECT_TIMEOUT_ATTR, 2000)
+                        .metadata(RESPONSE_TIMEOUT_ATTR, 15000)
                         .uri("lb://ANALYTICS")
                 ).route(r -> r
                         .path("/calendarplan/**")

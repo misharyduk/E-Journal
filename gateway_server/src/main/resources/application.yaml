@@ -18,6 +18,9 @@ spring:
             allowedOrigins: "*"
             allowedHeaders: "*"
             allowedMethods: "*"
+      httpclient:
+        connect-timeout: 1000
+        response-timeout: 5s
 
 resilience4j:
   circuitbreaker:
