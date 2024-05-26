@@ -20,33 +20,38 @@ public class GatewayServerApplication {
                         .path("/university/**")
                         .filters(f -> f.rewritePath("/university/(?<segment>.*)", "/${segment}")
                                 .circuitBreaker(circBreakConfig -> circBreakConfig
-                                        .setName("universityCircuitBreaker")))
+                                        .setName("universityCircuitBreaker")
+                                        .setFallbackUri("forward:/contactSupport")))
                         .uri("lb://UNIVERSITY")
                 )
                 .route(r -> r
                         .path("/group/**")
                         .filters(f -> f.rewritePath("/group/(?<segment>.*)", "/${segment}")
                                 .circuitBreaker(circBreakConfig -> circBreakConfig
-                                        .setName("groupCircuitBreaker")))
+                                        .setName("groupCircuitBreaker")
+                                        .setFallbackUri("forward:/contactSupport")))
                         .uri("lb://GROUP")
                 )
                 .route(r -> r
                         .path("/journal/**")
                         .filters(f -> f.rewritePath("/journal/(?<segment>.*)", "/${segment}")
                                 .circuitBreaker(circBreakConfig -> circBreakConfig
-                                        .setName("journalCircuitBreaker")))
+                                        .setName("journalCircuitBreaker")
+                                        .setFallbackUri("forward:/contactSupport")))
                         .uri("lb://JOURNAL")
                 ).route(r -> r
                         .path("/analytics/**")
                         .filters(f -> f.rewritePath("/analytics/(?<segment>.*)", "/${segment}")
                                 .circuitBreaker(circBreakConfig -> circBreakConfig
-                                        .setName("analyticsCircuitBreaker")))
+                                        .setName("analyticsCircuitBreaker")
+                                        .setFallbackUri("forward:/contactSupport")))
                         .uri("lb://ANALYTICS")
                 ).route(r -> r
                         .path("/calendarplan/**")
                         .filters(f -> f.rewritePath("/calendarplan/(?<segment>.*)", "/${segment}")
                                 .circuitBreaker(circBreakConfig -> circBreakConfig
-                                        .setName("calendarPlanCircuitBreaker")))
+                                        .setName("calendarPlanCircuitBreaker")
+                                        .setFallbackUri("forward:/contactSupport")))
                         .uri("lb://CALENDARPLAN")
                 )
                 .build();
