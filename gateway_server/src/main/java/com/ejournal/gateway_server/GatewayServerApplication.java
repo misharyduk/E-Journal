@@ -2,10 +2,13 @@ package com.ejournal.gateway_server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 
@@ -33,7 +36,10 @@ public class GatewayServerApplication {
                                         .setRetries(3)
                                         .setBackoff(Duration.ofMillis(1000),
                                                     Duration.ofMillis(5000),
-                                                2, true)))
+                                                2, true))
+                                .requestRateLimiter(rateLimiterConfig -> rateLimiterConfig
+                                        .setRateLimiter(redisRateLimiter())
+                                        .setKeyResolver(ipKeyResolver())))
                         .uri("lb://UNIVERSITY")
                 )
                 .route(r -> r
@@ -41,7 +47,10 @@ public class GatewayServerApplication {
                         .filters(f -> f.rewritePath("/group/(?<segment>.*)", "/${segment}")
                                 .circuitBreaker(circBreakConfig -> circBreakConfig
                                         .setName("groupCircuitBreaker")
-                                        .setFallbackUri("forward:/contactSupport")))
+                                        .setFallbackUri("forward:/contactSupport"))
+                                .requestRateLimiter(rateLimiterConfig -> rateLimiterConfig
+                                        .setRateLimiter(redisRateLimiter())
+                                        .setKeyResolver(ipKeyResolver())))
                         .uri("lb://GROUP")
                 )
                 .route(r -> r
@@ -49,7 +58,10 @@ public class GatewayServerApplication {
                         .filters(f -> f.rewritePath("/journal/(?<segment>.*)", "/${segment}")
                                 .circuitBreaker(circBreakConfig -> circBreakConfig
                                         .setName("journalCircuitBreaker")
-                                        .setFallbackUri("forward:/contactSupport")))
+                                        .setFallbackUri("forward:/contactSupport"))
+                                .requestRateLimiter(rateLimiterConfig -> rateLimiterConfig
+                                        .setRateLimiter(redisRateLimiter())
+                                        .setKeyResolver(ipKeyResolver())))
                         .uri("lb://JOURNAL")
                 ).route(r -> r
                         .path("/analytics/**")
@@ -62,9 +74,25 @@ public class GatewayServerApplication {
                         .filters(f -> f.rewritePath("/calendarplan/(?<segment>.*)", "/${segment}")
                                 .circuitBreaker(circBreakConfig -> circBreakConfig
                                         .setName("calendarPlanCircuitBreaker")
-                                        .setFallbackUri("forward:/contactSupport")))
+                                        .setFallbackUri("forward:/contactSupport"))
+                                .requestRateLimiter(rateLimiterConfig -> rateLimiterConfig
+                                        .setRateLimiter(redisRateLimiter())
+                                        .setKeyResolver(ipKeyResolver())))
                         .uri("lb://CALENDARPLAN")
                 )
                 .build();
+    }
+
+
+    @Bean
+    public RedisRateLimiter redisRateLimiter(){
+        return new RedisRateLimiter(10, 100, 10);
+    }
+
+    @Bean
+    public KeyResolver ipKeyResolver(){
+        return exchange -> Mono.just(
+                exchange.getRequest().getRemoteAddress().getAddress().toString()
+        );
     }
 }
