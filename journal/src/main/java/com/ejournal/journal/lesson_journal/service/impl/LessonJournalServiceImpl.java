@@ -17,12 +17,14 @@ import com.ejournal.journal.lesson_journal.repository.LessonJournalRepository;
 import com.ejournal.journal.lesson_journal.repository.LessonRepository;
 import com.ejournal.journal.lesson_journal.service.LessonJournalService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class LessonJournalServiceImpl implements LessonJournalService {
 
     private final LessonJournalRepository lessonJournalRepository;
@@ -36,8 +38,14 @@ public class LessonJournalServiceImpl implements LessonJournalService {
 
     @Override
     public LessonJournalResponseDto fetchById(Long lessonJournalId) {
+
+        log.info("Отримання журналу з ідентифікатором {}", lessonJournalId);
         LessonJournal lessonJournal = lessonJournalRepository.fetchLessonJournal(lessonJournalId)
-                .orElseThrow(() -> new ResourceNotFoundException("Lesson journal", "id", String.valueOf(lessonJournalId)));
+                .orElseThrow(() -> {
+                    log.info("Помилка: журнал із ідентифікатором {} не присутній у системі", lessonJournalId);
+                    return new ResourceNotFoundException("Lesson journal", "id", String.valueOf(lessonJournalId));
+                });
+
         return LessonJournalResponseDto.builder()
                 .id(lessonJournal.getId())
                 .calendarPlanId(lessonJournal.getCalendarPlanId())
@@ -64,7 +72,8 @@ public class LessonJournalServiceImpl implements LessonJournalService {
         calendarPlanRequestDto.setJournalId(lessonJournal.getId());
         calendarPlanRequestDto.setCalendarLessons(new ArrayList<>());
 
-        CalendarPlanResponseDto calendarPlan = calendarPlanFeignClient.createCalendarPlan(calendarPlanRequestDto).getBody();
+        CalendarPlanResponseDto calendarPlan = calendarPlanFeignClient
+                .createCalendarPlan(calendarPlanRequestDto).getBody();
         lessonJournal.setCalendarPlanId(calendarPlan.getId());
 
         lessonJournalRepository.saveLessonJournal(lessonJournal);
