@@ -13,11 +13,11 @@ import org.springframework.security.oauth2.server.resource.authentication.Reacti
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import reactor.core.publisher.Mono;
 
-@Configuration
-@EnableWebFluxSecurity
+//@Configuration
+//@EnableWebFluxSecurity
 public class SecurityConfig {
 
-    @Bean
+//    @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity security){
         security.authorizeExchange(exchanges -> exchanges
                                 .pathMatchers("/university/**").permitAll()
