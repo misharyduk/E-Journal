@@ -4,11 +4,11 @@ server:
 spring:
   application:
     name: gateway_server
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: "http://localhost:7080/realms/master/protocol/openid-connect/certs"
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          jwk-set-uri: "http://localhost:7080/realms/master/protocol/openid-connect/certs"
   cloud:
     gateway:
       discovery:
@@ -26,12 +26,12 @@ spring:
       httpclient:
         connect-timeout: 1000
         response-timeout: 5s
-  data:
-    redis:
-      connect-timeout: 5s
-      host: localhost
-      port: 6379
-      timeout: 2s
+#  data:
+#    redis:
+#      connect-timeout: 5s
+#      host: localhost
+#      port: 6379
+#      timeout: 2s
 
 resilience4j:
   circuitbreaker:

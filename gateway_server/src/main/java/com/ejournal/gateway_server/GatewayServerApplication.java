@@ -37,9 +37,10 @@ public class GatewayServerApplication {
                                         .setBackoff(Duration.ofMillis(1000),
                                                     Duration.ofMillis(5000),
                                                 2, true))
-                                .requestRateLimiter(rateLimiterConfig -> rateLimiterConfig
-                                        .setRateLimiter(redisRateLimiter())
-                                        .setKeyResolver(ipKeyResolver())))
+//                                .requestRateLimiter(rateLimiterConfig -> rateLimiterConfig
+//                                        .setRateLimiter(redisRateLimiter())
+//                                        .setKeyResolver(ipKeyResolver()))
+                        )
                         .uri("lb://UNIVERSITY")
                 )
                 .route(r -> r
@@ -48,9 +49,10 @@ public class GatewayServerApplication {
                                 .circuitBreaker(circBreakConfig -> circBreakConfig
                                         .setName("groupCircuitBreaker")
                                         .setFallbackUri("forward:/contactSupport"))
-                                .requestRateLimiter(rateLimiterConfig -> rateLimiterConfig
-                                        .setRateLimiter(redisRateLimiter())
-                                        .setKeyResolver(ipKeyResolver())))
+//                                .requestRateLimiter(rateLimiterConfig -> rateLimiterConfig
+//                                        .setRateLimiter(redisRateLimiter())
+//                                        .setKeyResolver(ipKeyResolver()))
+                        )
                         .uri("lb://GROUP")
                 )
                 .route(r -> r
@@ -59,9 +61,10 @@ public class GatewayServerApplication {
                                 .circuitBreaker(circBreakConfig -> circBreakConfig
                                         .setName("journalCircuitBreaker")
                                         .setFallbackUri("forward:/contactSupport"))
-                                .requestRateLimiter(rateLimiterConfig -> rateLimiterConfig
-                                        .setRateLimiter(redisRateLimiter())
-                                        .setKeyResolver(ipKeyResolver())))
+//                                .requestRateLimiter(rateLimiterConfig -> rateLimiterConfig
+//                                        .setRateLimiter(redisRateLimiter())
+//                                        .setKeyResolver(ipKeyResolver()))
+                        )
                         .uri("lb://JOURNAL")
                 ).route(r -> r
                         .path("/analytics/**")
@@ -75,24 +78,25 @@ public class GatewayServerApplication {
                                 .circuitBreaker(circBreakConfig -> circBreakConfig
                                         .setName("calendarPlanCircuitBreaker")
                                         .setFallbackUri("forward:/contactSupport"))
-                                .requestRateLimiter(rateLimiterConfig -> rateLimiterConfig
-                                        .setRateLimiter(redisRateLimiter())
-                                        .setKeyResolver(ipKeyResolver())))
+//                                .requestRateLimiter(rateLimiterConfig -> rateLimiterConfig
+//                                        .setRateLimiter(redisRateLimiter())
+//                                        .setKeyResolver(ipKeyResolver()))
+                        )
                         .uri("lb://CALENDARPLAN")
                 )
                 .build();
     }
 
 
-    @Bean
-    public RedisRateLimiter redisRateLimiter(){
-        return new RedisRateLimiter(10, 100, 10);
-    }
-
-    @Bean
-    public KeyResolver ipKeyResolver(){
-        return exchange -> Mono.just(
-                exchange.getRequest().getRemoteAddress().getAddress().toString()
-        );
-    }
+//    @Bean
+//    public RedisRateLimiter redisRateLimiter(){
+//        return new RedisRateLimiter(10, 100, 10);
+//    }
+//
+//    @Bean
+//    public KeyResolver ipKeyResolver(){
+//        return exchange -> Mono.just(
+//                exchange.getRequest().getRemoteAddress().getAddress().toString()
+//        );
+//    }
 }
