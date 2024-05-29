@@ -29,10 +29,10 @@ public class TeacherPaginationRepositoryCriteriaImpl implements TeacherPaginatio
         Root<Teacher> teacherRoot = criteriaQuery.from(Teacher.class);
 
         criteriaQuery.multiselect(
-                teacherRoot.get("teacher_id").alias("teacherId"),
-                teacherRoot.get("first_name").alias("firstName"),
-                teacherRoot.get("last_name").alias("lastName"),
-                teacherRoot.get("middle_name").alias("middleName"),
+                teacherRoot.get("id").alias("teacherId"),
+                teacherRoot.get("firstName").alias("firstName"),
+                teacherRoot.get("lastName").alias("lastName"),
+                teacherRoot.get("middleName").alias("middleName"),
                 teacherRoot.get("email").alias("email")
         );
 
