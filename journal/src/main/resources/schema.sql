@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS journal
     group_id                   BIGINT NOT NULL,
     lecture_teacher_id         BIGINT NOT NULL,
     practical_teacher_id       BIGINT NOT NULL,
+    second_practical_teacher_id       BIGINT,
     lecture_lesson_journal_id  BIGINT,
     practice_lesson_journal_id BIGINT,
     exercise_work_journal_id   BIGINT,

@@ -35,6 +35,8 @@ public class Journal {
     private Long lectureTeacherId;
     @Column(name = "practical_teacher_id")
     private Long practicalTeacherId;
+    @Column(name = "second_practical_teacher_id")
+    private Long secondPracticalTeacherId;
 
     @Column(name = "lecture_lesson_journal_id")
     private Long lectureLessonJournalId;

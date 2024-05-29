@@ -15,7 +15,9 @@ public class JournalMapper {
         journal.setPracticalTeacherId(requestDto.getPracticalTeacherId());
         journal.setSemesterNumber(SemesterNumber.valueOf(requestDto.getSemesterNumber().toUpperCase()));
         journal.setFirstAcademicYear(requestDto.getFirstAcademicYear());
-        journal.setSecondAcademicYear(requestDto.getSecondAcademicYear());
+        if(requestDto.getSecondAcademicYear() != 0) {
+            journal.setSecondAcademicYear(requestDto.getSecondAcademicYear());
+        }
         return journal;
     }
 

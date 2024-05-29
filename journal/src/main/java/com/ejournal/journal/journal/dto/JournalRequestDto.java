@@ -13,4 +13,5 @@ public class JournalRequestDto {
     private Long groupId;
     private Long lectureTeacherId;
     private Long practicalTeacherId;
+    private Long secondPracticalTeacherId;
 }

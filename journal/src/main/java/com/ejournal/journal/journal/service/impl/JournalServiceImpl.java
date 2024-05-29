@@ -4,18 +4,13 @@ import com.ejournal.journal.common.dto.PageableRequestDto;
 import com.ejournal.journal.common.dto.PageableResponseDto;
 import com.ejournal.journal.common.exception.ResourceNotFoundException;
 import com.ejournal.journal.common.util.SortFieldValidator.JournalField;
-import com.ejournal.journal.control_journal.entity.ControlJournal;
-import com.ejournal.journal.control_journal.repository.ControlJournalRepository;
 import com.ejournal.journal.control_journal.service.ControlJournalService;
-import com.ejournal.journal.exercise_journal.entity.PracticeJournal;
-import com.ejournal.journal.exercise_journal.repository.PracticeJournalRepository;
 import com.ejournal.journal.exercise_journal.service.PracticeJournalService;
 import com.ejournal.journal.journal.dto.AcademicModuleRequestDto;
 import com.ejournal.journal.journal.dto.JournalRequestDto;
 import com.ejournal.journal.journal.dto.JournalResponseDto;
 import com.ejournal.journal.journal.entity.Journal;
 import com.ejournal.journal.journal.entity.academic_entities.AcademicModule;
-import com.ejournal.journal.journal.entity.academic_entities.SemesterNumber;
 import com.ejournal.journal.journal.mapper.JournalMapper;
 import com.ejournal.journal.journal.repository.JournalRepository;
 import com.ejournal.journal.journal.service.AcademicModuleService;
@@ -25,9 +20,6 @@ import com.ejournal.journal.common.feign_client.group.dto.GroupResponseDto;
 import com.ejournal.journal.common.feign_client.university.UniversityFeignClient;
 import com.ejournal.journal.common.feign_client.university.dto.SubjectResponseDto;
 import com.ejournal.journal.common.feign_client.university.dto.TeacherResponseDto;
-import com.ejournal.journal.lesson_journal.dto.LessonResponseDto;
-import com.ejournal.journal.lesson_journal.entity.LessonJournal;
-import com.ejournal.journal.lesson_journal.repository.LessonJournalRepository;
 import com.ejournal.journal.lesson_journal.service.LessonJournalService;
 import com.ejournal.journal.lesson_journal.service.LessonService;
 import lombok.RequiredArgsConstructor;
@@ -205,6 +197,15 @@ public class JournalServiceImpl implements JournalService {
             throw new ResourceNotFoundException("Teacher", "id", String.valueOf(journal.getPracticalTeacherId()));
 
         responseDto.setPracticalTeacher(practicalTeacher.getBody());
+
+        // Map Second Practical Teacher
+        if(journal.getSecondPracticalTeacherId() != null && journal.getSecondPracticalTeacherId() != 0) {
+            ResponseEntity<TeacherResponseDto> secondPracticalTeacher = universityClient.fetchTeacher(journal.getSecondPracticalTeacherId());
+            if (secondPracticalTeacher.getBody() == null)
+                throw new ResourceNotFoundException("Teacher", "id", String.valueOf(journal.getSecondPracticalTeacherId()));
+
+            responseDto.setSecondPracticalTeacher(secondPracticalTeacher.getBody());
+        }
 
         return responseDto;
     }
