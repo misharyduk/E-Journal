@@ -14,6 +14,7 @@ import com.ejournal.group.student.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -51,6 +52,7 @@ public class StudentServiceImpl implements StudentService {
         List<Student> students = studentRepository.fetchStudentsByGroupId(groupId);
         return students.stream()
                 .map(StudentMapper::mapToDto)
+                .sorted(Comparator.comparing(StudentResponseDto::getLastName))
                 .toList();
     }
 
