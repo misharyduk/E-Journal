@@ -21,8 +21,7 @@ public class University {
     private Long id;
     @Column(name = "university_name")
     private String universityName;
-    @Column(name = "university_description", columnDefinition = "TEXT")
-    @Lob
+    @Column(name = "university_description")
     private String universityDescription;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")

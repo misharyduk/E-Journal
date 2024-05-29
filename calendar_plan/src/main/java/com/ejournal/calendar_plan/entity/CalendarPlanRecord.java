@@ -22,11 +22,9 @@ public class CalendarPlanRecord {
     private Integer lessonNumber;
     @Column(name = "lesson_date") // TODO think about removing this field as it's duplicate from Lesson class
     private Date lessonDate;
-    @Column(name = "theme_name", columnDefinition = "TEXT")
-    @Lob
+    @Column(name = "theme_name")
     private String themeName;
-    @Column(name = "ind_assignment", columnDefinition = "TEXT")
-    @Lob
+    @Column(name = "ind_assignment")
     private String individualAssignment;
     @Column(name = "ind_assign_date")
     private Date individualAssignmentDate;
