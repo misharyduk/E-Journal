@@ -46,6 +46,7 @@ public class TeacherPaginationService {
                 .setLastName(tuple.get("lastName", String.class))
                 .setMiddleName(tuple.get("middleName", String.class))
                 .setEmail(tuple.get("email", String.class))
+                .setMobilePhone(tuple.get("mobilePhone", String.class))
                 .build();
     }
 }

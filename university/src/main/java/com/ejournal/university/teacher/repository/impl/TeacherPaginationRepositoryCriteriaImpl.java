@@ -33,7 +33,8 @@ public class TeacherPaginationRepositoryCriteriaImpl implements TeacherPaginatio
                 teacherRoot.get("firstName").alias("firstName"),
                 teacherRoot.get("lastName").alias("lastName"),
                 teacherRoot.get("middleName").alias("middleName"),
-                teacherRoot.get("email").alias("email")
+                teacherRoot.get("email").alias("email"),
+                teacherRoot.get("mobilePhone").alias("mobilePhone")
         );
 
         if(direction.equals("desc")){
