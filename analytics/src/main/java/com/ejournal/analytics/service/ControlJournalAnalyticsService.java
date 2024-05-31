@@ -2,7 +2,7 @@ package com.ejournal.analytics.service;
 
 import com.ejournal.analytics.dto.SemesterGradesAnalyticsResponse;
 import com.ejournal.analytics.exception.ResourceNotFoundException;
-import com.ejournal.analytics.feign_client.journal.ControlJournalFeignClient;
+import com.ejournal.analytics.feign_client.journal.JournalFeignClient;
 import com.ejournal.analytics.feign_client.journal.dto.ControlJournalResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +16,11 @@ import java.util.Map;
 public class ControlJournalAnalyticsService {
 
     // Feign Clients
-    private final ControlJournalFeignClient controlJournalFeignClient;
+    private final JournalFeignClient controlJournalFeignClient;
 
     public SemesterGradesAnalyticsResponse calculateSemesterGradesAnalytics(Long controlJournalId) {
         // fetching control journal
-        ResponseEntity<ControlJournalResponseDto> controlJournalResponseDtoResponse = controlJournalFeignClient.fetchJournal(controlJournalId);
+        ResponseEntity<ControlJournalResponseDto> controlJournalResponseDtoResponse = controlJournalFeignClient.fetchControlJournal(controlJournalId);
         if(controlJournalResponseDtoResponse.getBody() == null)
             throw new ResourceNotFoundException("Control Journal", "id", String.valueOf(controlJournalId));
 
