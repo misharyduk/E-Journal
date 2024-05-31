@@ -87,6 +87,12 @@ public class PracticeJournalServiceImpl implements PracticeJournalService {
     }
 
     @Override
+    public List<WorkStudentMarkResponseDto> fetchAllStudentsGrades() {
+        List<WorkStudent> workStudents = workStudentRepository.fetchAllStudentsGrades();
+        return workStudents.stream().map(WorkStudentMapper::mapMarkResponse).toList();
+    }
+
+    @Override
     public PracticeJournalResponseDto markStudentGrade(Long practiceJournalId, WorkStudentMarkRequestDto markRequestDto) {
         PracticeJournal practiceJournal = practiceJournalRepository.fetchPracticeJournal(practiceJournalId)
                 .orElseThrow(() -> new ResourceNotFoundException("Practice journal", "id", String.valueOf(practiceJournalId)));

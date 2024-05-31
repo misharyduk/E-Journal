@@ -4,6 +4,7 @@ import com.ejournal.journal.common.dto.PageableRequestDto;
 import com.ejournal.journal.common.dto.PageableResponseDto;
 import com.ejournal.journal.exercise_journal.dto.PracticeJournalResponseDto;
 import com.ejournal.journal.exercise_journal.dto.WorkStudentMarkRequestDto;
+import com.ejournal.journal.exercise_journal.dto.WorkStudentMarkResponseDto;
 import com.ejournal.journal.exercise_journal.service.PracticeJournalService;
 import com.ejournal.journal.journal.dto.ExerciseWorkRequestDto;
 import com.ejournal.journal.journal.dto.ExerciseWorkResponseDto;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/workjournal")
@@ -55,6 +58,14 @@ public class PracticeJournalController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(practiceJournal);
+    }
+
+    @GetMapping("/allStudentsGrades")
+    public ResponseEntity<List<WorkStudentMarkResponseDto>> getAllStudentsGrades(){
+        List<WorkStudentMarkResponseDto> allStudentsGrades = practiceJournalService.fetchAllStudentsGrades();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(allStudentsGrades);
     }
 
 }

@@ -5,6 +5,7 @@ import com.ejournal.journal.common.dto.PageableResponseDto;
 import com.ejournal.journal.common.service.CommonCrudService;
 import com.ejournal.journal.exercise_journal.dto.PracticeJournalResponseDto;
 import com.ejournal.journal.exercise_journal.dto.WorkStudentMarkRequestDto;
+import com.ejournal.journal.exercise_journal.dto.WorkStudentMarkResponseDto;
 import com.ejournal.journal.journal.dto.ExerciseWorkRequestDto;
 import com.ejournal.journal.journal.dto.JournalRequestDto;
 import com.ejournal.journal.journal.dto.JournalResponseDto;
@@ -23,4 +24,6 @@ public interface PracticeJournalService {
     PracticeJournalResponseDto createExerciseWork(Long practiceJournalId, ExerciseWorkRequestDto exerciseWorkRequestDto);
 
     Journal enrichAndSavePracticeJournal(Journal journal);
+
+    List<WorkStudentMarkResponseDto> fetchAllStudentsGrades();
 }
