@@ -4,6 +4,7 @@ import com.ejournal.journal.lesson_journal.entity.LessonAttendance;
 import com.ejournal.journal.lesson_journal.repository.LessonAttendanceRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface JpaLessonAttendanceRepositoryImpl extends JpaRepository<LessonAttendance, Long>, LessonAttendanceRepository {
@@ -17,6 +18,11 @@ public interface JpaLessonAttendanceRepositoryImpl extends JpaRepository<LessonA
     @Override
     default Optional<LessonAttendance> fetchLessonAttendance(Long lessonAttendanceId){
         return findById(lessonAttendanceId);
+    }
+
+    @Override
+    default List<LessonAttendance> fetchAllAttendances(){
+        return findAll();
     }
 
     @Override
