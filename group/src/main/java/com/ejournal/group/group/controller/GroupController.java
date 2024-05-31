@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.ejournal.group.common.util.ServiceConstants.INSTANCE_DELETED;
 
 @RestController
@@ -36,6 +38,15 @@ public class GroupController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(pageOfGroups);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<GroupResponseDto>> fetchAllGroups(){
+
+        List<GroupResponseDto> allGroups = groupService.fetchAll();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(allGroups);
     }
 
     @GetMapping("/{groupId}")
