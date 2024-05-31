@@ -3,6 +3,7 @@ package com.ejournal.group.student.service.impl;
 import com.ejournal.group.common.dto.PageableRequestDto;
 import com.ejournal.group.common.dto.PageableResponseDto;
 import com.ejournal.group.common.util.SortFieldValidator;
+import com.ejournal.group.group.dto.GroupResponseDto;
 import com.ejournal.group.student.dto.StudentResponseDto;
 import com.ejournal.group.student.repository.StudentPaginationRepository;
 import jakarta.persistence.Tuple;
@@ -57,6 +58,7 @@ public class StudentPaginationService {
                 .setMiddleName(tuple.get("middleName", String.class))
                 .setEmail(tuple.get("email", String.class))
                 .setMobilePhone(tuple.get("mobilePhone", String.class))
+                .setGroup(GroupResponseDto.builder().setGroupId(tuple.get("groupId", Long.class)).build())
                 .build();
 
         /* switch (sortField){

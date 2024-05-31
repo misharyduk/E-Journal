@@ -1,13 +1,12 @@
 package com.ejournal.group.student.repository.impl;
 
+import com.ejournal.group.group.entity.Group;
 import com.ejournal.group.student.entity.Student;
 import com.ejournal.group.student.repository.StudentPaginationRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Tuple;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -29,13 +28,16 @@ public class StudentPaginationRepositoryCriteriaImpl implements StudentPaginatio
         CriteriaQuery<Tuple> criteriaQuery = cb.createTupleQuery();
         Root<Student> studentRoot = criteriaQuery.from(Student.class);
 
+        Join<Student, Group> groupJoin = studentRoot.join("group", JoinType.LEFT);
+
         criteriaQuery.multiselect(
                 studentRoot.get("id").alias("studentId"),
                 studentRoot.get("firstName").alias("firstName"),
                 studentRoot.get("lastName").alias("lastName"),
                 studentRoot.get("middleName").alias("middleName"),
                 studentRoot.get("mobilePhone").alias("mobilePhone"),
-                studentRoot.get("email").alias("email")
+                studentRoot.get("email").alias("email"),
+                groupJoin.get("id").alias("groupId")
         );
 
         if(direction.equals("desc")){
