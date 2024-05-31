@@ -15,8 +15,9 @@ public class JournalMapper {
         journal.setPracticalTeacherId(requestDto.getPracticalTeacherId());
         journal.setSemesterNumber(SemesterNumber.valueOf(requestDto.getSemesterNumber().toUpperCase()));
         journal.setFirstAcademicYear(requestDto.getFirstAcademicYear());
-        if(requestDto.getSecondAcademicYear() != 0) {
-            journal.setSecondAcademicYear(requestDto.getSecondAcademicYear());
+        journal.setSecondAcademicYear(requestDto.getSecondAcademicYear());
+        if(requestDto.getSecondPracticalTeacherId() != 0) {
+            journal.setSecondPracticalTeacherId(requestDto.getSecondPracticalTeacherId());
         }
         return journal;
     }
@@ -28,7 +29,9 @@ public class JournalMapper {
         responseDto.setFirstAcademicYear(journal.getFirstAcademicYear());
         responseDto.setSecondAcademicYear(journal.getSecondAcademicYear());
         responseDto.setAcademicModules(journal.getAcademicModules().stream()
-                .map(m -> new AcademicModuleResponseDto(m.getId(), m.getModuleNumber(), m.getModuleStartDate(), m.getModuleEndDate())).toList());
+                .map(m -> new AcademicModuleResponseDto(m.getId(), m.getModuleNumber(), m.getModuleStartDate(), m.getModuleEndDate(),
+                        new ControlWorkResponseDto(m.getControlWork().getId(), m.getControlWork().getExecutionDate())))
+                .toList());
         responseDto.setLectureLessonsJournalId(journal.getLectureLessonJournalId());
         responseDto.setPracticeLessonsJournalId(journal.getPracticeLessonJournalId());
         responseDto.setExerciseJournalId(journal.getExerciseWorkJournalId());
