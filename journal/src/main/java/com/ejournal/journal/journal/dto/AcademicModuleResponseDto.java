@@ -20,4 +20,12 @@ public class AcademicModuleResponseDto {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+    public AcademicModuleResponseDto(Long id, Integer moduleNumber, Date startDate, Date endDate, ControlWorkResponseDto controlWork) {
+        this.id = id;
+        this.moduleNumber = moduleNumber;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.controlWork = controlWork;
+    }
 }
