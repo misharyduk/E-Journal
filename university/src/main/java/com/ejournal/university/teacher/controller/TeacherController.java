@@ -40,6 +40,15 @@ public class TeacherController {
                 .body(pageOfTeachers);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<TeacherResponseDto>> fetchAllTeachers(){
+
+        List<TeacherResponseDto> allTeachers = teacherService.fetchAll();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(allTeachers);
+    }
+
     @GetMapping("/{teacherId}")
     public ResponseEntity<TeacherResponseDto> fetchTeacher(@PathVariable("teacherId") Long teacherId){
 
