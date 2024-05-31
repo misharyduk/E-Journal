@@ -40,6 +40,15 @@ public class StudentController {
                 .body(pageOfStudents);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<StudentResponseDto>> fetchAllOfStudents(){
+
+        List<StudentResponseDto> allStudents = studentService.fetchAll();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(allStudents);
+    }
+
     @GetMapping("/group/{groupId}")
     public ResponseEntity<List<StudentResponseDto>> fetchAllStudentsOfGroup(@PathVariable("groupId") Long groupId){
 
