@@ -152,7 +152,7 @@ ALTER TABLE lesson ADD FOREIGN KEY (les_journal_id) REFERENCES lesson_journal (l
 ALTER TABLE lesson_attendance ADD FOREIGN KEY (lesson_id) REFERENCES lesson (lesson_id) ON DELETE CASCADE;
 
 ALTER TABLE exercise_work ADD FOREIGN KEY (academic_module_id) REFERENCES academic_module (acad_module_id) ON DELETE CASCADE;
-ALTER TABLE exercise_work ADD FOREIGN KEY (prac_journal_id) REFERENCES lesson_journal (lesson_journal_id) ON DELETE SET NULL;
+ALTER TABLE exercise_work ADD FOREIGN KEY (prac_journal_id) REFERENCES practice_journal (practice_journal_id) ON DELETE SET NULL;
 
 ALTER TABLE work_student ADD FOREIGN KEY (exer_work_id) REFERENCES exercise_work (exer_work_id) ON DELETE SET NULL;
 
